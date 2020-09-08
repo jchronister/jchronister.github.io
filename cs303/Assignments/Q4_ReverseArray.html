@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+
+  <PRE id="jsText">
+
+    /*  Reverse an Array
+    *   Arrays have a reverse method that changes the array by inverting the order in which its elements
+    *   appear. For this exercise, write two functions, reverseArray and reverseArrayInPlace. The first,
+    *   reverseArray, takes an array as argument and produces a new array that has the same elements in
+    *   the inverse order. The second, reverseArrayInPlace, does what the reverse method does: it
+    *   modifies the array given as argument by reversing its elements. Neither may use the standard reverse
+    *   method.
+    *
+    *   reverseArray(["A", "B", "C"])); → ["C", "B", "A"];  
+    *   reverseArrayInPlace([1, 2, 3, 4, 5]); → [5, 4, 3, 2, 1]
+    *
+    *   Defining Table
+    *
+    *   Input               Processing                    Output
+    *   Array               Reverse Array Elements        Return Array
+    *                       Use Same or New Array
+    *                       Depending on Function
+    */
+    
+    
+    function reverseArray(arr) {
+    
+        let retrn = [], j = 0;
+    
+        for (i = arr.length - 1; i >= 0; i-=1) {
+          retrn[j] = arr[i];
+          j+=1;
+        }
+    
+        return retrn;
+    
+    }
+    <div id ="div1"></div>
+    <div id ="div1Output"></div>
+
+    function reverseArrayInPlace(arr) {
+    
+        let begin = 0, end = arr.length - 1, hold;
+    
+        while (begin < end) {
+          hold = arr[end];
+          arr[end] = arr[begin];
+          arr[begin] = hold;
+          begin+=1;
+          end-=1;
+        }
+    
+        return arr; 
+    
+    }
+    <div id ="div2"></div>
+    <div id ="div2Output"></div>   
+</PRE>
+
+  <script>
+  {
+
+  // Load Script
+  let script = document.createElement("script");
+  script.innerHTML = document.getElementById("jsText").innerText;
+  document.head.appendChild(script);
+   
+  let setup =[
+      {
+      divButtonId:'div1',
+      divOutputId: 'div1Output',
+      functionRef: reverseArray,
+      functionName: 'reverseArray',
+      promptQuestion: 'Please Enter Array Items Separated by Comma',
+      defaultPromptInput:'A ,B ,C'
+      }
+      ,
+      {
+      divButtonId:'div2',
+      divOutputId: 'div2Output',
+      functionRef: reverseArrayInPlace,
+      functionName: 'reverseArrayInPlace',
+      promptQuestion: 'Please Enter Array Items Separated by Comma',
+      defaultPromptInput:'1, 2, 3, 4, 5, 6'
+      } 
+  ];
+
+  for (let i = 0; i < setup.length; i+=1) {
+      setupCmdButton(setup[i].divButtonId,setup[i].divOutputId,setup[i].functionRef, setup[i].functionName,setup[i].promptQuestion,setup[i].defaultPromptInput);
+  }
+
+  function setupCmdButton (divButtonId, divOutputId, functionRef, functionName, promptQuestion, defaultInput) {
+
+      let element = document.createElement("input");
+      element.setAttribute("type", "button");
+      element.setAttribute("value", "Click to Call Function " + functionName);
+      document.getElementById(divButtonId).appendChild(element);
+
+      element.addEventListener('click', function() {
+
+        let retrArr = getUserInputArray(promptQuestion,defaultInput);
+        if (retrArr === null) return;
+        let retrn = functionRef(retrArr);
+
+        document.getElementById(divOutputId).innerText = 'Function Input:  ' + retrArr.join(', ') + '\nFunction Output: ' + retrn.join(', ');
+
+      });
+  }
+
+  function getUserInputArray(question,strDefault) {
+      let str = prompt(question,strDefault);
+      if (str === null) return null;
+      if (str.indexOf === -1) {
+        return [str];
+      } else {
+        return str.split(",").map(n=>n.trim());
+      }
+  }
+  }
+  </script>
+</body>
+</html>
