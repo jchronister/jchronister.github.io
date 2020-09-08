@@ -21,13 +21,15 @@
     *   
     */
     <span><hr></span>
+    "use strict";
+
     function findLongestWord(arr) {
     
         if (arr.length === 0) return 0;
     
         let longest = arr[0].length;
         
-        for (i = 1; i < arr.length; i+=1) {
+        for (let i = 1; i < arr.length; i+=1) {
           if(arr[i].length > longest) longest = arr[i].length;
         }
     
