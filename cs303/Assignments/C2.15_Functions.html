@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+
+  <PRE id="jsText">
+
+    // Chapter 2 Functions - Tasks
+
+/**********************************************************************/
+  /*  Rewrite the function checkAge using '?' or '||'
+  *
+  *   function checkAge(age) {
+  *       if (age > 18) {
+  *          return true;
+  *       } else {
+  *        return confirm('Did parents allow you?');
+  *      }
+  *      //console.log(checkAge(18));
+  *   }
+  */
+
+  // Using ?
+  function checkAge1(age) {
+    return age > 18 ? true : confirm('Did parents allow you?');
+  }
+  //console.log(checkAge1(18));
+
+  // Using ||
+  function checkAge2(age) {
+    return age > 18 || confirm('Did parents allow you?');
+  }
+  //console.log(checkAge2(18));
+
+  /**********************************************************************/
+  // Write a function min(a,b) which returns the least of two numbers a and b.
+
+  function min(a,b) {
+    if (a < b) {
+      return a;
+    } else {
+      return b;
+    }
+  }
+
+<div id ="div1"></div>
+<div id ="div1Output"></div>
+
+
+  /**********************************************************************/
+  // Write a function pow(x,n) that returns x in power n. Or, in other words, multiplies x by itself n times and returns the result.
+  // The function should support only natural values of n: integers up from 1.
+
+  function pow(x,n) {
+    let total = x;
+    for (let i = 1; i < n; i+=1) {
+      total*=x;
+    }
+    return total;
+  }
+
+    <div id ="div2"></div>
+    <div id ="div2Output"></div>   
+</PRE>
+
+  <script>
+  {
+
+  // Load Script
+  let script = document.createElement("script");
+  script.innerHTML = document.getElementById("jsText").innerText;
+  document.head.appendChild(script);
+   
+  let setup =[
+      {
+      divButtonId:'div1',
+      divOutputId: 'div1Output',
+      functionRef: min,
+      functionName: 'min',
+      functionInput: 'Parameters',
+      promptQuestion: 'Please Enter Two Numbers Separated by Comma',
+      defaultPromptInput:'8, 5',
+      promptDataType: 'Number'
+      }
+      ,
+      {
+      divButtonId:'div2',
+      divOutputId: 'div2Output',
+      functionRef: pow,
+      functionName: 'pow',
+      functionInput: 'Parameters',
+      promptQuestion: 'Please Enter Two Numbers Separated by Comma',
+      defaultPromptInput:'2, 3',
+      promptDataType: 'Number'
+      } 
+  ];
+
+
+
+  for (let i = 0; i < setup.length; i+=1) {
+      setupCmdButton(setup[i].divButtonId,setup[i].divOutputId,setup[i].functionRef, setup[i].functionName,setup[i].promptQuestion,setup[i].defaultPromptInput,setup[i].promptDataType, setup[i].functionInput);
+  }
+
+  function setupCmdButton (divButtonId, divOutputId, functionRef, functionName, promptQuestion, defaultInput, promptDataType, functionInput) {
+
+      let element = document.createElement("input");
+      element.setAttribute("type", "button");
+      element.setAttribute("value", "Click to Call Function " + functionName);
+      document.getElementById(divButtonId).appendChild(element);
+
+      element.addEventListener('click', function() {
+
+      let retrArr
+      if (promptQuestion !== null) {
+        retrArr = getUserInputArray(promptQuestion,defaultInput,promptDataType);
+        if (retrArr === null) return;
+      }
+
+      let retrn;
+      if (functionInput === 'Parameters') {
+        retrn = functionRef.apply(null,retrArr);
+      } else {
+        retrn = functionRef(retrArr);
+      }        
+
+      // Output: Determine if Array...
+      let input = Array.isArray(retrArr) ? retrArr.join(', ') : retrArr;
+      let output = Array.isArray(retrn) ? retrn.join(', ') : retrn;
+      document.getElementById(divOutputId).innerText = 'Function Input:  ' + input + '\nFunction Output: ' + output;
+      });
+  }
+
+  function getUserInputArray(question,strDefault, dataType) {
+      //dataType 'Number' -> Converts to Number
+      let str = prompt(question,strDefault);
+      if (str === null) return null;
+      if (str.indexOf === -1) {
+          str = [str];
+      } else {
+          str = str.split(",");
+      }
+      str = str.map(n=>n.trim());
+      if (dataType === 'Number') str = str.map(n=>+n);
+      return str;
+  }
+  }
+  </script>
+</body>
+</html>

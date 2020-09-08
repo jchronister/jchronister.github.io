@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+
+  <PRE id="jsText">
+    
+    /*  Write a function findLongestWord() that takes an array of words and returns the length of
+    *   the longest one. 
+    *       
+    *   Defining Table
+    *   
+    *   Input                   Processing                  Output
+    *   Array of Words          Loop Through Array and      Return Max Length
+    *                           Find Max Length
+    *   
+    */
+    
+    function findLongestWord(arr) {
+    
+        if (arr.length === 0) return 0;
+    
+        let longest = arr[0].length;
+        
+        for (i = 1; i < arr.length; i+=1) {
+          if(arr[i].length > longest) longest = arr[i].length;
+        }
+    
+        return longest || 0;
+      
+    }
+    <div id ="div1"></div>
+    <div id ="div1Output"></div>
+
+
+
+    <div id ="div2"></div>
+    <div id ="div2Output"></div>   
+</PRE>
+
+  <script>
+  {
+
+  // Load Script
+  let script = document.createElement("script");
+  script.innerHTML = document.getElementById("jsText").innerText;
+  document.head.appendChild(script);
+   
+  let setup =[
+      {
+      divButtonId:'div1',
+      divOutputId: 'div1Output',
+      functionRef: findLongestWord,
+      functionName: 'findLongestWord',
+      promptQuestion: 'Please Enter Array of Words Separated by Comma',
+      defaultPromptInput:'hi, hello, never, thoughts'
+      }
+      // ,
+      // {
+      // divButtonId:'div2',
+      // divOutputId: 'div2Output',
+      // functionRef: reverseArrayInPlace,
+      // functionName: 'reverseArrayInPlace',
+      // promptQuestion: 'Please Enter Array Items Separated by Comma',
+      // defaultPromptInput:'1, 2, 3, 4, 5, 6'
+      // } 
+  ];
+
+
+
+  for (let i = 0; i < setup.length; i+=1) {
+      setupCmdButton(setup[i].divButtonId,setup[i].divOutputId,setup[i].functionRef, setup[i].functionName,setup[i].promptQuestion,setup[i].defaultPromptInput);
+  }
+
+  function setupCmdButton (divButtonId, divOutputId, functionRef, functionName, promptQuestion, defaultInput) {
+
+      let element = document.createElement("input");
+      element.setAttribute("type", "button");
+      element.setAttribute("value", "Click to Call Function " + functionName);
+      document.getElementById(divButtonId).appendChild(element);
+
+      element.addEventListener('click', function() {
+
+        let retrArr = getUserInputArray(promptQuestion,defaultInput);
+        if (retrArr === null) return;
+        let retrn = functionRef(retrArr);
+
+//        document.getElementById(divOutputId).innerText = 'Function Input:  ' + retrArr.join(', ') + '\nFunction Output: ' + retrn.join(', ');
+document.getElementById(divOutputId).innerText = 'Function Input:  ' + retrArr.join(', ') + '\nFunction Output: ' + retrn;
+      });
+  }
+
+  function getUserInputArray(question,strDefault) {
+      let str = prompt(question,strDefault);
+      if (str === null) return null;
+      if (str.indexOf === -1) {
+        return [str];
+      } else {
+        return str.split(",").map(n=>n.trim());
+      }
+  }
+  }
+  </script>
+</body>
+</html>

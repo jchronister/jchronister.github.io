@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+
+  <PRE id="jsText">
+        
+  /*  Define a function maxOfThree() that takes three numbers as arguments and returns the
+  *   largest of them
+  *   
+  *   Defining Table
+  *   
+  *   Input                 Processing           Output
+  *   Number Arguments      Check to Find        Largest Number
+  *                         Largest Number
+  *   
+  */
+
+  // With 3 Arguments
+  function maxOfThree(num1, num2, num3) {
+
+      let largest = num1;
+      if (num2 > largest) largest = num2;
+      if (num3 > largest) largest = num3;
+      return largest;
+
+  }
+    <div id ="div1"></div>
+    <div id ="div1Output"></div>
+
+    // With Any Length of Arguments
+    function maxOfParameters(AnyNumberOfArguments) {
+    
+      let largest = arguments[0];
+    
+      for (let i = 1; i < arguments.length; i+=1){
+        if (arguments[i] > largest) largest = arguments[i];
+    
+      }
+    
+      return largest;
+    
+    }
+
+    <div id ="div2"></div>
+    <div id ="div2Output"></div>   
+</PRE>
+
+  <script>
+  {
+
+  // Load Script
+  let script = document.createElement("script");
+  script.innerHTML = document.getElementById("jsText").innerText;
+  document.head.appendChild(script);
+   
+  let setup =[
+      {
+      divButtonId:'div1',
+      divOutputId: 'div1Output',
+      functionRef: maxOfThree,
+      functionName: 'maxOfThree',
+      promptQuestion: 'Please Enter Three Numbers Separated by Comma',
+      defaultPromptInput:'5, 1, 2',
+      promptDataType: 'Number'
+      }
+      ,
+      {
+      divButtonId:'div2',
+      divOutputId: 'div2Output',
+      functionRef: maxOfParameters,
+      functionName: 'maxOfParameters',
+      promptQuestion: 'Please Enter Three Numbers Separated by Comma',
+      defaultPromptInput:'1, 12, 3, 04, 52, 6',
+      promptDataType: 'Number'
+      } 
+  ];
+
+
+
+  for (let i = 0; i < setup.length; i+=1) {
+      setupCmdButton(setup[i].divButtonId,setup[i].divOutputId,setup[i].functionRef, setup[i].functionName,setup[i].promptQuestion,setup[i].defaultPromptInput,setup[i].promptDataType);
+  }
+
+  function setupCmdButton (divButtonId, divOutputId, functionRef, functionName, promptQuestion, defaultInput, promptDataType) {
+
+      let element = document.createElement("input");
+      element.setAttribute("type", "button");
+      element.setAttribute("value", "Click to Call Function " + functionName);
+      document.getElementById(divButtonId).appendChild(element);
+
+      element.addEventListener('click', function() {
+
+        let retrArr = getUserInputArray(promptQuestion,defaultInput,promptDataType);
+        if (retrArr === null) return;
+
+
+        let retrn = functionRef.apply(null,retrArr);
+
+// Determine if Array...
+//        document.getElementById(divOutputId).innerText = 'Function Input:  ' + retrArr.join(', ') + '\nFunction Output: ' + retrn.join(', ');
+document.getElementById(divOutputId).innerText = 'Function Input:  ' + retrArr.join(', ') + '\nFunction Output: ' + retrn;
+      });
+  }
+
+  function getUserInputArray(question,strDefault, dataType) {
+      //dataType 'Number' -> Converts to Number
+      let str = prompt(question,strDefault);
+      if (str === null) return null;
+      if (str.indexOf === -1) {
+          str = [str];
+      } else {
+          str = str.split(",");
+      }
+      str = str.map(n=>n.trim());
+      if (dataType === 'Number') str = str.map(n=>+n);
+      return str;
+  }
+  }
+  </script>
+</body>
+</html>

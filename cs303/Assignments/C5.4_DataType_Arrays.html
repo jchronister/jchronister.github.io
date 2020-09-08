@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+
+  <PRE id="jsText">
+
+  /*****************************************************************
+  *  Is array copied? 
+  *  What is this code going to show?
+  */
+
+  let fruits = ["Apples", "Pear", "Orange"];
+ 
+  // push a new value into the "copy"
+  let shoppingCart = fruits;
+  shoppingCart.push("Banana");
+
+  // what's in fruits?
+  // ["Apples", "Pear", "Orange", "Banana"]
+  console.log('Fruits:',fruits, fruits.length ); //  = 4
+  
+
+  /**********************************************************************
+  *   Array operations. 
+  *   Let’s try 5 array operations.
+  *
+  *   Create an array styles with items “Jazz” and “Blues”.
+  *   Append “Rock-n-Roll” to the end.
+  *   Replace the value in the middle by “Classics”. Your code for finding the middle value should work for any arrays with odd length.
+  *   Strip off the first value of the array and show it.
+  *   Prepend Rap and Reggae to the array.
+  *   The array in the process:
+  *
+  *   Jazz, Blues
+  *   Jazz, Blues, Rock-n-Roll
+  *   Jazz, Classics, Rock-n-Roll
+  *   Classics, Rock-n-Roll
+  *   Rap, Reggae, Classics, Rock-n-Roll
+  */
+
+  var arr = ['Jazz','Blues'];
+    console.log(arr,'Original Array');
+  arr.push('Rock-n-Roll');
+    console.log(arr,'Pushed Rock-n-Roll');
+  arr[Math.floor(arr.length/2)] = 'Classics';
+    console.log(arr,'Replaced Middle Element with Classic');
+  arr.shift();
+    console.log(arr,'Removed 1st Element');
+  arr.unshift('Rap','Reggae');
+    console.log(arr,'Added Rap, Reggae to Front')
+  
+  /*****************************************************************
+  *  Calling in an array context 
+  *
+  *  What is the result? Why?
+  */
+
+  arr = ["a", "b"];
+  
+  arr.push(function() {
+    console.log(this);
+  })
+          
+  arr[2](); // = [ 'a', 'b', Function ]
+  
+  // The function is called as a method of the Array
+  // this references the object or Array in this Case
+  
+  /*****************************************************************
+  *  Sum input numbers
+  *
+  *  Write the function sumInput() that: 
+  *  
+  *  Asks the user for values using prompt and stores the values in the array.
+  *  Finishes asking when the user enters a non-numeric value, an empty string, or presses “Cancel”.
+  *  Calculates and returns the sum of array items.
+  *  P.S. A zero 0 is a valid number, please don’t stop the input on zero.
+  */
+
+  function sumInput() {
+
+      let arrStore = [];
+  
+          while (true) {
+  
+            let str = prompt('Please Enter Number');
+            let num = parseFloat(str);
+
+            if (str != num) break;
+
+            arrStore.push(num);
+
+          }
+  
+      return arrStore.reduce((a,n)=>a+n,0);
+  }
+
+<div id ="div1"></div>
+<div id ="div1Output"></div>
+
+/*****************************************************************    
+*  A maximal subarray
+*
+*  The input is an array of numbers, e.g. arr = [1, -2, 3, 4, -9, 6].
+*  The task is: find the contiguous subarray of arr with the maximal sum of items.
+*  Write the function getMaxSubSum(arr) that will return that sum.
+*/
+
+function getMaxSubSum(arr) {
+  let sum = 0, max = 0;
+
+  for (let i = 0; i < arr.length; i+=1) {
+    sum = 0;
+    for (let j = i; j < arr.length; j+=1){
+      sum+= arr[j];
+      if (sum > max) max = sum;
+    }
+    
+  }
+
+  return max;
+}
+
+//    -1, 2, 3, -9
+//    2, -1, 2, 3, -9
+//    -1, 2, 3, -9, 11
+//    -2, -1, 1, 2
+//    100, -9, 2, -3, 5
+//    1, 2, 3
+//    -1, -2, -3
+
+<div id ="div2"></div>
+<div id ="div2Output"></div>   
+</PRE>
+
+  <script>
+  {
+
+  // Load Script
+  let script = document.createElement("script");
+  script.innerHTML = document.getElementById("jsText").innerText;
+  document.head.appendChild(script);
+   
+  let setup =[
+      {
+      divButtonId:'div1',
+      divOutputId: 'div1Output',
+      functionRef: sumInput,
+      functionName: 'sumInput',
+      functionInput: 'None',
+      promptQuestion: null,
+      defaultPromptInput:'8, 5',
+      promptDataType: 'Number'
+      }
+      ,
+      {
+      divButtonId:'div2',
+      divOutputId: 'div2Output',
+      functionRef: getMaxSubSum,
+      functionName: 'getMaxSubSum',
+      functionInput: 'Array',
+      promptQuestion: 'Please Enter Array of Numbers Separated by Comma',
+      defaultPromptInput:'-1, 2, 3, -9, 11',
+      promptDataType: 'Number'
+      } 
+  ];
+
+
+  for (let i = 0; i < setup.length; i+=1) {
+      setupCmdButton(setup[i].divButtonId,setup[i].divOutputId,setup[i].functionRef, setup[i].functionName,setup[i].promptQuestion,setup[i].defaultPromptInput,setup[i].promptDataType, setup[i].functionInput);
+  }
+
+  function setupCmdButton (divButtonId, divOutputId, functionRef, functionName, promptQuestion, defaultInput, promptDataType, functionInput) {
+
+      let element = document.createElement("input");
+      element.setAttribute("type", "button");
+      element.setAttribute("value", "Click to Call Function " + functionName);
+      document.getElementById(divButtonId).appendChild(element);
+
+      element.addEventListener('click', function() {
+
+      let retrArr
+      if (promptQuestion !== null) {
+        retrArr = getUserInputArray(promptQuestion,defaultInput,promptDataType);
+        if (retrArr === null) return;
+      }
+
+      let retrn;
+      if (functionInput === 'Parameters') {
+        retrn = functionRef.apply(null,retrArr);
+      } else {
+        retrn = functionRef(retrArr);
+      }        
+
+      // Output: Determine if Array...
+      let input = Array.isArray(retrArr) ? retrArr.join(', ') : retrArr;
+      let output = Array.isArray(retrn) ? retrn.join(', ') : retrn;
+      document.getElementById(divOutputId).innerText = 'Function Input:  ' + input + '\nFunction Output: ' + output;
+      });
+  }
+
+  function getUserInputArray(question,strDefault, dataType) {
+      //dataType 'Number' -> Converts to Number
+      let str = prompt(question,strDefault);
+      if (str === null) return null;
+      if (str.indexOf === -1) {
+          str = [str];
+      } else {
+          str = str.split(",");
+      }
+      str = str.map(n=>n.trim());
+      if (dataType === 'Number') str = str.map(n=>+n);
+      return str;
+  }
+  }
+  </script>
+</body>
+</html>
