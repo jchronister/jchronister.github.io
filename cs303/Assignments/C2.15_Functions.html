@@ -4,12 +4,13 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Document</title>
+  <link href="../../js/assignment.css" rel="stylesheet" type="text/css"/>
 </head>
 <body>
 
   <PRE id="jsText">
 
-    // Chapter 2 Functions - Tasks
+// Chapter 2 Functions - Tasks
 
 /**********************************************************************/
   /*  Rewrite the function checkAge using '?' or '||'
@@ -20,7 +21,6 @@
   *       } else {
   *        return confirm('Did parents allow you?');
   *      }
-  *      //console.log(checkAge(18));
   *   }
   */
 
@@ -28,13 +28,11 @@
   function checkAge1(age) {
     return age > 18 ? true : confirm('Did parents allow you?');
   }
-  //console.log(checkAge1(18));
 
   // Using ||
   function checkAge2(age) {
     return age > 18 || confirm('Did parents allow you?');
   }
-  //console.log(checkAge2(18));
 
   /**********************************************************************/
   // Write a function min(a,b) which returns the least of two numbers a and b.
@@ -57,7 +55,7 @@
 
   function pow(x,n) {
     let total = x;
-    for (let i = 1; i < n; i+=1) {
+    for (let i = 2; i <= n; i+=1) {
       total*=x;
     }
     return total;
