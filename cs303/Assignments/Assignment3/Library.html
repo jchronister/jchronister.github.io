@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <script src="./Library.js"></script>
+  <link href="./out/styles/library.css" rel="stylesheet" type="text/css"/>
+</head>
+<body>
+  <div><h2>JCs Library</h2></div>
+
+  
+  <div><label for="bookTitle">Book Title</label><input type="text" id="bookTitle" data-Type="string"/><br/></div>
+  <div><label for="author">Author</label><input type="text" id="author" data-Type="string"/><br/></div>
+  <div><label for="bookId">Library Id</label><input type="text" id="bookId" data-Type="number"/><br/></div>
+
+  <div><input type="button" id="addBook" onclick="addBook()" value="Add Book"/>&nbsp&nbsp&nbsp
+  <input type="button" id="showTitles" onclick="displayBooks('Book Title')" value="Show Titles" title="Lists all Titles, Sorted Alphabetically"/>&nbsp&nbsp&nbsp
+  <input type="button" id="showAuthors" onclick="displayBooks('Author')" value="Show Authors" title="Lists all Authors, Sorted Alphabetically"/>&nbsp&nbsp&nbsp 
+  <input type="button" id="showIds" onclick="displayBooks('Library Id')" value="Show Ids" title="Lists Ids, Sorted Numerically"/></div>
+
+  <div><textarea id="bookDisplay" rows="8" cols="50"></textarea></div>
+
+  <div><a href="./out/index.html">JSDoc Function Info and Code</a><div>
+</body>
+</html>

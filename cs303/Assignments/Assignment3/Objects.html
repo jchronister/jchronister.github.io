@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <link href="../../../js/assignment.css" rel="stylesheet" type="text/css"/>
+  <style>
+    .header2 {font-size: 25px;  font-weight: bold;text-decoration: underline;}
+
+  </style>
+</head>
+<body>
+
+  <h1>Assignment 3: Objects</h1><br>
+  <h2 class="header2">Objects Section Questions</h2>
+  <PRE id="jsText">
+
+  /*  Hello, object
+  *   Write the code, one line for each action:
+  *
+  *   Create an empty object user.
+  *   Add the property name with the value John.
+  *   Add the property surname with the value Smith.
+  *   Change the value of the name to Pete.
+  *   Remove the property name from the object.
+  */
+
+  "use strict";
+  let user = {};
+  user.name = "John";
+  user.surname = "Smith";
+  user.name = "Pete";
+  delete user.name;
+
+  let s = JSON.stringify
+  let e = document.getElementById.bind(document);
+  e("1").innerText = s(user);
+  //<span>Object Returns --></span><span id="1">4568</span><hr/>
+
+  /*  Check for Emptiness
+  *
+  *   Write the function isEmpty(obj) which returns true if 
+  *   the object has no properties, false otherwise.
+  */
+
+  /**
+  * Returns if Object Has Properties true/false
+  * 
+  * @param  {object} obj - Object to Check for Properties
+  * @returns  {boolean} true/false
+  */
+  function isEmpty (obj) {
+
+    for (let x in obj) {
+      return false;
+    }
+    return true;
+  }
+
+  let obj1 = {}, obj2 = {n:1};
+  e("2").innerText = s(obj1) + ' ' + isEmpty(obj1) +  ' / ' + s(obj2) + ' ' + isEmpty(obj2);
+  //<span>Function Returns --></span><span id="2"></span><hr/>
+  
+  /*  Sum object properties
+  *
+  *   We have an object storing salaries of our team:
+  *   Write the code to sum all salaries and store in the variable 
+  *   sum. Should be 390 in the example above.
+  */
+  
+     let salaries = {
+      John: 100,
+      Ann: 160,
+      Pete: 130
+     }
+  
+  /**
+  * Returns Sum of All Numeric Object Properties
+  * 
+  * @param  {Object} obj - Object with Numeric Property Values
+  * @return  {number} Sum of Properties
+  */
+  function sumProperties (obj) {
+  
+    let sum = 0;
+  
+    for (let p in obj) {
+      if (typeof obj[p] === "number") sum+=obj[p];
+    }
+    return sum;
+  }
+
+  e("3").innerText = sumProperties(salaries);
+  //<span>Function Returns --></span><span id="3"></span><hr/>
+
+  /*  Multiply Object numeric properties by 2
+  *
+  *   Create a function multiplyNumeric(obj) that multiplies 
+  *   all numeric properties of obj by 2.
+  *
+  *   Please note that multiplyNumeric does not need to 
+  *   return anything. It should modify the object in-place.
+  */
+  
+  let menu = {
+    width: 200,
+    height: 300,
+    title: "My menu"
+  };
+  
+  /**
+   * Multiplies All Object Numeric Property Values by 2
+   * 
+   * @param  {Object} obj - Object with Properties
+   * @returns  {Object} Returns Original Object
+   */
+  function multiplyNumeric (obj) {
+  
+    for (let p in obj) {
+      if (typeof obj[p] === "number") obj[p]*= 2; 
+    }
+     return obj;
+  }
+
+  e("4").innerText = s(multiplyNumeric(menu));
+  //<span>Function Returns --></span><span id="4"></span><hr/>
+//<span class="header2">Object Methods, "this" Section Questions</span>
+
+  /*  Using "this" in object literal
+  *
+  *   Here the function makeUser returns an object.
+  *   What is the result of accessing its ref? Why?
+  */
+  
+  function makeUser() {
+    return {
+      name: "John",
+      ref: this
+    };
+  };
+  
+  let userO = makeUser();
+
+  // --> alert( user.ref.name ); Will Cause an Error Because user.ref is Undefined
+<span id="5"></span><hr/>
+
+  /*  Create a calculator
+  *
+  *   Create an object calculator with three methods:
+  *
+  *   read() prompts for two values and saves them as object properties.
+  *   sum() returns the sum of saved values.
+  *   mul() multiplies saved values and returns the result.
+  */
+
+  let calculator = {
+
+    read: function () {
+      let str = prompt("Please Enter Two Numbers Separated by Comma");
+      let arr = str.split(",").map(n=>+n);
+      this.num1 = arr[0];
+      this.num2 = arr[1];
+      e("6o").innerText = 'sum = ' + this.sum() + '  mul = ' + this.mul();
+    },
+
+    sum: function () {return this.num1 + this.num2},
+    mul: function () {return this.num1 * this.num2},
+
+  };
+  <div id="6"></div>
+  <div id="6o"></div><hr/>
+
+  /*  Chaining
+  *
+  * There’s a ladder object that allows to go up and down:
+  */
+
+  let ladder = {
+    step: 0,
+    up() {
+      this.step++;
+    },
+    down() {
+      this.step--;
+    },
+    showStep: function() { // shows the current step
+      return( this.step );
+    }
+  };
+
+  /*  Now, if we need to make several calls in sequence, can do it like this:
+  *
+  *ladder.up();
+  *ladder.up();
+  *ladder.down();
+  *ladder.showStep(); // 1
+  *
+  *Modify the code of up, down and showStep to make the calls chainable, like this:
+  *
+  *ladder.up().up().down().showStep(); // 1
+  */
+
+  ladder.up = function () {
+    this.step++;
+    return this;
+  };
+
+  ladder.down = function () {
+    this.step--;
+    return this;
+  };
+
+  e("7").innerText = ladder.up().up().down().showStep();
+  //<span>Methods Return --></span><span id="7"></span><hr/>
+//<span class="header2">Constructor, Operator “new” Section Questions</span>
+
+  /*  Two functions – one object
+  *
+  *   Is it possible to create functions A and B such as new A()==new B()?
+  *
+  *   function A() { ... }
+  *   function B() { ... }
+  *   alert( a == b ); // true
+  *   If it is, then provide an example of their code.
+  */
+
+  function A() {
+    return B;
+  }
+
+  function B() {
+    return B;
+  }
+
+  let a = new A;
+  let b = new B;
+
+  e("8").innerText = (a == b);
+  //<span>Returns --></span><span id="8"></span><hr/>
+
+  /*  Create New Calculator
+  *
+  *   Create a constructor function Calculator that creates objects with 3 methods:
+  *
+  *   read() prompts for two values and saves them as object properties.
+  *   sum() returns the sum of saved values.
+  *   mul() multiplies saved values and returns the result.
+  */
+
+  function NewCalculator () {
+
+      this.read = function () {
+        let str = prompt("Please Enter Two Numbers Separated by Comma");
+        let arr = str.split(",").map(n=>+n);
+        this.num1 = arr[0];
+        this.num2 = arr[1];
+        e("9o").innerText = 'sum = ' + this.sum() + '  mul = ' + this.mul();
+  
+      }
+
+      this.sum = function () {return this.num1 + this.num2}
+      this.mul = function () {return this.num1 * this.num2}
+
+  }            
+  <div id="9"></div><span id="9o">
+  </span><hr/>
+
+</PRE>
+
+
+
+
+  <script>
+  {
+
+  // Load Script
+  let script = document.createElement("script");
+  script.innerHTML = document.getElementById("jsText").innerText;
+  document.head.appendChild(script);
+
+  let setup =[
+      {
+      divButtonId:'6',
+      divOutputId: '',
+      functionRef: calculator,
+      methodName: 'read',
+      functionName: 'calculator.read',
+      promptQuestion: null,
+      defaultPromptInput:'1, 2, 3, 4, 5, 6, 7, 8, 9, 10',
+      promptDataType: 'Number'
+      }
+      ,
+      {
+      divButtonId:'9',
+      divOutputId: '',
+      functionRef: new NewCalculator(),
+      methodName: 'read',
+      functionName: 'new NewCalculator.read',
+      promptQuestion: null,
+      defaultPromptInput:'1, 2, 3, 4, 5, 6, 7, 8, 9, 10',
+      promptDataType: 'Number'
+      } 
+  ];
+
+  // setup.length=0
+
+  for (let i = 0; i < setup.length; i+=1) {
+      setupCmdButton(setup[i].divButtonId,setup[i].divOutputId,setup[i].functionRef, setup[i].functionName,setup[i].promptQuestion,setup[i].defaultPromptInput,setup[i].promptDataType, setup[i]);
+  }
+
+  function setupCmdButton (divButtonId, divOutputId, functionRef, functionName, promptQuestion, defaultInput, promptDataType, objData) {
+    
+      let element = document.createElement("input");
+      element.setAttribute("type", "button");
+      element.setAttribute("value", "Click to Call Function " + functionName);
+      document.getElementById(divButtonId).appendChild(element);
+
+      element.addEventListener('click', function() {
+
+      let retrArr
+      if (promptQuestion !== null) {
+        retrArr = getUserInputArray(promptQuestion,defaultInput,promptDataType);
+        if (retrArr === null) return;
+      }
+
+//        let retrn = functionRef.apply(null,retrArr);
+        let retrn;
+        if (objData.methodName) {
+          retrn = functionRef[objData.methodName]();
+        } else {
+          retrn = functionRef(retrArr);
+        }
+        
+
+      // Output: Determine if Array...
+      let input = Array.isArray(retrArr) ? retrArr.join(', ') : retrArr;
+      let output = Array.isArray(retrn) ? retrn.join(', ') : retrn;
+      if (divOutputId) document.getElementById(divOutputId).innerText = 'Function Input:  ' + input + '\nFunction Output: ' + output;
+      });
+  }
+
+  function getUserInputArray(question,strDefault, dataType) {
+      //dataType 'Number' -> Converts to Number
+      let str = prompt(question,strDefault);
+      if (str === null) return null;
+      if (str.indexOf === -1) {
+          str = [str];
+      } else {
+          str = str.split(",");
+      }
+      str = str.map(n=>n.trim());
+      if (dataType === 'Number') str = str.map(n=>+n);
+      return str;
+  }
+  }
+  </script>
+</body>
+</html>
