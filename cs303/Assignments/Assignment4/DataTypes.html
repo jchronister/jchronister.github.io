@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <link href="../../../js/assignment.css" rel="stylesheet" type="text/css"/>
+  <style>
+    .header2 {font-size: 25px;  font-weight: bold;text-decoration: underline;}
+
+  </style>
+  <script>
+    let e = document.getElementById.bind(document);
+  </script>
+</head>
+<body>
+
+  <h1>Assignment 3: Objects</h1><br>
+  <h2 class="header2">Objects Section Questions</h2>
+  <PRE id="jsText">
+
+
+  /*  Methods of primitives: 
+  *   Can I add a string property?
+  *   Consider the following code: What Will it Return?
+  */
+
+  let str = "Hello";
+  str.test = 5;
+
+  e('1').innerText = (str.test);
+  //<span>Returns --> </span><span id="1"></span><hr/>
+
+  /**  Sum numbers from the visitor
+  *
+  *   Create a script that prompts the visitor to enter 
+  *   two numbers and then shows their sum.
+  *   @returns {Number} Sum of Two Numbers Given
+  */
+  function addNumbers () {
+    let num1 = parseFloat(prompt("Please Enter Number"));
+    let num2 = parseFloat(prompt("Please Enter Number"));
+    return (num1 + num2);
+  }
+  <span id="2"></span>
+  <span id="2o"></span><hr/>
+
+
+
+
+
+
+  <div id="9"></div><span id="9o">
+  </span><hr/>
+
+</PRE>
+
+
+
+
+  <script>
+  {
+
+  // Load Script
+  let script = document.createElement("script");
+  script.innerHTML = document.getElementById("jsText").innerText;
+  document.head.appendChild(script);
+
+  let setup =[
+      {
+      divButtonId:'2',
+      divOutputId: '2o',
+      functionRef: addNumbers,
+      methodName: null,
+      functionName: 'Click to Call Function addNumbers',
+      promptQuestion: null,
+      defaultPromptInput:'1, 2, 3, 4, 5, 6, 7, 8, 9, 10',
+      promptDataType: 'Number'
+      }
+      // ,
+      // {
+      // // divButtonId:'9',
+      // // divOutputId: '',
+      // // functionRef: new NewCalculator(),
+      // // methodName: 'read',
+      // // functionName: 'new NewCalculator.read',
+      // // promptQuestion: null,
+      // // defaultPromptInput:'1, 2, 3, 4, 5, 6, 7, 8, 9, 10',
+      // // promptDataType: 'Number'
+      // } 
+  ];
+
+  // setup.length=0
+
+  for (let i = 0; i < setup.length; i+=1) {
+      setupCmdButton(setup[i].divButtonId,setup[i].divOutputId,setup[i].functionRef, setup[i].functionName,setup[i].promptQuestion,setup[i].defaultPromptInput,setup[i].promptDataType, setup[i]);
+  }
+
+  function setupCmdButton (divButtonId, divOutputId, functionRef, functionName, promptQuestion, defaultInput, promptDataType, objData) {
+    
+      let element = document.createElement("input");
+      element.setAttribute("type", "button");
+      element.setAttribute("value", "Click to Call Function " + functionName);
+      document.getElementById(divButtonId).appendChild(element);
+
+      element.addEventListener('click', function() {
+
+      let retrArr
+      if (promptQuestion !== null) {
+        retrArr = getUserInputArray(promptQuestion,defaultInput,promptDataType);
+        if (retrArr === null) return;
+      }
+
+//        let retrn = functionRef.apply(null,retrArr);
+        let retrn;
+        if (objData.methodName) {
+          retrn = functionRef[objData.methodName]();
+        } else {
+          retrn = functionRef(retrArr);
+        }
+        
+
+      // Output: Determine if Array...
+      let input = Array.isArray(retrArr) ? retrArr.join(', ') : retrArr;
+      let output = Array.isArray(retrn) ? retrn.join(', ') : retrn;
+      if (divOutputId) document.getElementById(divOutputId).innerText = 'Function Input:  ' + input + '\nFunction Output: ' + output;
+      });
+  }
+
+  function getUserInputArray(question,strDefault, dataType) {
+      //dataType 'Number' -> Converts to Number
+      let str = prompt(question,strDefault);
+      if (str === null) return null;
+      if (str.indexOf === -1) {
+          str = [str];
+      } else {
+          str = str.split(",");
+      }
+      str = str.map(n=>n.trim());
+      if (dataType === 'Number') str = str.map(n=>+n);
+      return str;
+  }
+  }
+  </script>
+</body>
+</html>

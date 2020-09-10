@@ -19,6 +19,7 @@
         #c1 {margin-left:60px;}
    
     </style>
+    <link href="../../../js/assignment.css" rel="stylesheet" type="text/css"/>
 
 </head>
 
@@ -35,7 +36,7 @@
 
 
     <div id="c1"><pre id="jsText">
-  /*  Create new Accumulator and Use Mocha to Test
+  /**  Create new Accumulator and Use Mocha to Test
   *
   *   Create a constructor function Accumulator(startingValue).
   *
@@ -44,8 +45,10 @@
   *   Store the “current value” in the property value. The starting value is set to the argument of the constructor startingValue.
   *   The read() method should use prompt to read a new number and add it to value.
   *   In other words, the value property is the sum of all user-entered values with the initial value startingValue.
+  *   
+  *   @param {number} startingValue - Number to Start At
+  *   @returns {Number} .show = Sum of Numers
   */
-      
   function Accumulator(startingValue) {
   
     this.sum = startingValue || 0;
