@@ -134,3 +134,50 @@ function displayBooks(key) {
 
 }
 
+
+
+function scramble(){
+
+  let retrn = [];
+
+  // Get Book Titles
+  let titles = books.map(n=>n['Book Title'].trim());
+
+  // Put Words in Array by Length
+  for(let i = 0; i < titles.length; i+=1) {
+
+      let split = titles[i].split(" ");
+
+      split.map(function(n) {
+        if(!retrn[n.length]) retrn[n.length] = [];
+        retrn[n.length].push(n);
+      })
+  }
+
+  // Put Array in String Format (for loop used to get missing element rows)
+  let strRtrn = []
+  for(let i = 1; i < retrn.length; i+=1) {
+    strRtrn.push(retrn[i] ? retrn[i].join(", ") + '\n' : '\n')
+  }
+  document.getElementById("bookDisplay").value = strRtrn.join("")
+
+}  
+
+function addTestBooks () {
+
+  books = []
+
+  function addBooks (title,author,id) {
+    var nbook = {};
+    nbook['Book Title'] = title
+    nbook['Author'] = author
+    nbook['Library Id'] = id
+    books.push(nbook);
+  }
+
+  addBooks("A Wind Before Time", 'Joe Kid', 456);
+  addBooks("The Land Before Time", 'Clint Eastwood', 85);
+  addBooks("Surfing", 'Kid Rock', 65);
+  addBooks("Fishing For Gold", 'Eric Holt', 34);
+
+}
