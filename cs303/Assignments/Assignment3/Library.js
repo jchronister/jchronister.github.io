@@ -122,7 +122,7 @@ function displayBooks(key) {
   if (books.length === 0) {
     bookInfo = "Sorry, No Books in Library"
   } else {
-    if(typeof books[key] === "number") {
+    if(typeof books[0][key] === "number") {
       arr = books.map(n=>n[key]).sort((a,b)=>a-b);
     } else {
       arr = books.map(n=>n[key]).sort();
