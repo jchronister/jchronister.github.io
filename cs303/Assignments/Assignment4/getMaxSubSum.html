@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>  
+
+    <title>Function Test</title>
+    <!-- add mocha css, to show results -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/mocha/3.2.0/mocha.css">
+    <!-- add mocha framework code -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mocha/3.2.0/mocha.js"></script>
+    <script>
+        mocha.setup('bdd'); // minimal setup
+    </script>
+    <!-- add chai
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/chai/3.5.0/chai.js"></script>
+     -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/chai/4.2.0/chai.min.js" integrity="sha512-x3BwhuxT44pOQZanacQyDnrB2r1L1AUfjUaefYArTHR9sHEvvy3NSnnm5Z7GAl5YPc3+GEWFT0S34obDSzUvaQ==" crossorigin="anonymous"></script>
+    <script>
+        // chai has a lot of stuff, let's make assert global
+        let assert = chai.assert;
+    </script> 
+    <style>
+        #c1 {margin-left:60px;}
+   
+    </style>
+    <link href="../../../js/assignment.css" rel="stylesheet" type="text/css"/>
+    
+    <!-- Sinon Link-->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/sinon.js/9.0.3/sinon.min.js" integrity="sha512-V2x5K36UATnI7lC2mEM/d6ttb+xYngBRgXWVyiONcjQmeOEaGNo6nIcdh4Kng9IMIm/TmpXstJNltWwgWqKdLw==" crossorigin="anonymous"></script>
+</head>
+
+<body>
+
+    <div style="margin-top:80px;margin-left:60px;"> 
+        
+        <h2>Function Test for getMaxSubSum</h2>
+        
+        <!-- Script with Functions 
+        <script src="./randomInteger.js"></script>
+        <div id="codetxt"><a href="./randomInteger.js">Function Code</a></div>
+        -->
+
+        <!-- Script with Tests     
+        <script src="./randomIntegerTests..js" id="tests"></script>
+        <div id="testtxt"><a href="./randomIntegerTests..js">Tests</a></div>
+        -->
+    
+
+
+    <pre id="jsText">
+
+      /*  A maximal subarray
+      *
+      *   The input is an array of numbers, e.g. arr = [1, -2, 3, 4, -9, 6].
+      *
+      *   The task is: find the contiguous subarray of arr with the
+      *   maximal sum of items.
+      *
+      *   Write the function getMaxSubSum(arr) that will return that sum.
+      *
+      *   For instance:
+      *   getMaxSubSum([-1, 2, 3, -9]) == 5 (the sum of highlighted items)
+      *   getMaxSubSum([2, -1, 2, 3, -9]) == 6
+      *   getMaxSubSum([-1, 2, 3, -9, 11]) == 11
+      *   getMaxSubSum([-2, -1, 1, 2]) == 3
+      *   getMaxSubSum([100, -9, 2, -3, 5]) == 100
+      *   getMaxSubSum([1, 2, 3]) == 6 (take all)
+      *   getMaxSubSum([-1, -2, -3]) = 0
+      *
+      * @param  {Number[]} arr - Array of Numbers
+      * @returns  {Number} Max Continuous Sum
+      */
+      function getMaxSubSum (arr) {
+      
+          let max = 0, cnt = 0;
+      
+          for (let i = 0; i < arr.length; i+=1) {
+      
+            cnt += arr[i];
+            if (cnt > max) max = cnt;
+            if (cnt < 0) cnt = 0;
+      
+          }
+      
+          return max;
+      
+      }
+
+
+    // Tests
+
+    describe("getMaxSubSum", function() {
+      it("maximal subsum of [1, 2, 3] equals 6", function() {
+        assert.equal(getMaxSubSum([1, 2, 3]), 6);
+      });
+    
+      it("maximal subsum of [-1, 2, 3, -9] equals 5", function() {
+        assert.equal(getMaxSubSum([-1, 2, 3, -9]), 5);
+      });
+    
+      it("maximal subsum of [-1, 2, 3, -9, 11] equals 11", function() {
+        assert.equal(getMaxSubSum([-1, 2, 3, -9, 11]), 11);
+      });
+    
+      it("maximal subsum of [-2, -1, 1, 2] equals 3", function() {
+        assert.equal(getMaxSubSum([-2, -1, 1, 2]), 3);
+      });
+    
+      it("maximal subsum of [100, -9, 2, -3, 5] equals 100", function() {
+        assert.equal(getMaxSubSum([100, -9, 2, -3, 5]), 100);
+      });
+    
+      it("maximal subsum of [] equals 0", function() {
+        assert.equal(getMaxSubSum([]), 0);
+      });
+    
+      it("maximal subsum of [-1] equals 0", function() {
+        assert.equal(getMaxSubSum([-1]), 0);
+      });
+    
+      it("maximal subsum of [-1, -2] equals 0", function() {
+        assert.equal(getMaxSubSum([-1, -2]), 0);
+      });
+    
+      it("maximal subsum of [2, -8, 5, -1, 2, -3, 2] equals 6", function() {
+        assert.equal(getMaxSubSum([2, -8, 5, -1, 2, -3, 2]), 6);
+      });
+    });
+      
+    </pre>
+
+  </div>
+    
+    <div id="mocha"></div>
+
+
+
+
+ 
+
+    
+
+  
+
+
+
+    <!-- the element with id="mocha" will contain test results -->
+    
+
+    <!-- run tests! -->
+
+
+
+  
+    <script>
+    // Load Script
+    let script = document.createElement("script");
+    script.innerHTML = document.getElementById("jsText").innerText;
+    document.head.appendChild(script);
+
+               mocha.run();
+            </script>
+ 
+</body>
+
+
+
+
+
+
+
+
+
+
+
+
+
+

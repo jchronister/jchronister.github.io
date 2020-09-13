@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>  
+
+    <title>Function Test</title>
+    <!-- add mocha css, to show results -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/mocha/3.2.0/mocha.css">
+    <!-- add mocha framework code -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mocha/3.2.0/mocha.js"></script>
+    <script>
+        mocha.setup('bdd'); // minimal setup
+    </script>
+    <!-- add chai
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/chai/3.5.0/chai.js"></script>
+     -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/chai/4.2.0/chai.min.js" integrity="sha512-x3BwhuxT44pOQZanacQyDnrB2r1L1AUfjUaefYArTHR9sHEvvy3NSnnm5Z7GAl5YPc3+GEWFT0S34obDSzUvaQ==" crossorigin="anonymous"></script>
+    <script>
+        // chai has a lot of stuff, let's make assert global
+        let assert = chai.assert;
+    </script> 
+    <style>
+        #c1 {margin-left:60px;}
+   
+    </style>
+    <link href="../../../js/assignment.css" rel="stylesheet" type="text/css"/>
+    
+    <!-- Sinon Link-->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/sinon.js/9.0.3/sinon.min.js" integrity="sha512-V2x5K36UATnI7lC2mEM/d6ttb+xYngBRgXWVyiONcjQmeOEaGNo6nIcdh4Kng9IMIm/TmpXstJNltWwgWqKdLw==" crossorigin="anonymous"></script>
+</head>
+
+<body>
+
+    <div style="margin-top:80px;margin-left:60px;"> 
+        
+        <h2>Function Test for camelize</h2>
+        
+        <!-- Script with Functions 
+        <script src="./randomInteger.js"></script>
+        <div id="codetxt"><a href="./randomInteger.js">Function Code</a></div>
+        -->
+
+        <!-- Script with Tests     
+        <script src="./randomIntegerTests..js" id="tests"></script>
+        <div id="testtxt"><a href="./randomIntegerTests..js">Tests</a></div>
+        -->
+    
+
+
+    <pre id="jsText">
+
+  /*   Translate border-left-width to borderLeftWidth
+  *
+  *   Write the function camelize(str) that changes dash-separated 
+  *    like “my-short-string” into camel-cased “myShortString”.
+  *
+  *   That is: removes all dashes, each word after dash becomes uppercased.
+  *
+  *   Examples:
+  *
+  *   camelize("background-color") == 'backgroundColor';
+  *   camelize("list-style-image") == 'listStyleImage';
+  *   camelize("-webkit-transition") == 'WebkitTransition';
+  *
+  * @param  {String} String to Camelize
+  * @return  {string} Camelized String
+  */
+  function camelize(str) {
+
+      let spot, ch;
+      while ((spot = str.indexOf("-")) !== -1) {
+        ch = str[spot + 1];
+        if (ch) ch = ch.toUpperCase();
+        str = str.substring(0,spot ) + (ch || "") + str.slice(spot + 2)
+      }
+
+      return str;
+
+  }
+
+    // Tests
+
+    describe("camelize", function() {
+
+      it("leaves an empty line as is", function() {
+        assert.equal(camelize(""), "");
+      });
+    
+      it("turns background-color into backgroundColor", function() {
+        assert.equal(camelize("background-color"), "backgroundColor");
+      });
+    
+      it("turns list-style-image into listStyleImage", function() {
+        assert.equal(camelize("list-style-image"), "listStyleImage");
+      });
+    
+      it("turns -webkit-transition into WebkitTransition", function() {
+        assert.equal(camelize("-webkit-transition"), "WebkitTransition");
+      });
+    
+    });
+      
+    </pre>
+
+  </div>
+    
+    <div id="mocha"></div>
+
+
+
+
+ 
+
+    
+
+  
+
+
+
+    <!-- the element with id="mocha" will contain test results -->
+    
+
+    <!-- run tests! -->
+
+
+
+  
+    <script>
+    // Load Script
+    let script = document.createElement("script");
+    script.innerHTML = document.getElementById("jsText").innerText;
+    document.head.appendChild(script);
+
+               mocha.run();
+            </script>
+ 
+</body>
+
+
+
+
+
+
+
+
+
+
+
+
+
+

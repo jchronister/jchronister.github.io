@@ -2,24 +2,36 @@
 var prompt = require('prompt-sync')();
 var log = console.log;
 
-
-/**  Sum numbers from the visitor
+/*   Translate border-left-width to borderLeftWidth
 *
-*   Create a script that prompts the visitor to enter 
-*   two numbers and then shows their sum.
-*   @returns {Number} Sum of Two Numbers Given
+*   Write the function camelize(str) that changes dash-separated 
+*    like “my-short-string” into camel-cased “myShortString”.
+*
+*   That is: removes all dashes, each word after dash becomes uppercased.
+*
+*   Examples:
+*
+*   camelize("background-color") == 'backgroundColor';
+*   camelize("list-style-image") == 'listStyleImage';
+*   camelize("-webkit-transition") == 'WebkitTransition';
 */
-function addNumbers () {
-  let num1 = parseFloat(prompt("Please Enter Number"));
-  let num2 = parseFloat(prompt("Please Enter Number"));
-  return (num1 + num2);
+/**
+ * @param  {String} String to Camelize
+ * @return  {string} Camelized String
+ */
+function camelize(str) {
+
+    let spot, ch;
+    while ((spot = str.indexOf("-")) !== -1) {
+      ch = str[spot + 1];
+      if (ch) ch = ch.toUpperCase();
+      str = str.substring(0,spot ) + (ch || "") + str.slice(spot + 2)
+    }
+
+    return str;
+
 }
 
 
-
-
-
-
-
-
+console.log(camelize('background-color'))
 

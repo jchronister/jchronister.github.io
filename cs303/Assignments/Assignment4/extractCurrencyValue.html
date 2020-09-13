@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>  
+
+    <title>Function Test</title>
+    <!-- add mocha css, to show results -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/mocha/3.2.0/mocha.css">
+    <!-- add mocha framework code -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mocha/3.2.0/mocha.js"></script>
+    <script>
+        mocha.setup('bdd'); // minimal setup
+    </script>
+    <!-- add chai
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/chai/3.5.0/chai.js"></script>
+     -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/chai/4.2.0/chai.min.js" integrity="sha512-x3BwhuxT44pOQZanacQyDnrB2r1L1AUfjUaefYArTHR9sHEvvy3NSnnm5Z7GAl5YPc3+GEWFT0S34obDSzUvaQ==" crossorigin="anonymous"></script>
+    <script>
+        // chai has a lot of stuff, let's make assert global
+        let assert = chai.assert;
+    </script> 
+    <style>
+        #c1 {margin-left:60px;}
+   
+    </style>
+    <link href="../../../js/assignment.css" rel="stylesheet" type="text/css"/>
+    
+    <!-- Sinon Link-->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/sinon.js/9.0.3/sinon.min.js" integrity="sha512-V2x5K36UATnI7lC2mEM/d6ttb+xYngBRgXWVyiONcjQmeOEaGNo6nIcdh4Kng9IMIm/TmpXstJNltWwgWqKdLw==" crossorigin="anonymous"></script>
+</head>
+
+<body>
+
+    <div style="margin-top:80px;margin-left:60px;"> 
+        
+        <h2>Function Test for extractCurrencyValue</h2>
+        
+        <!-- Script with Functions 
+        <script src="./randomInteger.js"></script>
+        <div id="codetxt"><a href="./randomInteger.js">Function Code</a></div>
+        -->
+
+        <!-- Script with Tests     
+        <script src="./randomIntegerTests..js" id="tests"></script>
+        <div id="testtxt"><a href="./randomIntegerTests..js">Tests</a></div>
+        -->
+    
+
+
+    <pre id="jsText">
+
+      /**  Extract the money
+      *
+      *   We have a cost in the form "$120". That is: the dollar 
+      *   sign goes first, and then the number.
+      *
+      *   Create a function extractCurrencyValue(str) that would 
+      * extract the numeric value from such string and return it.
+      *
+      * @param  {String} amount - String: Can Start with $
+      * @returns  {Number} ; Dollar Amount
+      */
+      function extractCurrencyValue (amount) {
+        amount = amount.replace(",", "");
+        return amount[0] === "$" ? Number(amount.slice(1)) : Number(amount);
+      }
+
+
+    // Tests
+
+    describe("extractCurrencyValue", function() {
+
+      it("for the string $120 returns the number 120", function() {
+        assert.strictEqual(extractCurrencyValue('$120'), 120);
+      });
+    
+    });
+      
+    </pre>
+
+  </div>
+    
+    <div id="mocha"></div>
+
+
+
+
+ 
+
+    
+
+  
+
+
+
+    <!-- the element with id="mocha" will contain test results -->
+    
+
+    <!-- run tests! -->
+
+
+
+  
+    <script>
+    // Load Script
+    let script = document.createElement("script");
+    script.innerHTML = document.getElementById("jsText").innerText;
+    document.head.appendChild(script);
+
+               mocha.run();
+            </script>
+ 
+</body>
+
+
+
+
+
+
+
+
+
+
+
+
+
+

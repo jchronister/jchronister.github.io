@@ -15,10 +15,9 @@
 </head>
 <body>
 
-  <h1>Assignment 3: Objects</h1><br>
-  <h2 class="header2">Objects Section Questions</h2>
+  <h1>Assignment 4: Data Types</h1><br>
   <PRE id="jsText">
-
+  //<span class="header2">Methods of primitives</span>
 
   /*  Methods of primitives: 
   *   Can I add a string property?
@@ -42,21 +41,265 @@
     let num2 = parseFloat(prompt("Please Enter Number"));
     return (num1 + num2);
   }
-  <span id="2"></span>
+  <div id="2"></div>
   <span id="2o"></span><hr/>
+  //<span class="header2">Numbers</span>
 
+  /**  Repeat until the input is a number
+  *
+  *   Create a function readNumber which prompts for a number until the 
+  *   visitor enters a valid numeric value.
+  *
+  *   The resulting value must be returned as a number.
+  *   
+  *   The visitor can also stop the process by entering an empty line or 
+  *   pressing “CANCEL”. In that case, the function should return null.
+  *
+  * @returns {Number|null} Returns Number or null
+  */
+  function readNumber () {
+  
+    let num;
+  
+    do {
+      num = prompt("Please Enter Number");
+      if (num === "" || num === null) return null;
+      num = Number(num);
+  
+    } while (num !== num);
+  
+    return num;
+  }
 
+  //<a href="./ReadNumberTests.html">See Mocha Tests</a>
 
+  <div id="3"></div>
+  <span id="3o"></span><hr/>
 
+  /*  An occasional infinite loop
+  *
+  *   This loop is infinite. It never ends. Why?
+  */
+  
+  function infiniteLoop () {
 
+      let retrn = '';
 
-  <div id="9"></div><span id="9o">
-  </span><hr/>
+      let i = 0;
+        while (i != 10) {
+        i += 0.2;
+        if (i > 9.5) retrn += i + "\n";
+        if (i > 10.5) break;
+      }
+      return retrn;
+  }
+
+  // Because i Never Equals 10 due to Rounding Errors with Fractions
+  <div id="4"></div>
+  <span id="4o"></span><hr/>
+
+  /**  A random number from min to max
+  *
+  *   The built-in function Math.random() creates a random 
+  *   value from 0 to 1 (not including 1).
+  *
+  *   Write the function random(min, max) to generate a random 
+  *   floating-point number from min to max (not including max).
+  *
+  *   @param  {Number} min - Random Minimum
+  *   @param  {Number} max - Random Maximum
+  *   @returns  {Number} Random Number
+  */
+  function random(min,max) {
+    return (Math.random() * (max - min)) + min;
+  }
+  <div id="5"></div>
+  <span id="5o"></span><hr/>
+
+  /**  A random integer from min to max
+  *
+  *   Create a function randomInteger(min, max) that generates a random integer number from min to max including both min and max as possible values.
+  *
+  *   Any number from the interval min..max must appear with the same probability.
+  *
+  *   @param  {Number} min - Random Minimum
+  *   @param  {Number} max - Random Maximum
+  *   @returns  {Number} Random Number
+  */
+  function randomInteger(min,max) {
+    return Math.ceil(Math.random() * (max - (min - 1)) + (min - 1));
+  }
+
+  //<a href="./randomIntegerTests.html">See Mocha Tests</a>
+  <div id="6"></div>
+  <span id="6o"></span><hr/>
+ //<span class="header2">Strings</span>
+  /**  Uppercase the first character
+  *
+  *   Write a function ucFirst(str) that returns the string str with the uppercased first character, for instance:
+  *   
+  *   ucFirst("john") == "John";
+  *
+  * @param  {String} str - Word
+  * @returns {String} Word
+  */
+  function ucFirst(str) {
+    str = "" + str;
+    return str.length > 0 ? str[0].toUpperCase() + str.slice(1) : str;
+  }
+
+//<a href="./ucFirstTests.html">See Mocha Tests</a>
+  <div id="7"></div>
+  <span id="7o"></span><hr/>
+
+  /**  Check for spam
+  *
+  *   Write a function checkSpam(str) that returns true if str contains
+  *   ‘viagra’ or ‘XXX’, otherwise false.
+  *
+  *   The function must be case-insensitive:
+  *
+  * @param  {String} str - String to Check
+  * @Returns  {Boolean} true/false
+  */
+  function checkSpam(str) {
+    str = str.toLowerCase();
+    return str.includes("viagra") || str.includes("xxx");
+  }
+
+  //<a href="./checkSpamTests.html">See Mocha Tests</a>
+  <div id="8"></div>
+  <span id="8o"></span><hr/>
+
+  /**  Truncate the text
+*
+*   Create a function truncate(str, maxlength) that checks the 
+*   length of the str and, if it exceeds maxlength – replaces the 
+*   end of str with the ellipsis character "…", to make its length 
+*   equal to maxlength.
+*
+*   The result of the function should be the truncated (if needed) string.
+*
+* @param  {String} str - String to truncate
+* @param  {Number} maxlength - Max String Length
+* @returns  {String} returns String
+*/
+function truncate(str, maxlength) {
+
+    if (maxlength === 0) return "";
+
+    if (str.length > maxlength) {
+      str = str.slice(0, maxlength - 1) + "…";
+    }
+    return str;
+
+}
+
+//<a href="./truncateTests.html">See Mocha Tests</a>
+
+<div id="9"></div>
+<span id="9o"></span><hr/>
+
+/**  Extract the money
+*
+*   We have a cost in the form "$120". That is: the dollar 
+*   sign goes first, and then the number.
+*
+*   Create a function extractCurrencyValue(str) that would 
+* extract the numeric value from such string and return it.
+*
+ * @param  {String} amount - String: Can Start with $
+ * @returns  {Number} ; Dollar Amount
+ */
+function extractCurrencyValue (amount) {
+  amount = amount.replace(",", "");
+  return amount[0] === "$" ? Number(amount.slice(1)) : Number(amount);
+}
+
+//<a href="./extractCurrencyValue.html">See Mocha Tests</a>
+
+<div id="10"></div>
+<span id="10o"></span><hr/>
+//<span class="header2">Arrays</span>
+/*  A maximal subarray
+*
+*   The input is an array of numbers, e.g. arr = [1, -2, 3, 4, -9, 6].
+*
+*   The task is: find the contiguous subarray of arr with the
+*   maximal sum of items.
+*
+*   Write the function getMaxSubSum(arr) that will return that sum.
+*
+*   For instance:
+*   getMaxSubSum([-1, 2, 3, -9]) == 5 (the sum of highlighted items)
+*   getMaxSubSum([2, -1, 2, 3, -9]) == 6
+*   getMaxSubSum([-1, 2, 3, -9, 11]) == 11
+*   getMaxSubSum([-2, -1, 1, 2]) == 3
+*   getMaxSubSum([100, -9, 2, -3, 5]) == 100
+*   getMaxSubSum([1, 2, 3]) == 6 (take all)
+*   getMaxSubSum([-1, -2, -3]) = 0
+*
+* @param  {Number[]} arr - Array of Numbers
+* @returns  {Number} Max Continuous Sum
+*/
+function getMaxSubSum (arr) {
+
+    let max = 0, cnt = 0;
+
+    for (let i = 0; i < arr.length; i+=1) {
+
+      cnt += arr[i];
+      if (cnt > max) max = cnt;
+      if (cnt < 0) cnt = 0;
+
+    }
+
+    return max;
+
+}
+
+//<a href="./getMaxSubSum.html">See Mocha Tests</a>
+
+<div id="11"></div>
+<span id="11o"></span><hr/>
+//<span class="header2">Array Methods</span>
+
+/*   Translate border-left-width to borderLeftWidth
+*
+*   Write the function camelize(str) that changes dash-separated 
+*    like “my-short-string” into camel-cased “myShortString”.
+*
+*   That is: removes all dashes, each word after dash becomes uppercased.
+*
+*   Examples:
+*
+*   camelize("background-color") == 'backgroundColor';
+*   camelize("list-style-image") == 'listStyleImage';
+*   camelize("-webkit-transition") == 'WebkitTransition';
+*/
+/**
+ * @param  {String} String to Camelize
+ * @return  {string} Camelized String
+ */
+function camelize(str) {
+
+    let spot, ch;
+    while ((spot = str.indexOf("-")) !== -1) {
+      ch = str[spot + 1];
+      if (ch) ch = ch.toUpperCase();
+      str = str.substring(0,spot ) + (ch || "") + str.slice(spot + 2)
+    }
+
+    return str;
+
+}
+
+//<a href="./camelize.html">See Mocha Tests</a>
+
+<div id="12"></div>
+<span id="12o"></span><hr/>
 
 </PRE>
-
-
-
 
   <script>
   {
@@ -77,20 +320,117 @@
       defaultPromptInput:'1, 2, 3, 4, 5, 6, 7, 8, 9, 10',
       promptDataType: 'Number'
       }
-      // ,
-      // {
-      // // divButtonId:'9',
-      // // divOutputId: '',
-      // // functionRef: new NewCalculator(),
-      // // methodName: 'read',
-      // // functionName: 'new NewCalculator.read',
-      // // promptQuestion: null,
-      // // defaultPromptInput:'1, 2, 3, 4, 5, 6, 7, 8, 9, 10',
-      // // promptDataType: 'Number'
-      // } 
+      ,{
+      divButtonId:'3',
+      divOutputId: '3o',
+      functionRef: readNumber,
+      methodName: null,
+      functionName: 'Click to Call Function addNumbers',
+      promptQuestion: null,
+      } 
+      ,{
+      divButtonId:'4',
+      divOutputId: '4o',
+      functionRef: infiniteLoop,
+      methodName: null,
+      functionName: 'Click to Call Function infiniteLoop',
+      promptQuestion: null,
+      } 
+      ,{
+      divButtonId:'5',
+      divOutputId: '5o',
+      functionRef: random,
+      methodName: null,
+      splitArgToParameters: true,
+      functionName: 'Click to Call Function random',
+      promptQuestion: 'Please Enter Two Numbers Separated by Comma',
+      defaultPromptInput:'1, 10',
+      promptDataType: 'Number'
+      } 
+      ,{
+      divButtonId:'6',
+      divOutputId: '6o',
+      functionRef: randomInteger,
+      methodName: null,
+      splitArgToParameters: true,
+      functionName: 'Click to Call Function randomInteger',
+      promptQuestion: 'Please Enter Two Numbers Separated by Comma',
+      defaultPromptInput:'1, 10',
+      promptDataType: 'Number'
+      } 
+      ,{
+      divButtonId:'7',
+      divOutputId: '7o',
+      functionRef: ucFirst,
+      methodName: null,
+      splitArgToParameters: true,
+      functionName: 'Click to Call Function ucFirst',
+      promptQuestion: 'Please Enter Word',
+      defaultPromptInput:'function',
+      promptDataType: 'String'
+      } 
+      ,{
+      divButtonId:'8',
+      divOutputId: '8o',
+      functionRef: checkSpam,
+      methodName: null,
+      splitArgToParameters: true,
+      functionName: 'Click to Call Function checkSpam',
+      promptQuestion: 'Please Enter Word',
+      defaultPromptInput:'functionxXx',
+      promptDataType: 'String'
+      } 
+      ,{
+      divButtonId:'9',
+      divOutputId: '9o',
+      functionRef: truncate,
+      methodName: null,
+      splitArgToParameters: true,
+      functionName: 'Click to Call Function truncate',
+      promptQuestion: 'Please Enter Word and Number Separated by Comma',
+      defaultPromptInput:'functionxXx, 9',
+      promptDataType: 'String'
+      } 
+      ,{
+      divButtonId:'10',
+      divOutputId: '10o',
+      functionRef: extractCurrencyValue,
+      methodName: null,
+      splitArgToParameters: false,
+      functionName: 'Click to Call Function extractCurrencyValue',
+      promptQuestion: 'Please Enter ($) Currency',
+      defaultPromptInput:'$120,125.25',
+      promptReturn: 'String',
+      promptDataType: 'String'
+      } ,
+      {
+      divButtonId:'11',
+      divOutputId: '11o',
+      functionRef: getMaxSubSum,
+      methodName: null,
+      splitArgToParameters: false,
+      functionName: 'Click to Call Function getMaxSubSum',
+      promptQuestion: 'Please Enter Array of Numbers Separated by Comma',
+      defaultPromptInput:'-1, 2, 3, -9, 11',
+      promptDataType: 'Number'
+      },
+      {
+      divButtonId:'12',
+      divOutputId: '12o',
+      functionRef: camelize,
+      methodName: null,
+      splitArgToParameters: false,
+      functionName: 'Click to Call Function camelize',
+      promptQuestion: 'Please Enter String',
+      promptReturn: 'String',
+      defaultPromptInput:'-webkit-transition',
+      promptDataType: 'String'
+      }
   ];
-
-  // setup.length=0
+      
+  
+  
+  
 
   for (let i = 0; i < setup.length; i+=1) {
       setupCmdButton(setup[i].divButtonId,setup[i].divOutputId,setup[i].functionRef, setup[i].functionName,setup[i].promptQuestion,setup[i].defaultPromptInput,setup[i].promptDataType, setup[i]);
@@ -100,30 +440,47 @@
     
       let element = document.createElement("input");
       element.setAttribute("type", "button");
-      element.setAttribute("value", "Click to Call Function " + functionName);
+      element.setAttribute("value", objData.functionName);
       document.getElementById(divButtonId).appendChild(element);
 
       element.addEventListener('click', function() {
 
       let retrArr
-      if (promptQuestion !== null) {
+
+      if (objData.promptReturn === "String") {
+        retrArr = prompt(promptQuestion,defaultInput);
+      } else if (promptQuestion !== null) {
         retrArr = getUserInputArray(promptQuestion,defaultInput,promptDataType);
         if (retrArr === null) return;
       }
 
-//        let retrn = functionRef.apply(null,retrArr);
         let retrn;
         if (objData.methodName) {
-          retrn = functionRef[objData.methodName]();
+          // Object Method Call
+          retrn = functionRef[objData.methodName](); 
         } else {
-          retrn = functionRef(retrArr);
+          // Regular Function Call
+          if (objData.splitArgToParameters) {
+            retrn = functionRef.apply(null,retrArr);
+          } else {
+            retrn = functionRef(retrArr);
+          }
         }
         
 
       // Output: Determine if Array...
       let input = Array.isArray(retrArr) ? retrArr.join(', ') : retrArr;
       let output = Array.isArray(retrn) ? retrn.join(', ') : retrn;
-      if (divOutputId) document.getElementById(divOutputId).innerText = 'Function Input:  ' + input + '\nFunction Output: ' + output;
+
+      let strRetrn;
+      if (objData.promptQuestion) {
+        strRetrn = 'Function Input:  ' + input + '\nFunction Output: ' + output;
+      } else {
+        strRetrn = 'Function Output: ' + output;
+      }
+
+      if (divOutputId) document.getElementById(divOutputId).innerText = strRetrn;
+      
       });
   }
 
