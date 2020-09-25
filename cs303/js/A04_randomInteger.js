@@ -1,23 +1,5 @@
 "use strict";
 
-{
-  let setup = {
-  key: "randomInteger",
-  filePath: "./randomInteger.js",
-  divButtonId: null,
-  divOutputId: null,
-  functionRef: randomInteger,
-  callCaption: "Click to Call Function randomInteger",
-  promptQuestion: "Please Enter Min and Max Separated by Comma",
-  promptReturn: ["number","number"],
-  defaultPromptInput: "1, 10",
-  };
-
-  if (typeof $setup === "object") $setup.ary.push(setup);
-
- }
-//^//
-
 /*  A random number from min to max
 *
 *   Create a function randomInteger(min, max) that generates a 

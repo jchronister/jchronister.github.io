@@ -16,8 +16,24 @@ a {
             }
 
 
+.func {
+    color: blue;
+    font-size: 20px;
+}
+
 .func:hover {
     text-decoration: underline;
     color:red;
     cursor:pointer;
 }
+
+.functionOutput {
+    color:red;
+}
+
+.divHolder {
+            margin:20px;
+            ;
+        }
+
+li {    margin-bottom: 10px;}

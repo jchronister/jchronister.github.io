@@ -4,6 +4,7 @@
   let setup = {
   key: "randomInteger",
   filePath: "./randomInteger.js",
+  fileCrop: [null, "//^//"],
   divButtonId: null,
   divOutputId: null,
   functionRef: randomInteger,

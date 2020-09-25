@@ -162,7 +162,7 @@ function scramble(){
   document.getElementById("bookDisplay").value = strRtrn.join("")
 
 }  
-
+  
 function addTestBooks () {
 
   books = []

@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+
+  <link href="./js/assignment.css" rel="stylesheet" type="text/css"/>
+  <script src="./js/assignments.js"></script>
+
+  <!-- Reference Chai -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/chai/4.2.0/chai.min.js"></script>
+  
+  <!-- Reference Mocha Framework Code -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/mocha/3.2.0/mocha.js"></script>
+
+  <!-- Setup Mocha Framework -->
+  <script>
+    mocha.setup('bdd');
+    var assert = chai.assert;
+  </script>
+</head>
+<body>
+  <div>
+
+
+
+  <h1>Assignment 4: Data Types</h1><br>
+<!--
+  <details>this is a detail list</details>
+  <h2>Section: Methods of primitives: </h2>
+  <ul>
+    <li data-fileTag="playground.js">Can I add a string property</li>
+  </ul>
+-->
+
+  <h2>Section: Numbers</h2>
+  <ul>
+    <li id="random">A Random Number From Min to Max</li>  
+    <li id="randomInteger">A Random Integer From Min to Max</li>  
+
+  </ul>
+
+  
+</div>
+<!--<div id="mocha" style="display:none;"></div>-->
+<div id="mocha"></div>
+<script>
+
+$setup.ary.push({
+key: "randomInteger",
+filePath: "./js/A04_randomInteger.js",
+testFilePath: "./tests/A04_randomIntegerTest.js",
+// fileCrop: [["//S//", ["//E//",1], "+"]],
+strFunctionRef: "randomInteger", 
+callCaption: "Click to Call Function randomInteger",
+promptQuestion: "Please Enter Min and Max Separated by Comma",
+promptReturn: ["number","number"],
+defaultPromptInput: "1, 10",
+});
+
+
+$setup.ary.push({
+key: "random",
+filePath: "./js/A04_random.js",
+testFilePath: "./tests/A04_randomTest.js",
+// fileCrop: [["//S//", ["//E//",1], "+"]],
+strFunctionRef: "random", 
+callCaption: "Click to Call Function random",
+promptQuestion: "Please Enter Min and Max Separated by Comma",
+promptReturn: ["number","number"],
+defaultPromptInput: "1, 10",
+});
+
+  
+
+
+
+
+
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+    
+
+ 
+
+
+
+
+
+
+
+
+
+
+
+// Update Page
+(function () {$setup.requestFiles()})();
+</script>
+
+</body>
+</html>
