@@ -33,7 +33,43 @@ a {
 
 .divHolder {
             margin:20px;
-            ;
+            
         }
 
 li {    margin-bottom: 10px;}
+
+.divInfo    {
+            margin-left:40px;
+            }
+
+
+
+.indentTop {margin-top:40px;}
+.indent {margin-left:40px;}
+.underline {text-decoration:underline;}
+
+.test.pass::before {
+    content: '✓';
+    font-size: 12px;
+    display: block;
+    float: left;
+    margin-right: 5px;
+    color: #00d6b2;
+}
+
+.test.fail::before {
+    content: '✖';
+    font-size: 12px;
+    display: block;
+    float: left;
+    margin-right: 5px;
+    color: #c00;
+  }
+
+.test.pass.fast .duration {
+    display: none;
+  }
+
+  ul.testlist {
+    list-style: none;
+  }

@@ -44,13 +44,23 @@
   
 </div>
 <!--<div id="mocha" style="display:none;"></div>-->
-<div id="mocha"></div>
+<div id="mocha" style="display:none;"></div>
+
+
+<ul id="random1"></ul>  
+<ul id="randomInteger1"></ul> 
+
+
+
+
 <script>
 
 $setup.ary.push({
 key: "randomInteger",
 filePath: "./js/A04_randomInteger.js",
-testFilePath: "./tests/A04_randomIntegerTest.js",
+testFilePath: "./tests/A04_Tests.js",
+fileTestCrop: [["//randomInteger>s", ["//randomInteger>e",1], "+"]],
+
 // fileCrop: [["//S//", ["//E//",1], "+"]],
 strFunctionRef: "randomInteger", 
 callCaption: "Click to Call Function randomInteger",
@@ -63,8 +73,9 @@ defaultPromptInput: "1, 10",
 $setup.ary.push({
 key: "random",
 filePath: "./js/A04_random.js",
-testFilePath: "./tests/A04_randomTest.js",
 // fileCrop: [["//S//", ["//E//",1], "+"]],
+testFilePath: "./tests/A04_Tests.js",
+fileTestCrop: [["//random>s", ["//random>e",1], "+"]],
 strFunctionRef: "random", 
 callCaption: "Click to Call Function random",
 promptQuestion: "Please Enter Min and Max Separated by Comma",
@@ -106,6 +117,8 @@ defaultPromptInput: "1, 10",
 
 // Update Page
 (function () {$setup.requestFiles()})();
+
+console.log($setup.jsLoaded)
 </script>
 
 </body>

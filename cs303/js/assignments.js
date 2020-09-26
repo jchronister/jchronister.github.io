@@ -263,50 +263,53 @@ var $setup = {
       
  
       // Create Other Sections
-      var div = this.crtApnd("div", section);
-      div.style.display = "none";
+      var div = this.crtApnd("div", section, null, 
+        [["display", "none"], 
+        ["addClass", "divInfo"]]);
+      this.crtApnd("h2", div, "Function Code",
+        ["addClass", "underline"]);
       obj.jsPre = this.crtApnd("pre", div);
       obj.btnDiv = this.crtApnd("div", div);
-      obj.btnDiv.classList.add("divHolder");
-      obj.FuncOut = this.crtApnd("div", div);      
-      obj.FuncOut.classList.add("divHolder");
-      obj.FuncOut.classList.add("functionOutput");
-      obj.testDiv = this.crtApnd("div", div, "Click to View Function Unit Tests");
-      obj.testDiv.classList.add("divHolder");
-      obj.testDiv.classList.add("func");
+      obj.FuncOut = this.crtApnd("div", div, null, 
+        [["addClass", "divHolder"], 
+        ["addClass", "functionOutput"]]);      
+      
+      // Test Section
+      obj.testDiv = this.crtApnd("div", div, "View Function Unit Test Code and Results", 
+        [["addClass", "func"],
+        ["addClass", "indentTop"]]);
+      var testDiv = this.crtApnd("div", div, null, 
+        [["display", "none"],
+        ["addClass", "indent"]]);
+      this.crtApnd("h2", testDiv, "Function Test Code",
+        ["addClass", "underline"]);
+      obj.testCode = this.crtApnd("pre", testDiv, null, 
+        ["addClass", "indent"]);
 
- 
+      // Attach Test Code
+      if (obj.testFilePath) this.crtApnd(obj.testCode, null, this.cropText(obj.jsTest, obj.fileTestCrop));
+      obj.testResults = this.crtApnd("div", testDiv);
 
-      // let testResult = this.crtApnd("div", div); 
-      // testResult.id="mocha";
-      // test.addEventListener("click", function() {
-      //   window.asdf=1;
-        
-      //   mocha.run();
-        
-      //   //<div id="mocha"></div>
-      //   // mocha.run();
-      // });
+      // Show / Hide Test Section
+      obj.testDiv.addEventListener("click", function (e) {
+        return function () {
+          e.display = e.display === "" ? e.display = "none" : e.display = "";
+        };
+      }(testDiv.style));
+  
 
       // Setup Button to Call Funtion
       if (obj.strFunctionRef) {
 
-          var call = this.crtApnd("input", obj.btnDiv), that = this;
-          call.setAttribute("type", "button");
-          call.setAttribute("value", obj.callCaption);
-          
-          /** Button Click to Call Function
-           * @param  {Object} objS - Setup Object
-           * @returns {undefined} Undefined
-           */
-          var buttonCall = function(objS) {
-            return function () {
-              objS.FuncOut.innerText = that.callFunction(objS);
-            };
-          };
-
-          call.addEventListener("click", buttonCall(obj) );
-      
+        var call = this.crtApnd("input", obj.btnDiv, null, [["attribute", "type", "button"], ["attribute", "value", obj.callCaption]]);
+        var that = this;
+        
+        call.addEventListener("click", function (o) {
+          return function () {
+            o.FuncOut.innerText = that.callFunction(o);
+          };           
+        }(obj));
+        
         // Attach Function Text
         var text = typeof obj.jsCode === "number" ? ary[obj.jsCode].jsCode : obj.jsCode;
 
@@ -352,12 +355,13 @@ var $setup = {
   },
       
   /** Create and Append Elements
-   * @param  {String} create - Element to Create
+   * @param  {String|Object} create - Element to Create or Apply
    * @param  {Object} append - Object which Element Appended
    * @param  {String} textNode - Text to Add
+   * @param  {String[]} properties - Properties to Add to Create
    * @returns {Object} Created Element
    */
-  crtApnd: function (create, append, textNode) {
+  crtApnd: function (create, append, textNode, properties) {
     
     // Create Element if Needed
     if (typeof create === "string") {
@@ -374,6 +378,29 @@ var $setup = {
 
     // Append if Exists
     if (append) append.appendChild(el);
+    
+    // Add Properties
+    if (properties) {
+
+      if (Array.isArray(properties)) {
+        if (!Array.isArray(properties[0])) properties = [properties];
+        properties.forEach(function(n) {
+          switch (n[0]) {
+            case "display":
+              el.style.display = n[1];
+              break;
+            case "addClass":
+              el.classList.add(n[1]);
+              break;
+            case "attribute":
+              el.setAttribute(n[1], n[2]);
+              break;
+          }
+        });
+      }
+         
+
+    }
     return el;
   },
 
@@ -462,11 +489,83 @@ httpRequest: function (setupObj, fileName, callBack) {
   xhttp.send();
 },
 
+
+/** Copy Test Results to Each Function Item
+ * @returns {undefined} Undefined
+ */
 runMocha: function () {
 
   mocha.run();
 
+  // Setup Mocha Format
+  // Future -> Use a Event / Call Back
 
+  /** Copy Test Results to Each Function Item
+  * @returns {undefined} Undefined
+  */
+  var formatMocha = function () {
+
+    document.getElementsByTagName("body")[0].removeEventListener("click", formatMocha, true);
+    var li = document.getElementsByClassName("suite");
+    var that = $setup;
+
+    for (var i = 0; i < li.length; i += 1){
+      
+      var cln = li[i].cloneNode(true);
+
+      // Remove Anchor Tags
+      var a = cln.getElementsByTagName("a");
+      for(var j = a.length - 1; j >=0 ; j -= 1) {
+        var text = a[j].firstChild.nodeValue;
+        a[j].parentNode.removeChild(a[j]);
+      }
+      
+      // Attach Tests
+      var section = document.createDocumentFragment();
+      var tests = cln.childNodes[1];
+      tests.classList.add("testlist");
+
+      //insertBefore()
+      that.crtApnd("h2", section, "Function " + text + " Test Results", ["addClass", "underline"]);
+      
+      var span = tests.getElementsByTagName("h2");
+      for (var l = 0; l < span.length; l += 1) {
+        span[l].classList.add("func");
+      }
+
+      tests.addEventListener("click", function(e) {
+
+        var el = e.target.parentNode;
+
+        if (el.nodeName === "LI") {
+          var child = el.childNodes;
+          for (var i = 0; i < child.length; i += 1) {
+            if (child[i].nodeName === "PRE" && child[i].className === "") {
+              child[i].style.display = child[i].style.display === "" ? child[i].style.display = "none" : child[i].style.display = "";
+            }
+          }
+        }
+        //   for (var i = 0; i < el.length; i += 1) {
+        //     if (el[i] === "pre" && el.classlist === "") {
+
+
+        //     }
+        
+      }
+
+      );
+
+      
+      that.crtApnd(tests, section);
+      that.getRef("strFunctionRef", text).testResults.appendChild(section);
+
+    }
+
+    
+    
+  };
+
+  document.getElementsByTagName("body")[0].addEventListener("click", formatMocha, true);
 },
 
 
