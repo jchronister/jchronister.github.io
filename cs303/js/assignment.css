@@ -45,7 +45,7 @@ li {    margin-bottom: 10px;}
 
 
 .indentTop {margin-top:40px;}
-.indent {margin-left:40px;}
+.indentLeft {margin-left:40px;}
 .underline {text-decoration:underline;}
 
 .test.pass::before {
@@ -73,3 +73,7 @@ li {    margin-bottom: 10px;}
   ul.testlist {
     list-style: none;
   }
+
+  .description:nth-child(1) {
+    list-style: none;
+}

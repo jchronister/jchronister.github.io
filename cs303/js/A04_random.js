@@ -1,5 +1,5 @@
 "use strict";
-
+//>DescStart
 /*  A random number from min to max
 *
 *   The built-in function Math.random() creates a random 
@@ -8,8 +8,8 @@
 *   Write the function random(min, max) to generate a random 
 *   floating-point number from min to max (not including max).
 */
-
-/**
+//>DescEnd
+/** Returns Random Floating Point Number >= Min and < Max
 *   @param  {Number} min - Random Minimum
 *   @param  {Number} max - Random Maximum
 *   @returns  {Number} Random Number

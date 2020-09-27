@@ -1,50 +1,6 @@
 /* eslint-disable id-length */
 "use strict";
 
-// Alert Error
-if(typeof window === "object") window.onerror = function(msg, page, line){
-  alert(msg +"\nLine " + line + "\n" + page );
-};
-
-var $setup = {
-
-  ary: [],
-  lastRef: undefined,
-  jsLoaded: [],
-  jsUpdate: 0,
- 
-  /** Returns if Search is in Array
-   * @param  {*[]} arr - Array to Search
-   * @param  {*} search - Search Value
-   * @returns {Number} Array Element Id or -1 for No Match
-   */
-  getArrayId: function (arr, search) {
-
-    if (arr.length === 0) return -1;
-
-    for (let i = 0; i < arr.length; i+=1) {
-      if (arr[i] === search) return i;
-    }
-    return -1;
-  },
-
-
-
-  /** Returns if Search is in Array [[]] 
-   * @param  {*[]} arr - Array to Search
-   * @param  {*} search - Search Value
-   * @param  {Number} index - Element Index
-   * @returns {Number} Array Element Id or -1 for No Match
-   */
-  getjsLoadedId: function (arr, search, index) {
-
-    if (arr.length === 0) return -1;
-
-    for (let i = 0; i < arr.length; i+=1) {
-      if (arr[i][index] === search) return i;
-    }
-    return -1;
-  },
 
   /* Setup Options
     let setup = {
@@ -60,32 +16,71 @@ var $setup = {
 
 
 
+// Alert Error
+if(typeof window === "object") window.onerror = function(msg, page, line){
+  //alert(msg +"\nLine " + line + "\n" + page );
+};
+
+var $setup = {
+
+  ary: [],
+
+  jsLoaded: {
+    complete: false,
+
+    /**Checks if All Files Have Been Loaded
+     * @returns  {Boolean} true / false
+     */
+    allFilesLoaded: function() {
+      for (var x in this) {
+        // if ("loaded" in x) if (x.loaded === false) return false;
+        if (this[x].loaded === false) return false;
+      }
+      return true;
+    }
+  },
+  
+ 
+  // /** Returns if Search is in Array
+  //  * @param  {*[]} arr - Array to Search
+  //  * @param  {*} search - Search Value
+  //  * @returns {Number} Array Element Id or -1 for No Match
+  //  */
+  // getArrayId: function (arr, search) {
+
+  //   if (arr.length === 0) return -1;
+
+  //   for (let i = 0; i < arr.length; i+=1) {
+  //     if (arr[i] === search) return i;
+  //   }
+  //   return -1;
+  // },
 
 
 
 
 
 
-  /** Returns Object Matching Key
+
+  /** Returns Object Matching Key in Setup Object Array
    * @param {String} key - Object Key
    * @param {*} value - Value to Compare
-   * @param{Number} exitId - Exit Value
-   * @returns {Object} Setup Object or Undefined for No Match
+   * @returns {Object} Setup Object or null for No Match
    */
-  getRef: function (key, value, exitId) {
-    var exit = exitId + 1 || this.ary.length;
-    for (let i = 0; i < exit; i+=1) {
-      if (this.ary[i][key] === value) {
-        this.lastRef = this.ary[i];
-        return this.ary[i];
+  getSetupRef: function (key, value) {
+    var arr = this.ary;
+    for (let i = 0; i < arr.length; i+=1) {
+      if (arr[i][key] === value) {
+        arr.lastRef = arr[i];
+        return arr[i];
       }
     }
+    return null;
   },  
     
   /** Searches Text for Match and Returns Location
    * @param  {String} text - Text to Search
    * @param  {String} search - Number, Search String, Search Array ['search',nth Time Found]
-   * @param  {Number} defLoc - Default Location
    * @returns {Number[]} [Start of String Match Location, Length of Search String]
    */
   getTextLoc: function (text, search) {
@@ -97,24 +92,24 @@ var $setup = {
       len = 0;
     } else {
       if (!Array.isArray(search)) search = [search, 1];
-
-        var start = 0 - len, cnt = 0;
         len = search[0].length;
+        var start = 0 - len, cnt = 0;
+        
         do {
           start = text.indexOf(search[0], start + len);
           cnt+=1;
         } while (start !== -1 && cnt < search[1]);
         if (start === -1) {
-          throw this.ary[this.lastRef].key + ": Search String '" + search[0] + "' Not Found " + search[1] + " Time";
-        } else {
+          throw this.ary.lastRef.key + ": Search String '" + search[0] + "' Not Found " + search[1] + " Time";
+        } else {  
           retrn = start;
         }
     } 
 
     if (retrn >= text.length) {
-      throw this.ary[this.lastRef].key + ": Search '" + search + "' > Text Length '" + text.length + "'";
+      throw this.ary.lastRef.key + ": Search '" + search + "' > Text Length '" + text.length + "'";
     } else if (retrn < 0) {
-      throw this.ary[this.lastRef].key + ": Search '" + search + "' Not Found or < 0";
+      throw this.ary.lastRef.key + ": Search '" + search + "' Not Found or < 0";
     }
     return [retrn, len];
   },
@@ -131,8 +126,10 @@ var $setup = {
     var start, end;
 
     if (!conditions) return text;
+    if (!Array.isArray(conditions[0])) conditions = [conditions];
 
     for (let i = 0; i < conditions.length; i+=1) {
+      
       start = this.getTextLoc(text, conditions[i][0], 0);
       end = this.getTextLoc(text, conditions[i][1], text.length - 1);
 
@@ -146,89 +143,68 @@ var $setup = {
     return text;
   },
 
-    /** Adds Files to HTML Script
+    /** Adds Files to HTML Script & Updates HTML When All Files Loaded
    * @param  {String} info - Script Text
-   * @param  {Object} obj - Setup Object
    * @param  {String} file - File Name/Path
    * @returns {undefined} Undefined
    */
-  insertJSCode: function (info, obj, file) {
+  insertJSCode: function (info, file) {
 
     var that = this || $setup;
-    var id = that.getjsLoadedId(that.jsLoaded, file, 0);
-
-    if (file === obj.filePath) {
-      var propText = "jsCode";
-    } else {
-      propText = "jsTest";
-    }
 
     that.crtApnd("script", document.head, info);
-    obj[propText] = info;
-    that.jsLoaded[id][1] = 1;
-      
+    that.jsLoaded[file].code = info;
+    that.jsLoaded[file].loaded = true;
+
     // Run Function Setup and Mocha Tests if Everything Loaded
-    if (that.jsUpdate === 0 && that.jsLoaded.reduce((a, n) => (n[1] === 0) ? a + 1 : a, 0) === 0) {
-      // Call Update
+    if (that.jsLoaded.complete === false && that.jsLoaded.allFilesLoaded()) {
       that.setupHTMl();
       that.runMocha();
-      that.jsUpdate = 1;
+      that.jsLoaded.complete = true;
     }
-    // console.log(that.jsLoaded)
+
   },
 
   /** Requests All JS Files (If Not Already Requested) for List Items
-  *   Checks for Setup Object with Missing Label
+  *   Checks for Missing / Duplicate Setup Objects or Labels
   * @returns  {undefined} undefined
   */
   requestFiles: function () {
 
-    var i, list = document.getElementsByTagName("li");
+    var list = document.getElementsByTagName("li");
     var ary = this.ary;
 
-    for (i = 0; i < list.length; i +=1 ) {
+    for (var i = 0; i < list.length; i +=1 ) {
 
       var fileTag = list[i].id;
 
-      // Get Ary Id for File Tag
-      var objId = ary.reduce((a, n, i) => n.key === fileTag ? i : a, -1);
-      if (objId === -1) {
-        throw "List Id " + fileTag + " not Found in Setup Array";
-      } else {
-        var obj = ary[objId];
+      // Get Setup Object
+      var obj = this.getSetupRef("key", fileTag);
+      
+      // Error for Invalid Key  
+      if (obj === null) {
+        throw "List Id '" + fileTag + "' not Found in Setup Array";
       }
 
-      // Request js File
-      if (!obj.filePath) {
-          obj.jsCode = "skip";
-      } else {
-          var otherId = this.getjsLoadedId(this.jsLoaded, obj.filePath === -1, 0);
-          if (otherId === -1) {
-            this.httpRequest(obj, obj.filePath, this.insertJSCode);
-            this.jsLoaded.push([obj.filePath, 0, "jsCode", objId]);
-            obj.jsCode = null;
-          } else {
-            obj.jsCode = this.jsLoaded[otherId][3];
-          }
-      }
+      // Request Files
+      obj.requestedFiles = true;
+      var files = obj.files, allFiles = this.jsLoaded;
+      for (var j = 0; j < files.length; j += 1) {
+        var file = files[j].filePath;
 
-      // Request test File
-      if (!obj.testFilePath) {
-          obj.jsTest = "skip";
-      } else {
-            var otherTId = this.getjsLoadedId(this.jsLoaded, obj.testFilePath === -1, 0);
-          if (otherTId === -1) {
-            this.httpRequest(obj, obj.testFilePath, this.insertJSCode);
-            this.jsLoaded.push([obj.testFilePath, 0, "jsTest", objId]);
-            obj.jsTest = null;
-          } else {
-            obj.jsTest = this.jsLoaded[otherTId][3];
-          } 
+        if (!allFiles[file]) {
+          this.httpRequest(obj, file, this.insertJSCode);
+
+          allFiles[file] = {
+            loaded: false,
+          };
+        }
       }
+      
     }
 
     // Check for Missing Labels
-    var miss = ary.reduce((a, n, i) => n.jsCode === undefined || n.jsTest === undefined ? i : a, -1);
+    var miss = ary.reduce((a, n, i) => !n.requestedFiles ? i : a, -1);
     if (miss !== -1) throw "Object Id " + miss + " without Label";
 
     // Check for Duplicates
@@ -241,62 +217,67 @@ var $setup = {
    */
   setupHTMl: function() {
 
-    var fileTag, elmnt, list = document.getElementsByTagName("li");
-    var ary = this.ary;
+    // Create Array from Current LI's HTML Collection (Collection will Change)
+    var list = Array.prototype.slice.call(document.getElementsByTagName("li"));
 
-    for (let i = 0; i < list.length; i += 1) {
+    for (var i = 0; i < list.length; i += 1) {
 
-      fileTag = list[i].id;
-      var objId = ary.reduce((a, n, i) => n.key === fileTag ? i : a, -1);
-      var obj = ary[objId];
-
+      var fileTag = list[i].id;
+      var obj = this.getSetupRef("key", fileTag);
       var section = document.createDocumentFragment();
 
+      /** Show / Hide Element
+       * @param  {Object} elStyle - Element Style Reference
+       * @returns {Function} Function to Show/Hide Element
+       */
+      var showHide = function (elStyle) {
+        return function () {
+          elStyle.display = elStyle.display === "" ? "none" : "";
+        };
+      };
+
       // Setup Hide/Show When List Item Clicked
-      elmnt = this.crtApnd("span", section, list[i].firstChild.nodeValue);
+      var elmnt = this.crtApnd("span", section, list[i].firstChild.nodeValue,
+        [["addClass", "func"],
+        ["addClass", "underline"]]);
       list[i].firstChild.nodeValue = "";
-      elmnt.classList.add("func");
-      elmnt.addEventListener("click", function (e) {
-          var li = e.target.nextSibling.style.display === "" ? "none" : "";
-          e.target.nextSibling.style.display = li; 
-        });
-      
- 
-      // Create Other Sections
+
+      // Div to Hold All Info
       var div = this.crtApnd("div", section, null, 
-        [["display", "none"], 
-        ["addClass", "divInfo"]]);
-      this.crtApnd("h2", div, "Function Code",
-        ["addClass", "underline"]);
-      obj.jsPre = this.crtApnd("pre", div);
-      obj.btnDiv = this.crtApnd("div", div);
-      obj.FuncOut = this.crtApnd("div", div, null, 
+        ["display", "none"]);
+        // ["addClass", "divInfo"]]); 
+      elmnt.addEventListener("click", showHide(div.style));
+
+      var ul = this.crtApnd("ul", div);
+      
+      // Add Description
+      var descLi = this.crtApnd("li", ul, null, ["addClass", "description"]);
+      this.insertCode(descLi, obj.files, "Description");
+
+      // Create js Code List Item
+      var li = this.crtApnd("li", ul);
+      var liSpan = this.crtApnd("span", li, "View js Code", ["addClass", "func"]);
+      var codeDiv = this.crtApnd("div", li, null, 
+        [["addClass", "indentLeft"],
+        ["display", "none"]]);
+      liSpan.addEventListener("click", showHide(codeDiv.style));
+
+      this.insertCode(codeDiv, obj.files, "jsCode", true);
+      obj.btnDiv = this.crtApnd("div", codeDiv);
+      obj.FuncOut = this.crtApnd("div", codeDiv, null, 
         [["addClass", "divHolder"], 
         ["addClass", "functionOutput"]]);      
       
-      // Test Section
-      obj.testDiv = this.crtApnd("div", div, "View Function Unit Test Code and Results", 
-        [["addClass", "func"],
-        ["addClass", "indentTop"]]);
-      var testDiv = this.crtApnd("div", div, null, 
-        [["display", "none"],
-        ["addClass", "indent"]]);
-      this.crtApnd("h2", testDiv, "Function Test Code",
-        ["addClass", "underline"]);
-      obj.testCode = this.crtApnd("pre", testDiv, null, 
-        ["addClass", "indent"]);
-
-      // Attach Test Code
-      if (obj.testFilePath) this.crtApnd(obj.testCode, null, this.cropText(obj.jsTest, obj.fileTestCrop));
-      obj.testResults = this.crtApnd("div", testDiv);
-
-      // Show / Hide Test Section
-      obj.testDiv.addEventListener("click", function (e) {
-        return function () {
-          e.display = e.display === "" ? e.display = "none" : e.display = "";
-        };
-      }(testDiv.style));
-  
+      // Create Test Code List Item
+        li = this.crtApnd("li");
+        liSpan = this.crtApnd("span", li, "View Function Unit Test Code and Results", ["addClass", "func"]);
+        codeDiv = this.crtApnd("div", li, null, 
+          [["addClass", "indentLeft"],
+          ["display", "none"]]);
+        liSpan.addEventListener("click", showHide(codeDiv.style));
+        var codeExists = this.insertCode(codeDiv, obj.files, "mochaTest", true);
+        obj.testResults = this.crtApnd("div", codeDiv);
+        if (codeExists === true) this.crtApnd(li, ul);
 
       // Setup Button to Call Funtion
       if (obj.strFunctionRef) {
@@ -311,16 +292,47 @@ var $setup = {
         }(obj));
         
         // Attach Function Text
-        var text = typeof obj.jsCode === "number" ? ary[obj.jsCode].jsCode : obj.jsCode;
+        // var text = typeof obj.jsCode === "number" ? ary[obj.jsCode].jsCode : obj.jsCode;
 
-        this.crtApnd(obj.jsPre, null, this.cropText(text, obj.fileCrop));
+        // this.crtApnd(obj.jsPre, null, this.cropText(text, obj.fileCrop));
 
-        // Render
-        this.crtApnd(section, list[i]);
+
 
       }
+        // Render HTML
+        this.crtApnd(section, list[i]);
     }
 
+  },
+
+  
+  /** Appends Code in pre & code element into Element
+   * @param  {Object} appendto - Element to Append to
+   * @param  {String} files - Code & Info Array
+   * @param  {String} type - Array Key
+   * @param  {Boolean} addLinks - Add Links true/false
+   * @returns {Boolean} Code Appended true / false
+   */
+  insertCode: function (appendto, files, type, addLinks) {
+
+    var appended = false;
+    if(!files) return appended;
+    var frag = document.createDocumentFragment();
+
+    for (var i = 0; i < files.length; i += 1) {
+      if (files[i].fileType === type) {
+
+        if (addLinks === true) {
+          this.crtApnd("br", frag);
+          this.crtApnd("a", frag, "View File", ["href", files[i].filePath]);
+        }
+        var spot = this.crtApnd("pre", frag);
+        this.crtApnd("code", spot, this.cropText(this.jsLoaded[files[i].filePath].code, files[i].fileCrop));
+        this.crtApnd(frag, appendto);
+        appended = true;
+      }
+    }
+    return appended;
   },
 
   /** Calls Function and Returns Answer With Input
@@ -329,9 +341,10 @@ var $setup = {
    */
   callFunction: function(obj) {
 
-    let retrArr = this.getUserInput(obj.promptQuestion, obj.defaultPromptInput, obj.promptReturn);
-          
-    if (retrArr === null) return "";
+    if (obj.promptQuestion) {
+      var retrArr = this.getUserInput(obj.promptQuestion, obj.defaultPromptInput, obj.promptReturn);
+      if (retrArr === null) return "";
+    }
 
     // Call Function - If More Than One Argument Apply Array
     if (window[obj.strFunctionRef].length > 1) {
@@ -345,9 +358,9 @@ var $setup = {
     var output = Array.isArray(retrn) ? retrn.join(", ") : retrn;
 
     if (obj.promptQuestion) {
-      var strRetrn = "Function Input:  " + input + "\nFunction Output: " + output;
+      var strRetrn = "Function Input: " + input + "\nFunction Output: " + output;
     } else {
-      strRetrn = "'Function Output: " + output;
+      strRetrn = "Function Output: " + output;
     }
 
     return strRetrn;
@@ -355,33 +368,26 @@ var $setup = {
   },
       
   /** Create and Append Elements
-   * @param  {String|Object} create - Element to Create or Apply
+   * @param  {String|Object} element - Element to Create or Modify
    * @param  {Object} append - Object which Element Appended
    * @param  {String} textNode - Text to Add
    * @param  {String[]} properties - Properties to Add to Create
    * @returns {Object} Created Element
-   */
-  crtApnd: function (create, append, textNode, properties) {
+   */ 
+  crtApnd: function (element, append, textNode, properties) {
     
     // Create Element if Needed
-    if (typeof create === "string") {
-      var el = document.createElement(create);
+    if (typeof element === "string") {
+      var el = document.createElement(element);
     } else {
-      el = create;
+      el = element;
     }
     
     // Add Text Node if Text Exists
-    if (textNode) {
-      var node = document.createTextNode(textNode);
-      el.appendChild(node);
-    }
+    if (textNode) el.appendChild(document.createTextNode(textNode));
 
-    // Append if Exists
-    if (append) append.appendChild(el);
-    
     // Add Properties
     if (properties) {
-
       if (Array.isArray(properties)) {
         if (!Array.isArray(properties[0])) properties = [properties];
         properties.forEach(function(n) {
@@ -395,12 +401,17 @@ var $setup = {
             case "attribute":
               el.setAttribute(n[1], n[2]);
               break;
+            case "href":
+              el.href = n[1];
+              break;
           }
         });
       }
-         
-
     }
+
+    // Append if Exists
+    if (append) append.appendChild(el);
+    
     return el;
   },
 
@@ -413,7 +424,7 @@ var $setup = {
    */
   getUserInput: function (question, strDefault, retrnFormat, mapFunction) {
     //dataType 'Number' -> Converts to Number
-    let quest = question.slice(), ary = Array.isArray(retrnFormat);
+    var quest = question.slice(), ary = Array.isArray(retrnFormat), stay = false;
 
     do {
 
@@ -431,18 +442,21 @@ var $setup = {
             str = [str];
         } else {
             str = str.split(",");
+            str = str.map(n=>n.trim());
         }
 
+        var last = chkFormat[0];
         for (let i = 0; i < str.length; i +=1) {
-          let val, form = typeof chkFormat[i];
+          let val, form = chkFormat[i] || last;
 
           switch (form) {
             case "number":
               val = Number(str[i]);
               if (val !== val) {
-                alert(val +" is Not a Number, Please Check and Reenter");
-                quest = str.join(", ");
-                continue;
+                quest = str[i] +" is Not a Number, Please Check and Reenter";
+                strDefault = str.join(", ");
+                stay = true;
+                break;
               } else {
                 str[i] = val;
               }
@@ -450,10 +464,10 @@ var $setup = {
             case "boolean":
               //Future
           }
+          if (form) last = form;
         }
 
-    // eslint-disable-next-line no-constant-condition
-    } while (false);
+    } while (stay);
 
     if (mapFunction) str = str.map(mapFunction);
 
@@ -478,9 +492,9 @@ httpRequest: function (setupObj, fileName, callBack) {
   xhttp.onreadystatechange = function() {
       if (this.readyState == 4) {
         if (this.status == 200) {
-          callBack(this.responseText, setupObj, fileName);
+          callBack(this.responseText, fileName);
         } else if (this.status == 404) {
-          throw "Sorry " + fileName + "Not Found for " + setupObj.key;
+          throw "Sorry '" + fileName + "' Not Found for '" + setupObj.key + "'";
         }    
       }
   };
@@ -557,7 +571,9 @@ runMocha: function () {
 
       
       that.crtApnd(tests, section);
-      that.getRef("strFunctionRef", text).testResults.appendChild(section);
+
+      var testEl = that.getSetupRef("strFunctionRef", text);
+      if (testEl !== null) if (testEl.testResults) testEl.testResults.appendChild(section);
 
     }
 
@@ -568,15 +584,68 @@ runMocha: function () {
   document.getElementsByTagName("body")[0].addEventListener("click", formatMocha, true);
 },
 
+/** Quick Setup
+ * @param {String} strFunction - Function Name
+ * @param {String} filePath - File Path
+ * @param {String} strCrop - Crop Text
+ * @param {String} promptDefault - Default Return
+ * @returns {Object} Object Created
+ */
+setup: function(strFunction, filePath, strCrop, promptDefault) {
+  
+  var obj = {
+    key: strFunction,
+    files: [{
+      filePath: filePath,
+      fileCrop: ["//" + strCrop + "start", "//" + strCrop + "mid", "+"],
+      fileType: "Description",
+      },{
+      filePath: filePath,
+      fileCrop: ["//" + strCrop + "mid", "//" + strCrop + "end", "+"],
+      fileType: "jsCode",
+    }],
+    strFunctionRef: strFunction, 
+    callCaption: "Click to Call Function " + strFunction,
+    promptQuestion: promptDefault === null ? null : "Please Enter Data",
+    promptReturn: null,
+    defaultPromptInput: promptDefault,
+
+    /** Quick Test Setup
+     * @param {String} path - File Path
+     * @param {String} crop - Crop Text
+     * @returns {Object} this
+     */
+    addTest: function (path, crop) {
+      if (!this.files) this.files = [];
+      this.files.push({
+        filePath: path,
+        fileCrop: crop ? ["//" + crop + "start", "//" + crop + "end", "+"]  : null,
+        fileType: "mochaTest",
+      });
+      delete this.addTest;
+      return this;
+    },
+
+    /** Quick Test Setup
+    * @param {String} property - Property
+    * @param {*} value - Value
+    * @returns {Object} this
+    */
+    mod: function (property, value) {
+      this[property] = value;
+      return this;
+    }
+
+  };
 
 
 
+ 
 
+  $setup.ary.push(obj);
+  return obj;
 
-
-
-
-
+}
 
 
 

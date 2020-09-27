@@ -1,13 +1,5 @@
 "use strict";
 
-// beforeEach(function() {
-//   sinon.stub(window, "prompt");
-// });
-
-// afterEach(function() {
-//   prompt.restore();
-// });
-
 describe("randomInteger", function() {
 
   for (let i = 0; i < 10; i+=1) {
