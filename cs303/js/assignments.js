@@ -258,8 +258,8 @@ var $setup = {
       var li = this.crtApnd("li", ul);
       var liSpan = this.crtApnd("span", li, "View js Code", ["addClass", "func"]);
       var codeDiv = this.crtApnd("div", li, null, 
-        [["addClass", "indentLeft"],
-        ["display", "none"]]);
+        [["addClass", "indentLeft"]]);
+        // ["display", "none"]]);
       liSpan.addEventListener("click", showHide(codeDiv.style));
 
       this.insertCode(codeDiv, obj.files, "jsCode", true);
