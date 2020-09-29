@@ -31,11 +31,24 @@
 
   <h2>Objects: The Basics: Sections: Constructor, operator “new”</h2>
   <ul>
-    <li id="">Two Functions – One Object</li>
-    <li id="">Create New Calculator</li>
-    <li id="">Create New Accumulator</li>
+    <li id="equalObjects">Two Functions – One Object</li>
+    <li id="Calculator">Create New Calculator</li>
+    <li id="Accumulator">Create New Accumulator</li>
   </ul>
   
+  <h2>Data Types: Section: Array Methods</h2>
+  <ul>
+    <li id="camelize">Translate border-left-width to borderLeftWidth</li>
+    <li id="filterRange">Filter Array - Return New Array</li>
+    <li id="filterRangeAry">Filter Array - Change Array</li>
+    <li id="sortDecreaseOrder">Sort Array in Decreasing Order</li>
+    <li id="sortArray">Copy and Sort Array</li>
+
+
+    
+  </ul>
+
+
 
 <!--
 
@@ -50,7 +63,40 @@
 <script>
 (function () {
 
-  
+$setup.setup("equalObjects", "./js/A05_misc.js", "TEO", null)
+$setup.setup("Calculator", "./js/A05_misc.js", "CNC", "5, 5").
+    mod("strFunctionRef", ["read","sum","mul"]).
+    mod("promptReturn", [["number"], null, null]).
+    mod("initialize", function () {
+      var calc = new Calculator();
+      this.functionRef[0] = calc.read.bind(calc);
+      this.functionRef[1] = function() {return calc.sum() + "\n Object = " + JSON.stringify(calc);}
+      this.functionRef[2] = function() {return calc.mul() + "\n Object = " + JSON.stringify(calc);}
+    });
+$setup.setup("Accumulator", "./js/A05_misc.js", "CNA", "5").
+    mod("strFunctionRef", ["Accumulator","property value"]).
+    mod("promptReturn", ["number", null]).
+    mod("initialize", function () {
+      var accum = new Accumulator(1);
+      this.functionRef[0] = accum.read.bind(accum);
+      this.functionRef[1] = function() {return accum.value + "\n Object = " + JSON.stringify(accum);}
+    }).
+    addTest("./tests/A05_miscTest.js", "CNA");
+
+$setup.setup("camelize", "./js/A05_misc.js", "CTCC", "list-style-image");
+
+
+$setup.setup("filterRange", "./js/A05_misc.js", "FR", "[5, 3, 8, 1],1,4");
+$setup.setup("filterRangeAry", "./js/A05_misc.js", "FRIP", "[5, 3, 8, 1],1,4");
+$setup.setup("sortDecreaseOrder", "./js/A05_misc.js", "SDO", "5, 2, 1, -10, 8").
+    mod("promptReturn", [["number"]]);
+$setup.setup("sortArray", "./js/A05_misc.js", "SAC", "HTML, JavaScript, CSS").
+    mod("promptReturn", [["string"]]);
+
+    
+
+
+
 // $setup.setup("getMaxSubSum", "./js/A04_misc.js", "MSA", "-2, -1, 1, 2").
 //   addTest("./tests/A04_miscTest.js", "MSA").
 //   mod("promptReturn", ["number"],);
@@ -58,6 +104,7 @@
   
 
 
+//     <li id="">Create New Accumulator</li>
 
 
 // $setup.ary.push({

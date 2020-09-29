@@ -1,4 +1,5 @@
 "use strict";
+
 //RUINstart
 beforeEach(function() {
   sinon.stub(window, "prompt");
@@ -41,7 +42,7 @@ describe("readNumber", function() {
 //RUINend
 //UFCstart
 describe("ucFirst", function() {
-  it('Uppercases the first symbol', function() {
+  it("Uppercases the first symbol", function() {
     assert.strictEqual(ucFirst("john"), "John");
   });
 
@@ -52,16 +53,16 @@ describe("ucFirst", function() {
 //UFCend
 //CFSstart
 describe("checkSpam", function() {
-  it('finds spam in "buy ViAgRA now"', function() {
-    assert.isTrue(checkSpam('buy ViAgRA now'));
+  it("finds spam in 'buy ViAgRA now'", function() {
+    assert.isTrue(checkSpam("buy ViAgRA now"));
   });
 
-  it('finds spam in "free xxxxx"', function() {
-    assert.isTrue(checkSpam('free xxxxx'));
+  it("finds spam in 'free xxxxx'", function() {
+    assert.isTrue(checkSpam("free xxxxx"));
   });
 
-  it('no spam in "innocent rabbit"', function() {
-    assert.isFalse(checkSpam('innocent rabbit'));
+  it("no spam in 'innocent rabbit'", function() {
+    assert.isFalse(checkSpam("innocent rabbit"));
   });
 });
 //CFSend
@@ -86,7 +87,7 @@ describe("truncate", function() {
 describe("extractCurrencyValue", function() {
 
   it("for the string $120 returns the number 120", function() {
-    assert.strictEqual(extractCurrencyValue('$120'), 120);
+    assert.strictEqual(extractCurrencyValue("$120"), 120);
   });
 
 });

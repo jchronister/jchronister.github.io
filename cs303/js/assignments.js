@@ -70,9 +70,19 @@ var $setup = {
   getSetupRef: function (key, value) {
     var arr = this.ary;
     for (let i = 0; i < arr.length; i+=1) {
-      if (arr[i][key] === value) {
-        arr.lastRef = arr[i];
-        return arr[i];
+      if (Array.isArray(arr[i][key])) {
+        var subAry = arr[i][key];
+        for(var j = 0; j < subAry.length; j += 1) {
+          if (subAry[j] === value) {
+            arr.lastRef = arr[i];
+            return arr[i];
+          }
+        }
+      } else {
+        if (arr[i][key] === value) {
+          arr.lastRef = arr[i];
+          return arr[i];
+        }
       }
     }
     return null;
@@ -219,6 +229,7 @@ var $setup = {
 
     // Create Array from Current LI's HTML Collection (Collection will Change)
     var list = Array.prototype.slice.call(document.getElementsByTagName("li"));
+    var that = this;
 
     for (var i = 0; i < list.length; i += 1) {
 
@@ -256,49 +267,92 @@ var $setup = {
 
       // Create js Code List Item
       var li = this.crtApnd("li", ul);
-      var liSpan = this.crtApnd("span", li, "View js Code", ["addClass", "func"]);
+      var liSpan = this.crtApnd("span", li, "View/Hide js Code", ["addClass", "func"]);
       var codeDiv = this.crtApnd("div", li, null, 
         [["addClass", "indentLeft"]]);
         // ["display", "none"]]);
       liSpan.addEventListener("click", showHide(codeDiv.style));
 
       this.insertCode(codeDiv, obj.files, "jsCode", true);
-      obj.btnDiv = this.crtApnd("div", codeDiv);
-      obj.FuncOut = this.crtApnd("div", codeDiv, null, 
-        [["addClass", "divHolder"], 
-        ["addClass", "functionOutput"]]);      
+
+      // Insert Call Buttons
+      // obj.btnDiv = this.crtApnd("div", codeDiv);
+      // obj.FuncOut = this.crtApnd("div", codeDiv, null, 
+      //   [["addClass", "divHolder"], 
+      //   ["addClass", "functionOutput"]]);  
+        
+      // Insert Call Buttons
+      var funct = obj.strFunctionRef;
       
+      if (funct) {
+
+        if (!Array.isArray(funct)) funct = [funct];
+
+        // Get Prompt Setup
+        var aryQuest = Array.isArray(obj.promptQuestion) ? obj.promptQuestion : [obj.promptQuestion];
+        var aryDefault = Array.isArray(obj.defaultPromptInput) ? obj.defaultPromptInput : [obj.defaultPromptInput];
+        var aryReturn = Array.isArray(obj.promptReturn) ? obj.promptReturn : [obj.promptReturn];
+        var aryMapBef = Array.isArray(obj.mapBefore) ? obj.mapBefore : [obj.mapBefore];
+        var aryMapAft = Array.isArray(obj.mapAfter) ? obj.mapAfter : [obj.mapAfter];
+        var aryCaption = Array.isArray(obj.callCaption) ? obj.callCaption : [obj.callCaption];
+
+        // if (Array.isArray(aryReturn)) {
+        //   if (!Array.isArray(aryReturn[0])) aryReturn = [aryReturn];
+
+        // } else {
+        //   aryReturn = [aryReturn];
+        // }
+        
+        Array.isArray(obj.promptReturn) ? obj.defaultPromptInput : [obj.defaultPromptInput];
+
+
+        var call = this.crtApnd("div", li);
+        
+
+        // Run Function Setup Code
+        if (obj.initialize) obj.initialize();
+
+        for (var j = 0; j < funct.length; j += 1) {
+
+          // Function Reference
+          var functRef = obj.functionRef[j] || window[funct[j]];
+
+          // Add Call Buttons
+          var btnHolder = this.crtApnd("div", call);
+          var btn = this.crtApnd("input", btnHolder, null, 
+              [["attribute", "type", "button"], 
+               ["attribute", "value", aryCaption[j] || "Click to Call Function " + funct[j]],
+               ["addClass", "divMargin"]]);
+          var functOut = this.crtApnd("div", btnHolder, null, 
+              [["addClass", "functionOutput"],
+              ["addClass", "divMargin"],
+              ["addClass", "indentLeft"]]);
+
+          // Setup onClick
+          if (aryReturn[j] !== null) {
+            if (aryQuest[j] === undefined) aryQuest[j] = "Please Enter Arguments. Separated by Comma if Needed";
+            if (aryMapBef[j] === undefined) aryMapBef[j] = (n)=>n.trim();
+          }
+          btn.addEventListener("click", function (functRef,quest,questDef,questRtrn,mapBefore,mapAfter,functOut) {
+            return function () {
+              functOut.innerText = that.callFunction(functRef,quest,questDef,questRtrn,mapBefore,mapAfter);
+            };           
+          }(functRef,aryQuest[j],aryDefault[j],aryReturn[j],aryMapBef[j],aryMapAft[j],functOut));
+        }
+      }        
+
       // Create Test Code List Item
-        li = this.crtApnd("li");
-        liSpan = this.crtApnd("span", li, "View Function Unit Test Code and Results", ["addClass", "func"]);
-        codeDiv = this.crtApnd("div", li, null, 
-          [["addClass", "indentLeft"],
-          ["display", "none"]]);
-        liSpan.addEventListener("click", showHide(codeDiv.style));
-        var codeExists = this.insertCode(codeDiv, obj.files, "mochaTest", true);
-        obj.testResults = this.crtApnd("div", codeDiv);
-        if (codeExists === true) this.crtApnd(li, ul);
-
-      // Setup Button to Call Funtion
-      if (obj.strFunctionRef) {
-
-        var call = this.crtApnd("input", obj.btnDiv, null, [["attribute", "type", "button"], ["attribute", "value", obj.callCaption]]);
-        var that = this;
-        
-        call.addEventListener("click", function (o) {
-          return function () {
-            o.FuncOut.innerText = that.callFunction(o);
-          };           
-        }(obj));
-        
-        // Attach Function Text
-        // var text = typeof obj.jsCode === "number" ? ary[obj.jsCode].jsCode : obj.jsCode;
-
-        // this.crtApnd(obj.jsPre, null, this.cropText(text, obj.fileCrop));
+      li = this.crtApnd("li");
+      liSpan = this.crtApnd("span", li, "View/Hide Function Unit Test Code and Results", ["addClass", "func"]);
+      codeDiv = this.crtApnd("div", li, null, 
+        [["addClass", "indentLeft"],
+        ["display", "none"]]);
+      liSpan.addEventListener("click", showHide(codeDiv.style));
+      var codeExists = this.insertCode(codeDiv, obj.files, "mochaTest", true);
+      obj.testResults = this.crtApnd("div", codeDiv);
+      if (codeExists === true) this.crtApnd(li, ul);
 
 
-
-      }
         // Render HTML
         this.crtApnd(section, list[i]);
     }
@@ -336,28 +390,37 @@ var $setup = {
   },
 
   /** Calls Function and Returns Answer With Input
-   * @param  {Object} obj - Setup Object
+   * @param  {Function} functRef - Function to Call
+   * @param  {String} question - Prompt Question
+   * @param  {String} qDefault - Prompt Default
+   * @param  {String} qReturn - Prompt Return Type - Can be Array
+   * @param  {Function} mapBefore - Map Function to Apply to Each Item Before Value Converted
+   * @param  {Function} mapAfter - Map Function to Apply to Each Item after Value Converted
    * @returns {String} Function Input/Output String
    */
-  callFunction: function(obj) {
+  callFunction: function(functRef, question, qDefault, qReturn, mapBefore, mapAfter) {
 
-    if (obj.promptQuestion) {
-      var retrArr = this.getUserInput(obj.promptQuestion, obj.defaultPromptInput, obj.promptReturn);
+    if (question) {
+      var retrArr = this.getUserInput(question, qDefault, qReturn, mapBefore, mapAfter);
       if (retrArr === null) return "";
     }
 
+    var input = Array.isArray(retrArr) ? JSON.stringify(retrArr) : retrArr;
+    
     // Call Function - If More Than One Argument Apply Array
-    if (window[obj.strFunctionRef].length > 1) {
-      var retrn = window[obj.strFunctionRef].apply(null,retrArr);
+    if (functRef.length > 1) {
+      var retrn = functRef.apply(null,retrArr);
     } else {
-      retrn = window[obj.strFunctionRef](retrArr);
+      retrn = functRef(retrArr);
     }
 
     // Output: Determine if Array...
-    var input = Array.isArray(retrArr) ? retrArr.join(", ") : retrArr;
-    var output = Array.isArray(retrn) ? retrn.join(", ") : retrn;
+    // var input = Array.isArray(retrArr) ? retrArr.join(", ") : retrArr;
+    
+    // var output = Array.isArray(retrn) ? retrn.join(", ") : retrn;
+    var output = Array.isArray(retrn) ? JSON.stringify(retrn) : retrn;
 
-    if (obj.promptQuestion) {
+    if (question) {
       var strRetrn = "Function Input: " + input + "\nFunction Output: " + output;
     } else {
       strRetrn = "Function Output: " + output;
@@ -419,32 +482,30 @@ var $setup = {
    * @param  {String} question - Prompt Question
    * @param  {String} strDefault - Default Value
    * @param  {String} retrnFormat - Return Format String
-   * @param  {Function} mapFunction - Map Function to Apply to Each Item
+   * @param  {Function} functMapBeforeConvert - Map Function to Apply to Each Item Before Value Converted
+   * @param  {Function} functMapAfterConvert - Map Function to Apply to Each Item after Value Converted
    * @returns  {*|[]} String or Array
    */
-  getUserInput: function (question, strDefault, retrnFormat, mapFunction) {
-    //dataType 'Number' -> Converts to Number
-    var quest = question.slice(), ary = Array.isArray(retrnFormat), stay = false;
+  getUserInput: function (question, strDefault, retrnFormat, functMapBeforeConvert, functMapAfterConvert) {
+    //dataType 'number' -> Converts to Number
+
+    var quest = question;
+    var ary = Array.isArray(retrnFormat), stay = false;
 
     do {
 
         var str = prompt(quest,strDefault), chkFormat;
 
+        // Exit on Cancel
         if (str === null) return null;
 
-        if (ary) {
-          chkFormat = retrnFormat;
-        } else {
-          chkFormat = [retrnFormat];
-        }
+        // Convert Check & Input to Array if Needed
+        chkFormat = ary === true ? retrnFormat : [retrnFormat];
+        str = str.indexOf(",") === -1 ? [str] : str.split(",");
 
-        if (str.indexOf(",") === -1) {
-            str = [str];
-        } else {
-            str = str.split(",");
-            str = str.map(n=>n.trim());
-        }
-
+        if (functMapBeforeConvert) str = str.map(functMapBeforeConvert);
+        
+        // Check Input Format
         var last = chkFormat[0];
         for (let i = 0; i < str.length; i +=1) {
           let val, form = chkFormat[i] || last;
@@ -462,20 +523,19 @@ var $setup = {
               }
               break;
             case "boolean":
-              //Future
+              val = str[i];
+              str[i] = val === "1" || val.toLowerCase() === "true" ? true : false;
+              break;
           }
+          // Save Last Format
           if (form) last = form;
         }
 
     } while (stay);
 
-    if (mapFunction) str = str.map(mapFunction);
+    if (functMapAfterConvert) str = str.map(functMapAfterConvert);
 
-    if (ary) { 
-      return str;
-    } else {
-      return str[0];
-    }
+    return ary === true ? str : str[0];
     
 },
 
@@ -573,7 +633,11 @@ runMocha: function () {
       that.crtApnd(tests, section);
 
       var testEl = that.getSetupRef("strFunctionRef", text);
-      if (testEl !== null) if (testEl.testResults) testEl.testResults.appendChild(section);
+      if (testEl === null || !testEl.testResults) {
+        document.getElementById("error").style.display="";
+        throw "No Place to Put Mocha Test " + text;
+      }
+      testEl.testResults.appendChild(section);
 
     }
 
@@ -604,9 +668,10 @@ setup: function(strFunction, filePath, strCrop, promptDefault) {
       fileCrop: ["//" + strCrop + "mid", "//" + strCrop + "end", "+"],
       fileType: "jsCode",
     }],
-    strFunctionRef: strFunction, 
-    callCaption: "Click to Call Function " + strFunction,
-    promptQuestion: promptDefault === null ? null : "Please Enter Data",
+    strFunctionRef: strFunction,
+    functionRef:[], 
+    // callCaption: "Click to Call Function " + strFunction,
+    promptQuestion: promptDefault === null ? null : "Please Enter Arguments. Separated by Comma if Needed",
     promptReturn: null,
     defaultPromptInput: promptDefault,
 

@@ -31,9 +31,8 @@ a {
     color:red;
 }
 
-.divHolder {
-            margin:20px;
-            
+.divMargin {
+            margin:5px;
         }
 
 li {    margin-bottom: 10px;}
