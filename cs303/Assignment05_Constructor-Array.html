@@ -26,7 +26,7 @@
 
 <body>
   <div>
-  <h1><a href="./assignments/w2d1DataTypes2.pdf">W2D1 Assignment</a>: Constructors and Arrays<span id="error" style="color:red;">-Error on Page See Console</span></h1><br>
+  <h1><a href="./assignments/w2d1DataTypes.pdf">W2D1 Assignment</a>: Constructors and Arrays<span id="error" style="color:red;">-Error on Page See Console</span></h1><br>
   
 
   <h2>Objects: The Basics: Sections: Constructor, operator “new”</h2>
@@ -43,12 +43,17 @@
     <li id="filterRangeAry">Filter Array - Change Array</li>
     <li id="sortDecreaseOrder">Sort Array in Decreasing Order</li>
     <li id="sortArray">Copy and Sort Array</li>
-
-
-    
+    <li id="extCalculator">Create an Extendable Calculator</li>
+    <li id="covertArrayName">Map to Names</li>
+    <li id="mapToObject">Map to Objects</li>
+    <li id="sortByAge">Sort Users by Age</li>
+    <li id="shuffle">Shuffle an Array</li>
+    <li id="getAverageAge">Get Average Age</li>
+    <li id="unique">Filter Unique Array Members</li>
+    <li id="groupById">Create Keyed Object from Array</li>
   </ul>
 
-
+ 
 
 <!--
 
@@ -59,12 +64,21 @@
 -->
 
 </div>
+<br>
+<h2 id="allmochatests" class="func">All Mocha Tests</h2>
 <div id="mocha" style="display:none;"></div>
 <script>
+
+
 (function () {
 
-$setup.setup("equalObjects", "./js/A05_misc.js", "TEO", null)
-$setup.setup("Calculator", "./js/A05_misc.js", "CNC", "5, 5").
+document.getElementById("allmochatests").addEventListener("click",function(){
+  var mochaStyle = document.getElementById("mocha").style;
+  mochaStyle.display = mochaStyle.display === "" ? mochaStyle.display = "none" : "";
+});
+
+$setup.setup("equalObjects", "./js/A05_misc.js", "//TEO", null)
+$setup.setup("Calculator", "./js/A05_misc.js", "//CNC", "5, 5").
     mod("strFunctionRef", ["read","sum","mul"]).
     mod("promptReturn", [["number"], null, null]).
     mod("initialize", function () {
@@ -73,7 +87,7 @@ $setup.setup("Calculator", "./js/A05_misc.js", "CNC", "5, 5").
       this.functionRef[1] = function() {return calc.sum() + "\n Object = " + JSON.stringify(calc);}
       this.functionRef[2] = function() {return calc.mul() + "\n Object = " + JSON.stringify(calc);}
     });
-$setup.setup("Accumulator", "./js/A05_misc.js", "CNA", "5").
+$setup.setup("Accumulator", "./js/A05_misc.js", "//CNA", "5").
     mod("strFunctionRef", ["Accumulator","property value"]).
     mod("promptReturn", ["number", null]).
     mod("initialize", function () {
@@ -83,19 +97,46 @@ $setup.setup("Accumulator", "./js/A05_misc.js", "CNA", "5").
     }).
     addTest("./tests/A05_miscTest.js", "CNA");
 
-$setup.setup("camelize", "./js/A05_misc.js", "CTCC", "list-style-image");
+$setup.setup("camelize", "./js/A05_misc.js", "//CTCC", "list-style-image");
 
 
-$setup.setup("filterRange", "./js/A05_misc.js", "FR", "[5, 3, 8, 1],1,4");
-$setup.setup("filterRangeAry", "./js/A05_misc.js", "FRIP", "[5, 3, 8, 1],1,4");
-$setup.setup("sortDecreaseOrder", "./js/A05_misc.js", "SDO", "5, 2, 1, -10, 8").
+$setup.setup("filterRange", "./js/A05_misc.js", "//FR", null).
+  mod("strFunctionRef", "callfilterRange");
+$setup.setup("filterRangeAry", "./js/A05_misc.js", "//FRIP", null).
+  mod("strFunctionRef", "callfilterRangeAry");
+$setup.setup("sortDecreaseOrder", "./js/A05_misc.js", "//SDO", "5, 2, 1, -10, 8").
     mod("promptReturn", [["number"]]);
-$setup.setup("sortArray", "./js/A05_misc.js", "SAC", "HTML, JavaScript, CSS").
+$setup.setup("sortArray", "./js/A05_misc.js", "//SAC", "HTML, JavaScript, CSS").
     mod("promptReturn", [["string"]]);
 
     
+$setup.setup("extCalculator", "./js/A05_misc.js", "//ECAL", ["5 + 5"]).
+    mod("strFunctionRef", ["extCalculator","addMethod *"]).
+    mod("promptReturn", ["string", null]).
+    mod("initialize", function () {
+      var cal = new extCalculator(1);
+      this.functionRef[0] = cal.calculate.bind(cal);
+      this.functionRef[1] = function () {cal.addMethod("*", (a, b) => a * b)};
+
+      // this.functionRef[2] = function() {return cal.value + "\n Object = " + JSON.stringify(cal);}
+    })
+    // addTest("./tests/A05_miscTest.js", "CNA");
+    
 
 
+$setup.setup("covertArrayName", "./js/A05_misc.js", "//MTN", null)
+$setup.setup("mapToObject", "./js/A05_misc.js", "//MTO", null)
+$setup.setup("sortByAge", "./js/A05_misc.js", "//SUA", null).
+    mod("strFunctionRef", "callSortByAge")
+$setup.setup(["shuffle", "checkProbablity"], "./js/A05_misc.js", "//SAA", "1, 2, 3").
+   mod("promptReturn", [["number"], null])     
+$setup.setup("getAverageAge", "./js/A05_misc.js", "//GAA", null).
+   mod("strFunctionRef", "callgetAverageAge")
+$setup.setup("unique", "./js/A05_misc.js", "//FUAM", "Hare, Krishna, Hare, Krishna, Krishna, Krishna, Hare, Hare, :-O").
+   mod("promptReturn", [["string"]])  
+$setup.setup("groupById", "./js/A05_misc.js", "//CKOFA", null).
+    mod("strFunctionRef", "callgroupById").
+    addTest("./tests/A05_miscTest.js", "//CKOFA");
 
 // $setup.setup("getMaxSubSum", "./js/A04_misc.js", "MSA", "-2, -1, 1, 2").
 //   addTest("./tests/A04_miscTest.js", "MSA").

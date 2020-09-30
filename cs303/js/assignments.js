@@ -141,7 +141,7 @@ var $setup = {
     for (let i = 0; i < conditions.length; i+=1) {
       
       start = this.getTextLoc(text, conditions[i][0], 0);
-      end = this.getTextLoc(text, conditions[i][1], text.length - 1);
+      end = this.getTextLoc(text, conditions[i][1]);
 
       if (conditions[i][2] === "+") {
         text = text.slice(start[0] + start[1], end[0]);
@@ -381,7 +381,7 @@ var $setup = {
           this.crtApnd("a", frag, "View File", ["href", files[i].filePath]);
         }
         var spot = this.crtApnd("pre", frag);
-        this.crtApnd("code", spot, this.cropText(this.jsLoaded[files[i].filePath].code, files[i].fileCrop));
+        this.crtApnd("code", spot, this.cropText(this.jsLoaded[files[i].filePath].code, [files[i].fileCrop]));
         this.crtApnd(frag, appendto);
         appended = true;
       }
@@ -398,13 +398,14 @@ var $setup = {
    * @param  {Function} mapAfter - Map Function to Apply to Each Item after Value Converted
    * @returns {String} Function Input/Output String
    */
-  callFunction: function(functRef, question, qDefault, qReturn, mapBefore, mapAfter) {
+  callFunction: function(functRef, question, qDefault, qReturn, mapBefore, mapAfter, outputfunc) {
 
     if (question) {
       var retrArr = this.getUserInput(question, qDefault, qReturn, mapBefore, mapAfter);
       if (retrArr === null) return "";
     }
 
+    // Get Input
     var input = Array.isArray(retrArr) ? JSON.stringify(retrArr) : retrArr;
     
     // Call Function - If More Than One Argument Apply Array
@@ -418,13 +419,17 @@ var $setup = {
     // var input = Array.isArray(retrArr) ? retrArr.join(", ") : retrArr;
     
     // var output = Array.isArray(retrn) ? retrn.join(", ") : retrn;
-    var output = Array.isArray(retrn) ? JSON.stringify(retrn) : retrn;
+    // var output = Array.isArray(retrn) ? JSON.stringify(retrn) : retrn;
+    var output = typeof retrn === "object" ? JSON.stringify(retrn) : retrn;
 
     if (question) {
       var strRetrn = "Function Input: " + input + "\nFunction Output: " + output;
     } else {
       strRetrn = "Function Output: " + output;
     }
+
+    // Modify Output if Needed
+    if (outputfunc) strRetrn = outputfunc(retrArr, retrn);
 
     return strRetrn;
 
@@ -632,7 +637,7 @@ runMocha: function () {
       
       that.crtApnd(tests, section);
 
-      var testEl = that.getSetupRef("strFunctionRef", text);
+      var testEl = that.getSetupRef("key", text);
       if (testEl === null || !testEl.testResults) {
         document.getElementById("error").style.display="";
         throw "No Place to Put Mocha Test " + text;
@@ -661,11 +666,11 @@ setup: function(strFunction, filePath, strCrop, promptDefault) {
     key: strFunction,
     files: [{
       filePath: filePath,
-      fileCrop: ["//" + strCrop + "start", "//" + strCrop + "mid", "+"],
+      fileCrop: [[strCrop, 1],[strCrop,2], "+"],
       fileType: "Description",
-      },{
+      },{ 
       filePath: filePath,
-      fileCrop: ["//" + strCrop + "mid", "//" + strCrop + "end", "+"],
+      fileCrop: [[strCrop , 2], [strCrop, 3], "+"],
       fileType: "jsCode",
     }],
     strFunctionRef: strFunction,
@@ -684,7 +689,7 @@ setup: function(strFunction, filePath, strCrop, promptDefault) {
       if (!this.files) this.files = [];
       this.files.push({
         filePath: path,
-        fileCrop: crop ? ["//" + crop + "start", "//" + crop + "end", "+"]  : null,
+        fileCrop: crop ? [[crop, 1], [crop, 2], "+"]  : null,
         fileType: "mochaTest",
       });
       delete this.addTest;

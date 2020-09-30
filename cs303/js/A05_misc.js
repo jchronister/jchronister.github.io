@@ -3,13 +3,17 @@
 /* eslint-disable require-jsdoc */
 "use strict";
 var log = console.log;
+// eslint-disable-next-line no-redeclare
+if (typeof alert === "undefined") var alert = console.log;
+// eslint-disable-next-line no-redeclare
+if (typeof prompt === "undefined") var prompt = require("prompt-sync")();
 
-//TEOstart
+//TEO
 /* Two functions – one object
 *
 * Is it possible to create functions A and B such as new A() === new B()?
 */
-//TEOmid
+//TEO
 /** Create Equal Objects with New
  *  @returns {Object} Two Equal Objects
  */
@@ -23,7 +27,7 @@ function equalObjects () {
   return new A() === new B();
 
 }
-//TEOend
+//TEO
 //CNCstart
 /*  Create new Calculator
 *
@@ -168,6 +172,10 @@ function filterRange (arr, a, b) {
   return [arrFilt, arr];
 
 }
+
+function callfilterRange() {
+  return filterRange([5, 3, 8, 1], 1, 4);
+}
 //FRend
 //FRIPstart
 /* Filter range "in place"
@@ -201,7 +209,13 @@ function filterRangeAry (arr, a, b) {
     b = temp;
   }
 
-  arr.forEach((n,i)=>{if(n < a || n < b) arr.splice(i,1);});
+  arr.forEach((n,i)=>{if(n < a || n > b) arr.splice(i,1);});
+}
+
+function callfilterRangeAry() {
+  var arr = [5, 3, 8, 1];
+  filterRangeAry(arr, 1, 4);
+  return arr;
 }
 //FRIPend
 //SDOstart
@@ -247,7 +261,7 @@ function sortArray(arr) {
   return [arrSort, arr];
 }
 //SACend
-//CALstart
+//ECAL
 /* Create an extendable calculator
 *
 *  Create a constructor function Calculator that creates “extendable” calculator objects.
@@ -278,90 +292,231 @@ function sortArray(arr) {
 *  The numbers and the operator are delimited with exactly one space.
 *  There may be error handling if you’d like to add it.
 */
-//CALmid
-
-
-
+//ECAL
 function extCalculator () {
 
+  // Calculator Methods
   this.opr = {
-    "+":function(a,b){return a + b},
-    "-":function(a,b){return a - b}
-  },
-
-
-  this.strSpliter = function(strSplit) {
-    var ary = strSplit.split("").map(n=>n.trim());
-    var cal = [], cnt = 0;
-
-    ary.forEach(function(n) {
-      if (n !== "") {
-        var chr = Number(n);
-        if (chr === chr) {
-          cal[cnt] = cal[cnt] ? cal[cnt] + n : n;
-        } else { 
-          cnt+=1;
-          cal[cnt] = n;
-          cnt+=1;
-        }
-      }
-    });
-
-    // Convert undefined to 0 and Numbers
-    for (var i = 0; i < cal.length; i += 1) {
-      if (!cal[i]) {
-        cal[i] = 0;
-      } else {
-        var num = Number(cal[i]);
-        if (num === num) cal[i] = num;
-      }
-    }
-
-    return cal;
-
+    "+":function(a,b){return a + b;},
+    "-":function(a,b){return a - b;}
   };
 
+  this.calculate = function(strFormula) {
+    
+    var formula = strFormula.split(" "), retrn;
 
-  // this.calculate = function (str) {
-  // }
+    var num1 = Number(formula[0]);
+    var num2 = Number(formula[2]);
+    var cal = formula[1];
 
-  // calculate
+    if (num1 !== num1) {
+      return "First Number is Not a Number";
+    } else if (num2 !== num2) {
+      return "Second Number is Not a Number";
+    }
 
+    if (cal in this.opr) {
+      return this.opr[formula[1]](num1, num2);
+    } else {
+      return "Do Not Understand Operator: " + cal;
+    }
+  };
+
+  this.addMethod = function (name, func) {
+    this.opr[name] = func;
+  };
+}
+//ECAL
+//MTN
+/* Map to names
+*  
+*  You have an array of user objects, each one has user.name. 
+*  Write the code that converts it into an array of names.
+*  
+*/
+//MTN
+function covertArrayName () {
+
+  let john = {name: "John", age: 25};
+  let pete = {name: "Pete", age: 30};
+  let mary = {name: "Mary", age: 28};
+  let users = [ john, pete, mary ];
+
+  let names = users.map(n=>n.name);
+
+  return names;
+
+}
+//MTN
+//MTO
+/* Map to objects
+*  
+*  You have an array of user objects, each one has name, surname and id.
+*  
+*  Write the code to create another array from it, of objects with id 
+*  and fullName, where fullName is generated from name and surname.
+*/
+//MTO
+function mapToObject(obj) {
+
+  // Default Test Object
+  let john = { name: "John", surname: "Smith", id: 1 };
+  let pete = { name: "Pete", surname: "Hunt", id: 2 };
+  let mary = { name: "Mary", surname: "Key", id: 3 };
+
+  let users = obj || [ john, pete, mary ];
+
+  return users.map(n=>{
+    var obt = {};
+    obt.fullName = n.name + " " + n.surname;
+    obt.id = n.id;
+    return obt;
+  });
+}
+//MTO
+//SUA
+/*  Sort users by age
+*   
+*   Write the function sortByAge(users) that gets an array of objects 
+*   with the age property and sorts them by age.
+*/
+//SUA
+function sortByAge (objAry) {
+  return objAry.sort((a, b) => a.age - b.age);
+}
+
+function callSortByAge() {
+  let john = { name: "John", age: 25 };
+  let pete = { name: "Pete", age: 30 };
+  let mary = { name: "Mary", age: 28 };
+  let arr = [ pete, john, mary ];
+  return sortByAge(arr);
+}
+//SUA
+//SAA
+/* Shuffle an array
+*  
+*  Write the function shuffle(array) that shuffles (randomly reorders) 
+*  elements of the array.
+*  
+*  Multiple runs of shuffle may lead to different orders of elements. 
+*  All element orders should have an equal probability.
+*/
+//SAA
+function shuffle(ary) {
+
+  var i = 0, retrn = [], len = ary.length;
+  do {
+    var spot = Math.floor(len * Math.random());
+
+    if(!retrn[spot]) {
+      retrn[spot] = ary[i];
+      i += 1;
+    }
+
+  } while (i < len);
+  return retrn;
+}
+
+function checkProbablity () {
+
+  let count = {
+    "123": 0,
+    "132": 0,
+    "213": 0,
+    "231": 0,
+    "321": 0,
+    "312": 0,
+  };
+
+  //Shuffle Array
+  for (let i = 0; i < 1000000; i++) {
+    let array = [1, 2, 3];
+    count[shuffle(array).join("")]++;
+  }
+  return count;
+}
+//SAA
+//GAA
+/* Get average age
+*
+*  Write the function getAverageAge(users) that gets an array of 
+*  objects with property age and returns the average age.
+*  
+*  The formula for the average is (age1 + age2 + ... + ageN) / N.
+*  // (25 + 30 + 29) / 3 = 28
+*/
+//GAA
+function getAverageAge(users) {
+  var total = users.length || 1;
+  return users.reduce((a,n)=>a+n.age,0) / total;
+}
+
+function callgetAverageAge() {
+  let john = { name: "John", age: 25 };
+  let pete = { name: "Pete", age: 30 };
+  let mary = { name: "Mary", age: 29 };
+
+  let arr = [ john, pete, mary ];
+  return getAverageAge(arr);
+}
+//GAA
+//FUAM
+/*  Filter unique array members
+*  
+*  Let arr be an array.
+*  
+*  Create a function unique(arr) that should return an array with 
+*  unique items of arr.
+*/
+//FUAM
+function unique(arr) {
+  var retrn = [];
+
+  arr.forEach(function(m) {
+    // Slow for Big Arrays
+    if(retrn.reduce((a,n) => n===m ? a + 1 : a,0) === 0) retrn.push(m);
+  });
+  return retrn;
+}
+//FUAM
+//CKOFA
+/*  Create keyed object from array
+*
+*   Let’s say we received an array of users in the form 
+*   {id:..., name:..., age... }.
+*
+*   Create a function groupById(arr) that creates an object from it,
+*   with id as the key, and array items as values.
+*   Use array .reduce method in the solution.
+*
+*   After the call we should have:
+*  {
+*  john: {id: 'john', name: "John Smith", age: 20},
+*  ann: {id: 'ann', name: "Ann Smith", age: 24},
+*  pete: {id: 'pete', name: "Pete Peterson", age: 31},
+*  }
+*/
+
+//CKOFA
+function groupById(arr) {
+
+  return arr.reduce(function(a, n) {
+    a[n.id] = n;
+      return a;
+    }, {});
 
 }
 
+function callgroupById() {
 
-var t = new extCalculator();
-log(t.strSpliter("-4+ -1 +-6"))
+  let users = [
+    {id: "john", name: "John Smith", age: 20},
+    {id: "ann", name: "Ann Smith", age: 24},
+    {id: "pete", name: "Pete Peterson", age: 31},
+  ];
 
+  return groupById(users);
+}
+//CKOFA
 
-
-
-
-
-
-// log(typeof opr["*"]==="function")
-//CALend
-
-
-// log(sortArray(["HTML", "JavaScript", "CSS"]))
-
-
-
-
-
-
-
-//SACend
-
-
-
-
-
-
-
-
-
-
-
-// log(camelize("background-color"))
