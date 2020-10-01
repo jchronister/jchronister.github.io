@@ -82,7 +82,7 @@ function calltopSalary() {
 function createDates() {
   return ([new Date("2012-02-20T03:12Z"),
   new Date("February 20, 2012 03:12:00Z"),
-  new Date(2012, 1, 20, 3, 12).toUTCString()]);
+  new Date(2012, 1, 20, 3, 12)]);
 }
 //CAD
 //SAW
