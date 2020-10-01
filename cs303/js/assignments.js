@@ -333,11 +333,11 @@ var $setup = {
             if (aryQuest[j] === undefined) aryQuest[j] = "Please Enter Arguments. Separated by Comma if Needed";
             if (aryMapBef[j] === undefined) aryMapBef[j] = (n)=>n.trim();
           }
-          btn.addEventListener("click", function (functRef,quest,questDef,questRtrn,mapBefore,mapAfter,functOut) {
+          btn.addEventListener("click", function (functRef,quest,questDef,questRtrn,mapBefore,mapAfter,functOutput, functOut) {
             return function () {
-              functOut.innerText = that.callFunction(functRef,quest,questDef,questRtrn,mapBefore,mapAfter);
+              functOut.innerText = that.callFunction(functRef,quest,questDef,questRtrn,mapBefore,mapAfter,functOutput);
             };           
-          }(functRef,aryQuest[j],aryDefault[j],aryReturn[j],aryMapBef[j],aryMapAft[j],functOut));
+          }(functRef,aryQuest[j],aryDefault[j],aryReturn[j],aryMapBef[j],aryMapAft[j],obj.outputfunc, functOut));
         }
       }        
 
@@ -664,6 +664,7 @@ setup: function(strFunction, filePath, strCrop, promptDefault) {
   
   var obj = {
     key: strFunction,
+    strCrop: strCrop,
     files: [{
       filePath: filePath,
       fileCrop: [[strCrop, 1],[strCrop,2], "+"],
@@ -687,16 +688,17 @@ setup: function(strFunction, filePath, strCrop, promptDefault) {
      */
     addTest: function (path, crop) {
       if (!this.files) this.files = [];
+      var textCrop = crop || this.strCrop;
       this.files.push({
         filePath: path,
-        fileCrop: crop ? [[crop, 1], [crop, 2], "+"]  : null,
+        fileCrop: textCrop ? [[textCrop, 1], [textCrop, 2], "+"]  : null,
         fileType: "mochaTest",
       });
       delete this.addTest;
       return this;
     },
 
-    /** Quick Test Setup
+    /** Quick Property Setup
     * @param {String} property - Property
     * @param {*} value - Value
     * @returns {Object} this
@@ -709,8 +711,6 @@ setup: function(strFunction, filePath, strCrop, promptDefault) {
   };
 
 
-
- 
 
   $setup.ary.push(obj);
   return obj;

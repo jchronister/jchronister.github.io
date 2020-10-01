@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+
+  <link href="./js/assignment.css" rel="stylesheet" type="text/css"/>
+  <script src="./js/assignments.js"></script>
+
+  <!-- Reference Chai -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/chai/4.2.0/chai.min.js"></script>
+  
+  <!-- Reference Mocha Framework Code -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/mocha/3.2.0/mocha.js"></script>
+
+  <!-- Sinon Link-->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/sinon.js/9.0.3/sinon.min.js"></script>
+  
+  <!-- Setup Mocha Framework -->
+  <script>
+    mocha.setup('bdd');
+    var assert = chai.assert;
+  </script>
+</head>
+
+<body>
+  <div>
+  <h1><a href="./assignments/w2d3RecursionAssignment.pdf">W2D3 Assignment</a>: Recursion<span id="error" style="color:red;">-Error on Page See Console</span></h1><br>
+  
+
+  <h2>Part 0: Array method practice:</h2>
+
+
+  <h3>Map</h3>
+  <ul>
+    <li id="mapDouble">Double Numbers and Age</li>
+  </ul>
+
+  <h3>Filter</h3>
+  <ul>
+    <li id="filterAllEvens">Filter for Even Numbers</li>
+    <li id="filterAgeGT10">Filter Age >10</li>
+    <li id="findEven">Find Even & Includes Even</li>
+    <li id="findGT10">Find >10 & Includes >10</li>
+  </ul>
+
+  <h3>Reduce</h3>
+  <ul>
+    <li id="reduceToSum">Find Sum of Numbers</li>
+    <li id="reduceToAvg">Find Average of Numbers</li>
+    <li id="reduceToMax">Find Max for Numbers and Ages</li>
+    <li id="reduceAvgEvenAge">Find Average of Even Ages. Chain Map/Filter/Reduce</li>
+    <li id="reduceAvgOddAge">Find Average of Odd Ages. Chain Map/Filter/Reduce</li>
+  </ul>
+
+  <h2>Part 2: Write a Recursive Function</h2>
+  <ul>
+    <li id="callrecurseTree">Recursive Function</li>
+    <li id="calliterativeTree">Iterative Function</li>
+  </ul>
+
+<!--
+
+  <h2></h2>
+  <ul>
+    <li id=""></li>
+  </ul>
+-->
+
+</div>
+<br>
+<h2 id="allmochatests" class="func">All Mocha Tests</h2>
+<div id="mocha" style="display:none;"></div>
+<script>
+
+
+(function () {
+
+document.getElementById("allmochatests").addEventListener("click",function(){
+  var mochaStyle = document.getElementById("mocha").style;
+  mochaStyle.display = mochaStyle.display === "" ? mochaStyle.display = "none" : "";
+});
+
+// $setup.setup("destructureObj", "./js/W2D2_Assignment.js", "//DA", null);
+
+
+
+$setup.setup("reduceAvgEvenAge", "./js/W2D3_Assignment.js", "//RAEA", null).
+    addTest("./tests/W2D3_AssignmentTest.js").
+    mod("strFunctionRef", null);
+    
+$setup.setup("reduceAvgOddAge", "./js/W2D3_Assignment.js", "//RAOA", null).
+    addTest("./tests/W2D3_AssignmentTest.js").
+    mod("strFunctionRef", null);
+
+$setup.setup("reduceToMax", "./js/W2D3_Assignment.js", "//RTM", null).
+    addTest("./tests/W2D3_AssignmentTest.js").
+    mod("strFunctionRef", null);
+    
+$setup.setup("reduceToAvg", "./js/W2D3_Assignment.js", "//RTA", null).
+    addTest("./tests/W2D3_AssignmentTest.js").
+    mod("strFunctionRef", null);
+
+$setup.setup("reduceToSum", "./js/W2D3_Assignment.js", "//RTS", null).
+    addTest("./tests/W2D3_AssignmentTest.js").
+    mod("strFunctionRef", null);
+
+$setup.setup("mapDouble", "./js/W2D3_Assignment.js", "//MD", null).
+    addTest("./tests/W2D3_AssignmentTest.js").
+    mod("strFunctionRef", null);
+
+$setup.setup("filterAllEvens", "./js/W2D3_Assignment.js", "//FAE", null).
+    addTest("./tests/W2D3_AssignmentTest.js").
+    mod("strFunctionRef", null);
+$setup.setup("filterAgeGT10", "./js/W2D3_Assignment.js", "//FAG10", null).
+    addTest("./tests/W2D3_AssignmentTest.js").
+    mod("strFunctionRef", null);
+$setup.setup("findEven", "./js/W2D3_Assignment.js", "//FEIE", null).
+    addTest("./tests/W2D3_AssignmentTest.js").
+    mod("strFunctionRef", null);
+$setup.setup("findGT10", "./js/W2D3_Assignment.js", "//FG10IG10", null).
+    addTest("./tests/W2D3_AssignmentTest.js").
+    mod("strFunctionRef", null);
+
+$setup.setup("callrecurseTree", "./js/W2D3_Assignment.js", "//RTREE", null).
+    mod("outputfunc",function(){return "See Console for Output"});
+
+$setup.setup("calliterativeTree", "./js/W2D3_Assignment.js", "//ITREE", null).
+    mod("outputfunc",function(){return "See Console for Output"});
+
+
+// $setup.setup("Calculator", "./js/A05_misc.js", "//CNC", "5, 5").
+//     mod("strFunctionRef", ["read","sum","mul"]).
+//     mod("promptReturn", [["number"], null, null]).
+//     mod("initialize", function () {
+//       var calc = new Calculator();
+//       this.functionRef[0] = calc.read.bind(calc);
+//       this.functionRef[1] = function() {return calc.sum() + "\n Object = " + JSON.stringify(calc);}
+//       this.functionRef[2] = function() {return calc.mul() + "\n Object = " + JSON.stringify(calc);}
+//     });
+
+
+
+//     <li id="">Create New Accumulator</li>
+
+
+// $setup.ary.push({
+// key: "random",
+// files: [{
+//   filePath: "./js/A04_random.js",
+//   fileCrop: ["//>DescStart", "//>DescEnd", "+"],
+//   fileType: "Description",
+//   },{
+//   filePath: "./js/A04_random.js",
+//   fileCrop: [0, "//>DescEnd", "-"],
+//   fileType: "jsCode",
+// },{
+//   filePath: "./tests/A04_randomTest.js",
+//   fileCrop: null,
+//   fileType: "mochaTest",
+// }],
+// strFunctionRef: "random", 
+// callCaption: "Click to Call Function random",
+// promptQuestion: "Please Enter Min and Max Separated by Comma",
+// promptReturn: ["number","number"],
+// defaultPromptInput: "1, 10",
+// });
+
+
+
+
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+    
+
+ 
+
+
+
+
+
+
+
+
+
+
+
+// Update Page
+$setup.requestFiles()
+document.getElementById("error").style.display="none";
+})();
+</script>
+
+</body>
+</html>

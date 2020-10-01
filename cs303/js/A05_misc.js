@@ -5,7 +5,7 @@
 var log = console.log;
 // eslint-disable-next-line no-redeclare
 if (typeof alert === "undefined") var alert = console.log;
-// eslint-disable-next-line no-redeclare
+// eslint-disable-next-line no-undef, no-redeclare
 if (typeof prompt === "undefined") var prompt = require("prompt-sync")();
 
 //TEO
