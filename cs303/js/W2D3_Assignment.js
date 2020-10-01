@@ -164,19 +164,19 @@ function callrecurseTree(){recurseTree(getTree());}
 // eslint-disable-next-line require-jsdoc, no-unused-vars
 function iterativeTree(tree) {
 
-  var skipped = [];
+  var stack = [];
 
   do {
 
     // Log and Remove from Stack
     log(tree.name, tree.value);
-    skipped.shift();
+    stack.shift();
     var child = tree.children;
 
     // Add Children to Stack
-    if (child !== null) child.forEach(n=>skipped.push(n));
+    if (child !== null) child.forEach(n=>stack.push(n));
  
-    tree = skipped[0];
+    tree = stack[0];
   
   } while(tree !== undefined);
   
