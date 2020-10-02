@@ -54,6 +54,20 @@
     <li id="reduceAvgOddAge">Find Average of Odd Ages. Chain Map/Filter/Reduce</li>
   </ul>
 
+
+
+  <h2>Part 1: Recursion and stack:</h2>
+  <ul>
+    <li id="sumToUseRecursion">Sum All Numbers Up To the One Given</li>
+    <li id="calculatefactorial">Calculate Factorial</li>
+    <li id="fibonacci">Fibonacci Numbers</li>
+    <li id="printListbyRecursion">Console Log a Single-Linked List</li>
+    <li id="reverseLinkedList">Console Log a Single-Linked List in Reverse Order</li>
+  </ul>
+
+
+
+
   <h2>Part 2: Write a Recursive Function</h2>
   <ul>
     <li id="callrecurseTree">Recursive Function</li>
@@ -128,6 +142,27 @@ $setup.setup("callrecurseTree", "./js/W2D3_Assignment.js", "//RTREE", null).
 
 $setup.setup("calliterativeTree", "./js/W2D3_Assignment.js", "//ITREE", null).
     mod("outputfunc",function(){return "See Console for Output"});
+
+$setup.setup("sumToUseRecursion", "./js/W2D3_Assignment.js", "//STN", ["100", "100", "100"]).
+    mod("strFunctionRef", ["sumToUseRecursion", "sumToUseLoop", "sumToArithmeticProgression"]).
+    mod("promptReturn", ["number", "number", "number"]);
+
+$setup.setup("calculatefactorial", "./js/W2D3_Assignment.js", "//CF", "5").
+    mod("promptReturn", "number");
+
+$setup.setup("fibonacci", "./js/W2D3_Assignment.js", "//FN", "77").
+    mod("promptReturn", "number");
+
+$setup.setup("printListbyRecursion", "./js/W2D3_Assignment.js", "//LL", null).
+  mod("outputfunc",function(){return "See Console for Output"}).
+  mod("promptReturn", [null,null]).
+  mod("strFunctionRef", ["callprintListbyRecursion", "callprintListbyIteration"]);
+
+$setup.setup("reverseLinkedList", "./js/W2D3_Assignment.js", "//OSLLR", null).
+  mod("outputfunc",function(){return "See Console for Output"}).
+  mod("promptReturn", [null,null]).
+  mod("strFunctionRef", ["callreverseLinkedList", "callreverseLinkedListIteration"]);
+
 
 
 // $setup.setup("Calculator", "./js/A05_misc.js", "//CNC", "5, 5").
