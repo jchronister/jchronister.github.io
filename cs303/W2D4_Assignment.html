@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+
+  <link href="./js/assignment.css" rel="stylesheet" type="text/css"/>
+  <script src="./js/assignments.js"></script>
+
+  <!-- Reference Chai -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/chai/4.2.0/chai.min.js"></script>
+  
+  <!-- Reference Mocha Framework Code -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/mocha/3.2.0/mocha.js"></script>
+
+  <!-- Sinon Link-->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/sinon.js/9.0.3/sinon.min.js"></script>
+  
+  <!-- Setup Mocha Framework -->
+  <script>
+    mocha.setup('bdd');
+    var assert = chai.assert;
+  </script>
+</head>
+
+<body>
+  <div>
+  <h1><a href="./Assignments/w2d4recursionPracticeAssignment.pdf">W2D4 Assignment</a>: Recursion Practice<span id="error" style="color:red;">-Error on Page See Console</span></h1><br>
+  
+
+  <h2>Questions:</h2>
+  <ul>
+    <li id="viewtree">View Tree</li>
+    <li id="logTreeNamebyRecursion">Log Tree Node Names to Console</li>
+    <li id="treeContains">Is Node Value Present in Tree</li>
+    <li id="getTreeNode">Return Node in Tree</li>
+    <li id="createListNode">Create a New Class and Generate a Linked List</li>
+    <li id="findListNode">Return Node in List</li>
+    <li id="allCaps">Modify All Node Values in Tree</li>
+    <li id="spreadCopyArray">Spread Operator Examples</li>
+    <li id="restDestructuringAssignment">Rest Operator Examples</li>
+  </ul> 
+
+  <h2>Fibonacci Sequence Test</h2>
+  <ul>
+    <li id="fibonacci No Memorization (45 Cap)">Fibonacci with No Memorization</li>
+  </ul>
+
+
+  
+<!--
+
+  <h2></h2>
+  <ul>
+    <li id=""></li>
+  </ul>
+-->
+
+</div>
+<br>
+<h2 id="allmochatests" class="func">All Mocha Tests</h2>
+<div id="mocha" style="display:none;"></div>
+<script>
+
+
+(function () {
+
+document.getElementById("allmochatests").addEventListener("click",function(){
+  var mochaStyle = document.getElementById("mocha").style;
+  mochaStyle.display = mochaStyle.display === "" ? mochaStyle.display = "none" : "";
+});
+
+
+
+
+
+$setup.setup("logTreeNamebyRecursion", "./js/W2D4_Assignment.js", "//LTTC", null).
+    mod("functionRef", [function () {
+        window["logTreeNamebyRecursion"](window["getW2D4Tree"]()[0]);
+      }]).
+    mod("outputfunc",function(){return "See Console for Output"});
+    
+$setup.setup(["treeContains","treeContainsAnotherWay"], "./js/W2D4_Assignment.js", "//TC", null).
+    mod("functionRef", [function () {
+        var user = $setup.getUserInput("Enter Node Name", "Lisa","string");
+        return window["treeContains"](window["getW2D4Tree"]()[0], user);
+      },
+      function () {
+        var user = $setup.getUserInput("Enter Node Name", "Lisa","string");
+        return window["treeContainsAnotherWay"](window["getW2D4Tree"]()[0], user);
+      }    
+    ]).
+    mod("promptReturn", [null,null]);
+ 
+$setup.setup("viewtree", "./js/W2D4_Assignment.js", "//GW2D4TREE", null).
+    mod("functionRef", [function () {
+        log(window["getW2D4Tree"]()[0]);
+      }]).
+    mod("outputfunc",function(){return "See Console for Output"})
+    
+$setup.setup("getTreeNode", "./js/W2D4_Assignment.js", "//GTN", null).
+    mod("functionRef", [function () {
+        var user = $setup.getUserInput("Enter Node Name", "Lisa","string");
+        var ext = window["extendTree"];
+        var tree = window["getW2D4Tree"];
+        return window["getTreeNode"](ext(tree())[0], user);
+      }]).
+      addTest("./tests/W2D4_AssignmentTest.js");
+    
+
+$setup.setup("createListNode", "./js/W2D4_Assignment.js", "//CLN", null).
+    mod("functionRef", [function () {
+        log(window["createListNode"]());
+      }]).
+    mod("outputfunc",function(){return "See Console for Output"});
+
+$setup.setup("findListNode", "./js/W2D4_Assignment.js", "//FLN", null).
+    mod("functionRef", [function () {
+        var user = $setup.getUserInput("Enter Node Name", "Bart","string");
+        var tree = window["createListNode"];
+        return window["findListNode"](tree(), user);
+      }]);
+
+$setup.setup(["allCaps","addStars", "reverseString"], "./js/W2D4_Assignment.js", "//TRM", null).
+    mod("functionRef", [function () {
+        return window["treeModifier"](window["getW2D4Tree"]()[0], window["allCaps"]);
+      },
+      function () {
+        return window["treeModifier"](window["getW2D4Tree"]()[0], window["addStars"]);
+      },
+      function () {
+        return window["treeModifier"](window["getW2D4Tree"]()[0], window["reverseString"]);
+      }    
+    ]).
+    mod("promptReturn", [null,null, null]);
+
+
+    var list = ["spreadCopyArray","spreadConcatenateArrays","spreadConcatenateArrayAndElement",
+    "spreadFunctionCallArguments", "spreadMathMin", "spreadMathMax", "spreadCombineObjects"]
+    $setup.setup(list, "./js/W2D4_Assignment.js", "//SO", null).
+      mod("promptReturn", [null,null,null,null,null,null,null]);
+
+    $setup.setup(["restDestructuringAssignment","restFunctionDeclaration"], "./js/W2D4_Assignment.js", "//RO", null).
+      mod("promptReturn", [null,null]);
+
+
+    $setup.setup(["fibonacci No Memorization (45 Cap)","fibonacci with Memorization"], "./js/W2D4_Assignment.js", "//FTS", null).
+    mod("functionRef", [function () {
+        var user = $setup.getUserInput("Enter Number", "35","number");
+        if (user > 45) user = 45; 
+        this.inputB = user;
+        return window["fibonacciTest"](user, false);
+      },
+      function () {
+        var user = $setup.getUserInput("Enter Number", "35","number");
+        this.inputB = user;
+        return window["fibonacciTest"](user, true);
+      }]).
+      mod("outputfunc",function(skip, retrn){return "Function Input: " + this.inputB + "\n" + "Function Output:" + retrn}).
+      mod("promptReturn", [null,null]);
+
+     
+
+
+// Update Page
+$setup.requestFiles()
+document.getElementById("error").style.display="none";
+})();
+</script>
+
+</body>
+</html>

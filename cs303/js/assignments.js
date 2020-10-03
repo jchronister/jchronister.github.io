@@ -202,7 +202,7 @@ var $setup = {
       for (var j = 0; j < files.length; j += 1) {
         var file = files[j].filePath;
 
-        if (!allFiles[file]) {
+        if (!allFiles[file] && file) {
           this.httpRequest(obj, file, this.insertJSCode);
 
           allFiles[file] = {
