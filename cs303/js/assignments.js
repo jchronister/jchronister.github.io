@@ -259,7 +259,7 @@ var $setup = {
         // ["addClass", "divInfo"]]); 
       elmnt.addEventListener("click", showHide(div.style));
 
-      var ul = this.crtApnd("ul", div);
+      var ul = this.crtApnd("ul", div, null, ["addClass", "ListInfo"]);
       
       // Add Description
       var descLi = this.crtApnd("li", ul, null, ["addClass", "description"]);
@@ -267,7 +267,7 @@ var $setup = {
 
       // Create js Code List Item
       var li = this.crtApnd("li", ul);
-      var liSpan = this.crtApnd("span", li, "View/Hide js Code", ["addClass", "func"]);
+      var liSpan = this.crtApnd("span", li, "View/Hide js Code", [["addClass", "func"], ["addClass", "hide"]]);
       var codeDiv = this.crtApnd("div", li, null, 
         [["addClass", "indentLeft"]]);
         // ["display", "none"]]);
@@ -378,7 +378,7 @@ var $setup = {
 
         if (addLinks === true) {
           this.crtApnd("br", frag);
-          this.crtApnd("a", frag, "View File", ["href", files[i].filePath]);
+          this.crtApnd("a", frag, "View Actual js File", ["href", files[i].filePath]);
         }
         var spot = this.crtApnd("pre", frag);
         this.crtApnd("code", spot, this.cropText(this.jsLoaded[files[i].filePath].code, [files[i].fileCrop]));
@@ -645,6 +645,16 @@ runMocha: function () {
       testEl.testResults.appendChild(section);
 
     }
+
+    // Show/Hide All Mocha Tests
+    if (i === 0) {
+      document.getElementById("allmochatests").style.display = "none";
+    } else {
+      document.getElementById("allmochatests").addEventListener("click",function(){
+        var mochaStyle = document.getElementById("mocha").style;
+        mochaStyle.display = mochaStyle.display === "" ? mochaStyle.display = "none" : "";
+      });
+    }      
 
     
     

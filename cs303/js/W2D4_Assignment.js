@@ -315,7 +315,7 @@ function spreadCombineObjects () {
   var obj2 = {name2: "jane", age2: 42};
   var obj3 = {name3: "molly", age3: 22};
 
-  return  {...obj1, ...obj2, ...obj3}
+  return  {...obj1, ...obj2, ...obj3};
 
 }
 //SO

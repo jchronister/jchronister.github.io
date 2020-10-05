@@ -69,10 +69,17 @@ li {    margin-bottom: 10px;}
     display: none;
   }
 
-  ul.testlist {
+ul.testlist {
     list-style: none;
   }
 
-  .description:nth-child(1) {
+.description:nth-child(1) {
+    list-style: none;
+}
+
+.hide {
+   display: none;
+}
+.ListInfo {
     list-style: none;
 }

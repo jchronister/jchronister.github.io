@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+
+  <link href="./js/assignment.css" rel="stylesheet" type="text/css"/>
+  <script src="./js/assignments.js"></script>
+
+  <!-- Reference Chai -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/chai/4.2.0/chai.min.js"></script>
+  
+  <!-- Reference Mocha Framework Code -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/mocha/3.2.0/mocha.js"></script>
+
+  <!-- Sinon Link-->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/sinon.js/9.0.3/sinon.min.js"></script>
+  
+  <!-- Setup Mocha Framework -->
+  <script>
+    mocha.setup('bdd');
+    var assert = chai.assert;
+  </script>
+</head>
+
+<body>
+  <div>
+  <h1><a href="./Assignments/w2d6timeoutAssignment.pdf">W2D6 Assignment</a>: Timeout and Context/’this’ Binding<span id="error" style="color:red;">-Error on Page See Console</span></h1><br>
+
+
+  <h2>Scheduling: setTimeout and setInterval</h2>
+  <ul>
+    <li id="printNumbersWithSetInterval">Output Every Second</li>
+    <li id="setTimeoutShowwhen">What will setTimeout show</li>
+  </ul>
+  <h2>Function Binding</h2>
+  <ul>
+    <li id="bindFunctionasMethod">Bound Function as a Method</li>
+    <li id="bindAgain">Second Bind</li>
+    <li id="propertyAfterBind">Function Property After Bind</li>
+  </ul>
+  
+  
+  
+<!--
+
+  <h2></h2>
+  <ul>
+    <li id=""></li>
+  </ul>
+-->
+
+</div>
+<br>
+<h2 id="allmochatests" class="func">All Mocha Tests</h2>
+<div id="mocha" style="display:none;"></div>
+<script>
+{
+
+document.getElementById("allmochatests").addEventListener("click",function(){
+  var mochaStyle = document.getElementById("mocha").style;
+  mochaStyle.display = mochaStyle.display === "" ? mochaStyle.display = "none" : "";
+});
+
+$setup.setup(["printNumbersWithSetInterval","printNumbersWithSetTimeout"], "./js/W2D6_Assignment.js", "//OES", [["3, 10"], ["15, 24"]]).
+    mod("outputfunc",function(){return "See Console for Output"}).
+    mod("promptReturn", [["number","number"],["number","number"]]);;
+
+$setup.setup("setTimeoutShowwhen", "./js/W2D6_Assignment.js", "//WWSTS", null).
+    mod("outputfunc",function(){return "See Alert for Output"}); 
+    
+$setup.setup("bindFunctionasMethod", "./js/W2D6_Assignment.js", "//BFAM", null)
+$setup.setup("bindAgain", "./js/W2D6_Assignment.js", "//SB", null)
+$setup.setup("propertyAfterBind", "./js/W2D6_Assignment.js", "//FPAB", null)
+
+
+
+// Update Page
+$setup.requestFiles()
+document.getElementById("error").style.display="none";
+
+}
+</script>
+
+</body>
+</html>

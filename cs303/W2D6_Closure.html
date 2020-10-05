@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+
+  <link href="./js/assignment.css" rel="stylesheet" type="text/css"/>
+  <script src="./js/assignments.js"></script>
+
+  <!-- Reference Chai -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/chai/4.2.0/chai.min.js"></script>
+  
+  <!-- Reference Mocha Framework Code -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/mocha/3.2.0/mocha.js"></script>
+
+  <!-- Sinon Link-->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/sinon.js/9.0.3/sinon.min.js"></script>
+  
+  <!-- Setup Mocha Framework -->
+  <script>
+    mocha.setup('bdd');
+    var assert = chai.assert;
+  </script>
+</head>
+
+<body>
+  <div>
+  <h1><a href="./Assignments/w2d6ClosureAssignment.pdf">W2D6 Assignment</a>: Closures<span id="error" style="color:red;">-Error on Page See Console</span></h1><br>
+  
+
+  <h2>Part 1 Section: Closure</h2>
+  <ul>
+    <li id="latestChange">Does a function pickup latest changes?</li>
+    <li id="whichVariableAvailable">Which variables are available?</li>
+    <li id="areCountersIndependent">Are counters independent?</li>
+    <li id="counterObject">Counter object</li>
+    <li id="functionInIf">Function in if</li>
+    <li id="sumWithClosure">Sum with closures</li>
+    <li id="isVariableVisible">Is Variable Visible?</li>
+    <li id="inBetween">Filter through Function</li>
+    <li id="sortByField">Sort by Field</li>
+    <li id="makeArmy">Army of Functions</li>
+  </ul> 
+
+  <h2>Function Object: Named Function Expression</h2>
+  <ul>
+    <li id="counter">Set and Decrease for Counter</li>
+  </ul>
+ 
+
+  
+  
+<!--
+
+  <h2></h2>
+  <ul>
+    <li id=""></li>
+  </ul>
+-->
+
+</div>
+<br>
+<h2 id="allmochatests" class="func">All Mocha Tests</h2>
+<div id="mocha" style="display:none;"></div>
+<script>
+{
+
+$setup.setup("latestChange", "./js/W2D6_Assignment.js", "//PLC", null)
+$setup.setup("whichVariableAvailable", "./js/W2D6_Assignment.js", "//WVA", null)
+$setup.setup("areCountersIndependent", "./js/W2D6_Assignment.js", "//ACI", null)
+$setup.setup("counterObject", "./js/W2D6_Assignment.js", "//CO", null)
+$setup.setup("functionInIf", "./js/W2D6_Assignment.js", "//FII", null)
+$setup.setup("sumWithClosure", "./js/W2D6_Assignment.js", "//SWC", "5, 6").
+    mod("promptReturn", [["number","number"]]);
+$setup.setup("isVariableVisible", "./js/W2D6_Assignment.js", "//VV", null)
+$setup.setup(["inBetween", "inArray"], "./js/W2D6_Assignment.js", "//FTF", null).
+    mod("functionRef", [function () {
+        var user = $setup.getUserInput("Enter Check Number Array", "1, 2, 3, 4, 5, 6, 7",["number"]);
+        var mm = $setup.getUserInput("Enter Min and Max", "3, 6",["number"]);
+        this.inputB = JSON.stringify(user) + " " + JSON.stringify(mm);
+        return user.filter(window["inBetween"](mm[0], mm[1]));
+      },
+      function () {
+        var user = $setup.getUserInput("Enter Check Number Array", "1, 2, 3, 4, 5, 6, 7",["number"]);
+        var mm = $setup.getUserInput("Enter Number Array to Look For", "1, 2, 3",["number"]);
+        this.inputB = JSON.stringify(user) + " " + JSON.stringify(mm);
+        return user.filter(window["inArray"](mm));
+      }]).
+      mod("promptReturn", [null,null]).
+      mod("outputfunc",function(skip, retrn){return "Function Input: " + this.inputB + "\n" + "Function Output:" + JSON.stringify(retrn)});
+$setup.setup("sortByField", "./js/W2D6_Assignment.js", "//SBF", "age")
+$setup.setup("makeArmy", "./js/W2D6_Assignment.js", "//AOF", "Yes")  
+
+$setup.setup(["counter","set","decrease"], "./js/W2D6_Assignment.js", "//SADC", null).
+  mod("functionRef", [function () {
+        if (!window.counterVarible) window.counterVarible = window["makeCounter"]();
+        return counterVarible();
+      },
+      function () {
+        let user = $setup.getUserInput("Please Enter Number", "12","number");
+        if (!window.counterVarible) window.counterVarible = window["makeCounter"]();
+        return window.counterVarible.set(user);
+      },
+      function () {
+        if (!window.counterVarible) window.counterVarible = window["makeCounter"]();
+        return counterVarible.decrease();
+      }]).
+      mod("promptReturn", [null,null,null]);
+
+
+//AGLE
+
+ 
+
+
+// Update Page
+$setup.requestFiles()
+document.getElementById("error").style.display="none";
+
+}
+</script>
+
+</body>
+</html>
