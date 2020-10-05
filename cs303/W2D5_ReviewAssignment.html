@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+
+  <link href="./js/assignment.css" rel="stylesheet" type="text/css"/>
+  <script src="./js/assignments.js"></script>
+
+  <!-- Reference Chai -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/chai/4.2.0/chai.min.js"></script>
+  
+  <!-- Reference Mocha Framework Code -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/mocha/3.2.0/mocha.js"></script>
+
+  <!-- Sinon Link-->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/sinon.js/9.0.3/sinon.min.js"></script>
+  
+  <!-- Setup Mocha Framework -->
+  <script>
+    mocha.setup('bdd');
+    var assert = chai.assert;
+  </script>
+</head>
+
+<body>
+  <div>
+  <h1><a href="./Assignments/w2d5ReviewExercises.pdf">W2D5 Assignment</a>: Review<span id="error" style="color:red;">-Error on Page See Console</span></h1><br>
+  
+
+  <h2>Review Questions</h2>
+  <ul>
+    <li id="callmapMe">Create Version of Array.Map</li>
+    <li id="callfilterMe">Create Version of Array.Filter</li>
+    <li id="callreduceMe">Create Version of Array.Reduce</li>
+    <li id="createSimpson">Constructor Function to Replace the Simpson Class</li>
+    <li id="createHTMLTree">Constructor Function to Replace the HTML Tree</li>
+  </ul> 
+
+  
+ 
+
+  
+  
+<!--
+
+  <h2></h2>
+  <ul>
+    <li id=""></li>
+  </ul>
+-->
+
+</div>
+<br>
+<h2 id="allmochatests" class="func">All Mocha Tests</h2>
+<div id="mocha" style="display:none;"></div>
+<script>
+{
+
+$setup.setup("callmapMe", "./js/W2D5_Review.js", "//MOM", null).
+    addTest("./tests/W2D5_ReviewTest.js","//MOMT");
+
+$setup.setup("callfilterMe", "./js/W2D5_Review.js", "//MOF", null).
+    addTest("./tests/W2D5_ReviewTest.js","//MOFT");
+
+$setup.setup("callreduceMe", "./js/W2D5_Review.js", "//MOR", null).
+    addTest("./tests/W2D5_ReviewTest.js","//MORT");
+
+
+$setup.setup("createSimpson", "./js/W2D5_Review.js", "//WSC", "Kevin").
+    addTest("./tests/W2D5_ReviewTest.js","//WSCT");
+$setup.setup("createHTMLTree", "./js/W2D5_Review.js", "//CHC", null).
+    addTest("./tests/W2D5_ReviewTest.js","//CHCT")
+
+// Update Page
+$setup.requestFiles()
+document.getElementById("error").style.display="none";
+
+}
+</script>
+
+</body>
+</html>

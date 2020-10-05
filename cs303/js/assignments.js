@@ -169,6 +169,14 @@ var $setup = {
     // Run Function Setup and Mocha Tests if Everything Loaded
     if (that.jsLoaded.complete === false && that.jsLoaded.allFilesLoaded()) {
       that.setupHTMl();
+
+      document.getElementById("allmochatests").innerText = "No Tests Loaded Yet. Click to Check";
+      
+      document.getElementById("allmochatests").addEventListener("click",function(){
+        var mochaStyle = document.getElementById("mocha").style;
+        mochaStyle.display = mochaStyle.display === "" ? mochaStyle.display = "none" : "";
+      });
+      
       that.runMocha();
       that.jsLoaded.complete = true;
     }
@@ -648,12 +656,9 @@ runMocha: function () {
 
     // Show/Hide All Mocha Tests
     if (i === 0) {
-      document.getElementById("allmochatests").style.display = "none";
-    } else {
-      document.getElementById("allmochatests").addEventListener("click",function(){
-        var mochaStyle = document.getElementById("mocha").style;
-        mochaStyle.display = mochaStyle.display === "" ? mochaStyle.display = "none" : "";
-      });
+      document.getElementById("allmochatests").innerText ="No Tests Available";
+    } else {  
+      document.getElementById("allmochatests").innerText ="All Mocha Tests";
     }      
 
     

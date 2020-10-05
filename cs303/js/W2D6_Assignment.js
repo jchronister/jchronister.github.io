@@ -262,19 +262,19 @@ function sortByField(fieldName) {
 ➢LE for makeArmy()
  __________________________________________
 | shooters: []                             |
-| i: 0                                     |  => Global
+| i: 0 -> 10                               |  => Global
 |__________________________________________|
 
  
 ➢LE for LE of the while loop
  __________________________________________
-| shooter: function                        |  => makeArmy
+| shooter: function                        |  => makeArmy()
 |__________________________________________|
 
 
 **Change**When a is added, there will be a LE for Each Iteration of Loop 
  __________________________________________
-| shooter: function                        |  => makeArmy
+| shooter: function                        |  => makeArmy()
 | a: 0 - 10                                |                      
 |__________________________________________|
 
@@ -282,7 +282,7 @@ function sortByField(fieldName) {
 ➢ LE for army[0]
  __________________________________________
 |                                          |  
-| [0]: function                            |  => Global
+| [0]: function { return i }               |  => makeArmy()
 |__________________________________________|
 *///AOF
 function makeArmy(bind) { // 'Yes to Bind a' or Anything Else to Use i
