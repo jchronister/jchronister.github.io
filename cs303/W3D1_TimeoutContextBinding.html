@@ -26,7 +26,7 @@
 
 <body>
   <div>
-  <h1><a href="./Assignments/w2d6timeoutAssignment.pdf">W2D6 Assignment</a>: Timeout and Context/’this’ Binding<span id="error" style="color:red;">-Error on Page See Console</span></h1><br>
+  <h1><a href="./Assignments/w3d1timeoutAssignment.pdf">W3D1 Assignment</a>: Timeout and Context/’this’ Binding<span id="error" style="color:red;">-Error on Page See Console</span></h1><br>
 
 
   <h2>Scheduling: setTimeout and setInterval</h2>
@@ -39,7 +39,15 @@
     <li id="bindFunctionasMethod">Bound Function as a Method</li>
     <li id="bindAgain">Second Bind</li>
     <li id="propertyAfterBind">Function Property After Bind</li>
+    <li id="pass">Fix a function that loses “this” (with bind, wrapper, call, and apply)</li>
+    <li id="passAgain">Partial Application for Login</li>
+    <li id="correctBinding">Arrow Functions and Lexical ‘this’ Exercise</li>
   </ul>
+  <h2>Decorators and forwarding, call/apply</h2>
+  <ul>
+    <li id="callworkSpy">Spy Decorator</li>
+  </ul>
+  
   
   
   
@@ -58,22 +66,23 @@
 <script>
 {
 
-document.getElementById("allmochatests").addEventListener("click",function(){
-  var mochaStyle = document.getElementById("mocha").style;
-  mochaStyle.display = mochaStyle.display === "" ? mochaStyle.display = "none" : "";
-});
-
-$setup.setup(["printNumbersWithSetInterval","printNumbersWithSetTimeout"], "./js/W2D6_Assignment.js", "//OES", [["3, 10"], ["15, 24"]]).
+$setup.setup(["printNumbersWithSetInterval","printNumbersWithSetTimeout"], "./js/W3D1_Assignment.js", "//OES", [["3, 10"], ["15, 24"]]).
     mod("outputfunc",function(){return "See Console for Output"}).
     mod("promptReturn", [["number","number"],["number","number"]]);;
 
-$setup.setup("setTimeoutShowwhen", "./js/W2D6_Assignment.js", "//WWSTS", null).
+$setup.setup("setTimeoutShowwhen", "./js/W3D1_Assignment.js", "//WWSTS", null).
     mod("outputfunc",function(){return "See Alert for Output"}); 
     
-$setup.setup("bindFunctionasMethod", "./js/W2D6_Assignment.js", "//BFAM", null)
-$setup.setup("bindAgain", "./js/W2D6_Assignment.js", "//SB", null)
-$setup.setup("propertyAfterBind", "./js/W2D6_Assignment.js", "//FPAB", null)
-
+$setup.setup("bindFunctionasMethod", "./js/W3D1_Assignment.js", "//BFAM", null)
+$setup.setup("bindAgain", "./js/W3D1_Assignment.js", "//SB", null)
+$setup.setup("propertyAfterBind", "./js/W3D1_Assignment.js", "//FPAB", null)
+$setup.setup("pass", "./js/W3D1_Assignment.js", "//FFLT", null)
+$setup.setup("passAgain", "./js/W3D1_Assignment.js", "//PAL", null)
+$setup.setup("correctBinding", "./js/W3D1_Assignment.js", "//AFLE", null).
+    mod("outputfunc",function(){return "See Console for Output"});
+$setup.setup("callworkSpy", "./js/W3D1_Assignment.js", "//SD", null).
+    mod("outputfunc",function(){return "See Console for Output"});
+    
 
 
 // Update Page

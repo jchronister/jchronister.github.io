@@ -175,6 +175,3 @@ function createHTMLTree () {
 
 }
 //CHC
-
-
-log(createHTMLTree())

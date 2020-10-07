@@ -138,7 +138,7 @@ function propertyAfterBind() {
 
 }
 //FPAB
-
+//FFLT
 /*
 Fix a function that loses "this"
 importance: 5
@@ -148,11 +148,14 @@ But it leads to an error. Why?
 
 Fix the highlighted line for everything to start working right (other lines are not to be changed).
 */
-
+//FFLT
 function pass () {
 
+  let pwd;
+
   function askPassword(ok, fail) {
-    let password = prompt("Password?", '');
+    let password = pwd || prompt("Password?", '');
+    pwd = password;
     if (password == "rockstar") return ok();
     else return fail();
   }
@@ -170,12 +173,123 @@ function pass () {
 
   };
 
-  return askPassword(user.loginOk.bind(user), user.loginFail.bind(user));
+  return [askPassword(user.loginOk.bind(user), user.loginFail.bind(user)),
+          askPassword(function(){return user.loginOk()},function(){return user.loginFail()}),
+          askPassword(function(){return user.loginOk.call(user);}, function(){return user.loginFail.call(user);}),
+          askPassword(function(){return user.loginOk.apply(user);}, function(){return user.loginFail.apply(user);})
+  ];
+}
+//FFLT
+//PAL
+/* Partial application for login
+*
+*  The task is a little more complex variant of Fix a function 
+*  that loses "this".
+*
+*  The user object was modified. Now instead of two functions 
+*  loginOk/loginFail, it has a single function user.login(true/false).
+*
+*  What should we pass askPassword in the code below, so that it calls user.login(true) as ok and user.login(false) as fail?
+*/
+//PAL
+function passAgain () {
+
+  function askPassword(ok, fail) {
+    let password = prompt("Password?", "");
+    if (password == "rockstar") return ok();
+    else return fail();
+  }
+
+  let user = {
+    name: "John",
+
+    login(result) {
+      return ( this.name + (result ? " logged in" : " failed to log in") );
+    }
+  };
+
+  return askPassword(user.login.bind(user, true), user.login.bind(user, false)); 
+
+}
+//PAL
+//AFLE
+/* Arrow functions and lexical ‘this’ exercise  
+* Fix the code below using an arrow function and then using bind
+*/
+//AFLE
+function correctBinding () {
+
+  let group = {
+    title: "Our Group",
+    students: ["John", "Pete", "Alice"],
+    showList() {
+        // Original Line -> this.students.forEach(function(student) {
+        this.students.forEach((student) => { // <- Changed to Arrow Function
+        // Original Error: Cannot read property 'title' of undefined
+        log(this.title + ": " + student);
+    });
+    }
+   };
+   group.showList();
+
+
+   group = {
+    title: "Our Group",
+    students: ["John", "Pete", "Alice"],
+    showList() {
+        this.students.forEach(function(student) {
+        // Original Error: Cannot read property 'title' of undefined
+        log(this.title + ": " + student);
+    // Original Line ->   });
+    }.bind(group)); // <-- Added Bind
+    }
+   };
+   group.showList();
+
+  }
+//AFLE
+//SD
+/* Spy decorator
+*
+*  Create a decorator spy(func) that should return a wrapper that 
+*  saves all calls to function in its calls property.
+*
+*  Every call is saved as an array of arguments.
+*
+*  That decorator is sometimes useful for unit-testing. Its advanced 
+*  form is sinon.spy in Sinon.JS library.
+*/
+//SD
+function work(a, b) {
+  log( a + b ); // work is an arbitrary function or method
 }
 
+function spy(functn) {
 
-log(pass())
+  let retrn = function () {
 
+    let arg = [].slice.apply(arguments);
+    retrn.calls.push([].slice.apply(arg));
+      
+    return functn(...arg);
 
+  };
 
+  retrn.calls = [];
+  return retrn;
+}
 
+function callworkSpy() {
+
+  // eslint-disable-next-line no-func-assign
+  work = spy(work);
+
+  work(1, 2); // 3
+  work(4, 5); // 9
+
+  for (let args of work.calls) {
+    log( "call:" + args.join() ); // "call:1,2", "call:4,5"
+  }
+
+}
+//SD
