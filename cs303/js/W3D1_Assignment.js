@@ -308,10 +308,9 @@ function f(x, y, z) {
 }
 
 function delay(call, msDelay) {
-
+ 
   return function (...arg) {
-    // setTimeout(function(){call.apply(this,args);}, msDelay);
-    setTimeout(function(){call.apply(this, arg)}, msDelay);
+    setTimeout(call.bind(this, ...arg), msDelay);
   };
 
 }
@@ -325,8 +324,8 @@ function callDelay() {
 let f1000 = delay(f, 1000);
 let f1500 = delay(f, 1500);
 
-f1000("test", " is", " a" ,"test"); // shows "test" after 1000ms
-f1500("test",1,2); // shows "test" after 1500ms
+f1000("test", " is", " working"); // shows "test is working" after 1000ms
+f1500("test",1,2); // shows "test12" after 1500ms
 
 
 }
