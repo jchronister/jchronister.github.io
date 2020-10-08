@@ -142,8 +142,8 @@ let node3 = {
  };
  let node1 = {
   name: "body",
-  children: [node2, node3],
   value: null,
+  children: [node2, node3],
  };
  
 function createHTMLTree () {

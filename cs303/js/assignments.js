@@ -343,7 +343,12 @@ var $setup = {
           }
           btn.addEventListener("click", function (functRef,quest,questDef,questRtrn,mapBefore,mapAfter,functOutput, functOut) {
             return function () {
-              functOut.innerText = that.callFunction(functRef,quest,questDef,questRtrn,mapBefore,mapAfter,functOutput);
+              var retrn = that.callFunction(functRef,quest,questDef,questRtrn,mapBefore,mapAfter,functOutput);
+              if (typeof retrn === "object" && retrn.nodeName === "#document-fragment") {
+                functOut.appendChild(retrn);
+              } else {
+                functOut.innerText = retrn;
+              }
             };           
           }(functRef,aryQuest[j],aryDefault[j],aryReturn[j],aryMapBef[j],aryMapAft[j],obj.outputfunc, functOut));
         }

@@ -38,6 +38,11 @@
     <li id="createHTMLTree">Constructor Function to Replace the HTML Tree</li>
   </ul> 
 
+  <h2>Mocha Like Testing</h2>
+  <ul>
+    <li id="ownMochaTesting">Create Mocha Like Testing</li>
+    
+  </ul> 
   
  
 
@@ -72,6 +77,30 @@ $setup.setup("createSimpson", "./js/W2D5_Review.js", "//WSC", "Kevin").
     addTest("./tests/W2D5_ReviewTest.js","//WSCT");
 $setup.setup("createHTMLTree", "./js/W2D5_Review.js", "//CHC", null).
     addTest("./tests/W2D5_ReviewTest.js","//CHCT")
+
+$setup.setup("ownMochaTesting", "./tests/W2D5_ReviewTestRecreate.js", "//OMT", null).
+mod("outputfunc",function(skip, retrn){
+  let div = document.createDocumentFragment();
+  let ul = $setup.crtApnd("ul", div, null);
+  
+  for (let x of retrn) {
+
+    let li = $setup.crtApnd("li", ul, x.describe + " " + x.it);
+    if (x.passed === true) {
+      li.style.color = "Green";
+      li.firstChild.nodeValue += " Test Passed";
+    } else {
+      li.style.color = "red";
+      li.firstChild.nodeValue += " Test Failed";
+    }
+
+  }
+
+  return div
+
+});
+                          
+
 
 // Update Page
 $setup.requestFiles()
