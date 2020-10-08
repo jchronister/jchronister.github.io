@@ -14,9 +14,9 @@
   <!-- Reference Mocha Framework Code -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/mocha/3.2.0/mocha.js"></script>
 
-  <!-- Sinon Link-->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/sinon.js/9.0.3/sinon.min.js"></script>
-  
+  <!-- Sinon Link
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/sinon.js/9.0.3/sinon.min.js"></script>-->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/sinon.js/9.2.0/sinon.js" integrity="sha512-9X6wigszgCLFhOENWD3vRQwH/n/djrTRQqA3mS9Uv9Gz6pXeeLANX0KaJFFh3fBcGnXsD3Vst9jgXmTqzE26RQ==" crossorigin="anonymous"></script>
   <!-- Setup Mocha Framework -->
   <script>
     mocha.setup('bdd');
@@ -46,6 +46,7 @@
   <h2>Decorators and forwarding, call/apply</h2>
   <ul>
     <li id="callworkSpy">Spy Decorator</li>
+    <li id="callDelay">Delaying Decorator</li>
   </ul>
   
   
@@ -81,10 +82,15 @@ $setup.setup("passAgain", "./js/W3D1_Assignment.js", "//PAL", null)
 $setup.setup("correctBinding", "./js/W3D1_Assignment.js", "//AFLE", null).
     mod("outputfunc",function(){return "See Console for Output"});
 $setup.setup("callworkSpy", "./js/W3D1_Assignment.js", "//SD", null).
-    mod("outputfunc",function(){return "See Console for Output"});
+    mod("outputfunc",function(){return "See Console for Output"}).
+    addTest("./tests/W3D1_AssignmentTests.js")
+
+$setup.setup("callDelay", "./js/W3D1_Assignment.js", "//DD", null).
+    mod("outputfunc",function(){return "See Console for Output"}).
+    addTest("./tests/W3D1_AssignmentTests.js")
+
+
     
-
-
 // Update Page
 $setup.requestFiles()
 document.getElementById("error").style.display="none";

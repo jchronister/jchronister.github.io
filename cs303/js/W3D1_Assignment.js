@@ -269,9 +269,9 @@ function spy(functn) {
   let retrn = function () {
 
     let arg = [].slice.apply(arguments);
-    retrn.calls.push([].slice.apply(arg));
-      
-    return functn(...arg);
+    retrn.calls.push(arg);
+
+    return functn.call(this,...arg);
 
   };
 
@@ -293,3 +293,40 @@ function callworkSpy() {
 
 }
 //SD
+//DD
+/*  Delaying decorator
+*
+*   Create a decorator delay(f, ms) that delays each call of f by ms 
+*   milliseconds.
+*   In other words, delay(f, ms) returns a "delayed by ms" variant of f.
+*   In the code above, f is a function of a single argument, but your solution 
+*   should pass all arguments and the context this.
+*/
+//DD
+function f(x, y, z) {
+  log(x+ y+ z);
+}
+
+function delay(call, msDelay) {
+
+  return function (...arg) {
+    // setTimeout(function(){call.apply(this,args);}, msDelay);
+    setTimeout(function(){call.apply(this, arg)}, msDelay);
+  };
+
+}
+//DD
+
+
+
+function callDelay() {
+
+// create wrappers
+let f1000 = delay(f, 1000);
+let f1500 = delay(f, 1500);
+
+f1000("test", " is", " a" ,"test"); // shows "test" after 1000ms
+f1500("test",1,2); // shows "test" after 1500ms
+
+
+}
