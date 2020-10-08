@@ -75,11 +75,6 @@
 
 (function () {
 
-document.getElementById("allmochatests").addEventListener("click",function(){
-  var mochaStyle = document.getElementById("mocha").style;
-  mochaStyle.display = mochaStyle.display === "" ? mochaStyle.display = "none" : "";
-});
-
 $setup.setup("equalObjects", "./js/A05_misc.js", "//TEO", null)
 $setup.setup("Calculator", "./js/A05_misc.js", "//CNC", "5, 5").
     mod("strFunctionRef", ["read","sum","mul"]).

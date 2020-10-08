@@ -174,7 +174,7 @@ var $setup = {
       
       document.getElementById("allmochatests").addEventListener("click",function(){
         var mochaStyle = document.getElementById("mocha").style;
-        mochaStyle.display = mochaStyle.display === "" ? mochaStyle.display = "none" : "";
+        mochaStyle.display = mochaStyle.display === "" ? "none" : "";
       });
       
       that.runMocha();
