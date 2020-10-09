@@ -1,6 +1,31 @@
 "use strict";
+/*global assert,random,randomInteger,sinon,readNumber,ucFirst,checkSpam,
+extractCurrencyValue,truncate,getMaxSubSum,camelize*/
+//RNT
+describe("random", function() {
 
-//RUINstart
+  for (let i = 0; i < 10; i+=1) {
+    it("Should Be >=1 and <3", function() {
+      let num = random(1,3);
+      assert(num >= 1 && num < 3);
+    });
+  }
+
+});
+//RNT
+//RIT
+describe("randomInteger", function() {
+
+  for (let i = 0; i < 10; i+=1) {
+    it("Should Be 1, 2, or 3", function() {
+      let num = randomInteger(1,3);
+      assert(num === 1 || num === 2 || num === 3);
+    });
+  }
+
+});
+//RIT
+//RUIN
 beforeEach(function() {
   sinon.stub(window, "prompt");
 });
@@ -39,8 +64,8 @@ describe("readNumber", function() {
   });
 
 });
-//RUINend
-//UFCstart
+//RUIN
+//UFC
 describe("ucFirst", function() {
   it("Uppercases the first symbol", function() {
     assert.strictEqual(ucFirst("john"), "John");
@@ -50,8 +75,9 @@ describe("ucFirst", function() {
     assert.strictEqual(ucFirst(""), "");
   });
 });
-//UFCend
-//CFSstart
+//UFC
+
+//CFS
 describe("checkSpam", function() {
   it("finds spam in 'buy ViAgRA now'", function() {
     assert.isTrue(checkSpam("buy ViAgRA now"));
@@ -65,8 +91,8 @@ describe("checkSpam", function() {
     assert.isFalse(checkSpam("innocent rabbit"));
   });
 });
-//CFSend
-//TTTstart
+//CFS
+//TTT
 describe("truncate", function() {
   it("truncate the long string to the given length (including the ellipsis)", function() {
     assert.equal(
@@ -82,8 +108,8 @@ describe("truncate", function() {
     );
   });
 });
-//TTTend
-//ETMstart
+//TTT
+//ETM
 describe("extractCurrencyValue", function() {
 
   it("for the string $120 returns the number 120", function() {
@@ -91,8 +117,8 @@ describe("extractCurrencyValue", function() {
   });
 
 });
-//ETMend
-//MSAstart
+//ETM
+//MSA
 describe("getMaxSubSum", function() {
   it("maximal subsum of [1, 2, 3] equals 6", function() {
     assert.equal(getMaxSubSum([1, 2, 3]), 6);
@@ -130,8 +156,8 @@ describe("getMaxSubSum", function() {
     assert.equal(getMaxSubSum([2, -8, 5, -1, 2, -3, 2]), 6);
   });
 });
-//MSAend
-//TBWstart
+//MSA
+//TBW
 describe("camelize", function() {
 
   it("leaves an empty line as is", function() {
@@ -151,4 +177,4 @@ describe("camelize", function() {
   });
 
 });
-//TBWend
+//TBW

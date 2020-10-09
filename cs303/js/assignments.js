@@ -17,6 +17,7 @@
 
 
 // Alert Error
+// eslint-disable-next-line no-unused-vars
 if(typeof window === "object") window.onerror = function(msg, page, line){
   //alert(msg +"\nLine " + line + "\n" + page );
 };
@@ -409,6 +410,7 @@ var $setup = {
    * @param  {String} qReturn - Prompt Return Type - Can be Array
    * @param  {Function} mapBefore - Map Function to Apply to Each Item Before Value Converted
    * @param  {Function} mapAfter - Map Function to Apply to Each Item after Value Converted
+   * @param  {Function} outputfunc - Function to Format Function Call Result
    * @returns {String} Function Input/Output String
    */
   callFunction: function(functRef, question, qDefault, qReturn, mapBefore, mapAfter, outputfunc) {

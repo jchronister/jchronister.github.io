@@ -1,8 +1,9 @@
 /* eslint-disable require-jsdoc */
 /* eslint-disable id-length */
 "use strict";
-/*global assert,simpson,Simpson,createHTMLTree,node1*/
+/*global simpson,Simpson,createHTMLTree,node1*/
 
+// eslint-disable-next-line no-unused-vars
 function ownMochaTesting () {
 
 var likeMocha = [];

@@ -154,7 +154,7 @@ function pass () {
   let pwd;
 
   function askPassword(ok, fail) {
-    let password = pwd || prompt("Password?", '');
+    let password = pwd || prompt("Password?", "");
     pwd = password;
     if (password == "rockstar") return ok();
     else return fail();
@@ -174,7 +174,7 @@ function pass () {
   };
 
   return [askPassword(user.loginOk.bind(user), user.loginFail.bind(user)),
-          askPassword(function(){return user.loginOk()},function(){return user.loginFail()}),
+          askPassword(function(){return user.loginOk();},function(){return user.loginFail();}),
           askPassword(function(){return user.loginOk.call(user);}, function(){return user.loginFail.call(user);}),
           askPassword(function(){return user.loginOk.apply(user);}, function(){return user.loginFail.apply(user);})
   ];

@@ -1,16 +1,16 @@
 "use strict";
-var log = console.log;
-//CIASPstart
+var log = console.log;// eslint-disable-line no-unused-vars
+//CIASP
 /*  Methods of primitives: 
 *   Can I add a string property?
 *   Consider the following code: What Will it Return?
 */
-//CIASPmid
+//CIASP
 /** Try to Add Property to String
  * @param  {String} string - String
  * @returns {*} Error Message
  */
-function addStringProperty (string) {
+function addStringProperty (string) {// eslint-disable-line no-unused-vars
   try{
     string.test = 5;
   }
@@ -18,7 +18,7 @@ function addStringProperty (string) {
     return err.message;
   }
 }
-//CIASPend
+//CIASP
 //SNFVstart
 /*  Sum numbers from the visitor
 *
@@ -29,13 +29,13 @@ function addStringProperty (string) {
 /** Sums Two Numbers
  * @returns {Number} Sum of Two Numbers Given
  */
-function addNumbers () {
+function addNumbers () {// eslint-disable-line no-unused-vars
   let num1 = parseFloat(prompt("Please Enter Number"));
   let num2 = parseFloat(prompt("Please Enter Number"));
   return (num1 + num2);
 }
 //SNFVend
-//RUINstart
+//RUIN
 /**  Repeat until the input is a number
 *
 *   Create a function readNumber which prompts for a number until the 
@@ -46,11 +46,11 @@ function addNumbers () {
 *   The visitor can also stop the process by entering an empty line or 
 *   pressing “CANCEL”. In that case, the function should return null.
 */
-//RUINmid
+//RUIN
 /** Repeats Until the Input is a Number
 * @returns {Number|null} Returns Number or null
 */
- function readNumber () {
+ function readNumber () {// eslint-disable-line no-unused-vars
   
   let num;
 
@@ -63,7 +63,7 @@ function addNumbers () {
 
   return num;
 }
-//RUINend
+//RUIN
 //OIPstart
 /*  An occasional infinite loop
 *   
@@ -79,7 +79,7 @@ function addNumbers () {
 /** This loop is infinite. It never ends. Why?
 * @returns {String} Values of i
 */
- function infiniteLoop () {
+ function infiniteLoop () {// eslint-disable-line no-unused-vars
 
   let retrn = "Because i Never Equals 10 due to Rounding Errors with Fractions\n";
 
@@ -107,7 +107,7 @@ function addNumbers () {
  * @param {String} str - String
  * @returns {String} String with First Character in Upper Case
 */
- function ucFirst(str) {
+ function ucFirst(str) { // eslint-disable-line no-unused-vars
   str = "" + str;
   return str.length > 0 ? str[0].toUpperCase() + str.slice(1) : str;
 }
@@ -125,7 +125,7 @@ function addNumbers () {
 * @param  {String} str - String to Check
 * @Returns  {Boolean} true/false
 */
- function checkSpam(str) {
+ function checkSpam(str) {// eslint-disable-line no-unused-vars
   str = str.toLowerCase();
   return str.includes("viagra") || str.includes("xxx");
 }
@@ -146,7 +146,7 @@ function addNumbers () {
 * @param  {Number} maxlength - Max String Length
 * @returns  {String} returns String
 */
-function truncate(str, maxlength) {
+function truncate(str, maxlength) {// eslint-disable-line no-unused-vars
 
   if (maxlength === 0) return "";
 
@@ -171,7 +171,7 @@ function truncate(str, maxlength) {
 * @param  {String} amount - String: Can Start with $
 * @returns  {Number} Dollar Amount
 */
-function extractCurrencyValue (amount) {
+function extractCurrencyValue (amount) {// eslint-disable-line no-unused-vars
   amount = amount.replace(",", "");
   return amount[0] === "$" ? Number(amount.slice(1)) : Number(amount);
 }
@@ -200,7 +200,7 @@ function extractCurrencyValue (amount) {
 *   @param  {Number[]} arr - Array of Numbers
 *   @returns  {Number} Max Continuous Sum
 */
-function getMaxSubSum (arr) {
+function getMaxSubSum (arr) {// eslint-disable-line no-unused-vars
 
   let max = 0, cnt = 0;
 
@@ -235,7 +235,7 @@ function getMaxSubSum (arr) {
  * @param  {String} str to Camelize
  * @return  {string} Camelized String
  */
-function camelize(str) {
+function camelize(str) {// eslint-disable-line no-unused-vars
 
   let spot, chr;
   while ((spot = str.indexOf("-")) !== -1) {
@@ -248,3 +248,42 @@ function camelize(str) {
 
 }
 //TBWend
+//RIT
+//>DescStart
+/*  A random number from min to max
+*
+*   Create a function randomInteger(min, max) that generates a 
+*   random integer number from min to max including both min and max
+*   as possible values.
+*
+*   Any number from the interval min..max must appear with the same probability.
+*/
+//RIT
+/** Returns a Random Integer >= Min and <= Max
+*   @param  {Number} min - Random Minimum
+*   @param  {Number} max - Random Maximum
+*   @returns  {Number} Random Number
+*/
+function randomInteger(min,max) {// eslint-disable-line no-unused-vars
+  return Math.ceil(Math.random() * (max - (min - 1)) + (min - 1));
+}
+//RIT
+//RNT
+/*  A random number from min to max
+*
+*   The built-in function Math.random() creates a random 
+*   value from 0 to 1 (not including 1).
+*
+*   Write the function random(min, max) to generate a random 
+*   floating-point number from min to max (not including max).
+*/
+//RNT
+/** Returns Random Floating Point Number >= Min and < Max
+*   @param  {Number} min - Random Minimum
+*   @param  {Number} max - Random Maximum
+*   @returns  {Number} Random Number
+*/
+function random(min,max) {// eslint-disable-line no-unused-vars
+  return (Math.random() * (max - min)) + min;
+}
+//RNT

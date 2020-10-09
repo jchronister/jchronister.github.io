@@ -1,13 +1,15 @@
+/* eslint-disable no-func-assign */
 /* eslint-disable require-jsdoc */
 /* eslint-disable id-length */
 "use strict";
-/*global assert,work,spy*/
+/*global assert,spy,sinon,delay*/
 
 //SD
 describe("callworkSpy", function() {
   it("records calls into its property", function() {
     function work() {}
 
+    // eslint-disable-next-line no-func-assign
     work = spy(work);
     assert.deepEqual(work.calls, []);
 
@@ -62,7 +64,7 @@ describe("callDelay", function() {
   it("calls the function after the specified timeout", function() {
     let start = Date.now();
 
-    function f(x) {
+    function f() {
       assert.equal(Date.now() - start, 1000);
     }
     f = sinon.spy(f);

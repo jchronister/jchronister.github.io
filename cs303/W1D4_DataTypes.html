@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+
+  <link href="./js/assignment.css" rel="stylesheet" type="text/css"/>
+  <script src="./js/assignments.js"></script>
+
+  <!-- Reference Chai -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/chai/4.2.0/chai.min.js"></script>
+  
+  <!-- Reference Mocha Framework Code -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/mocha/3.2.0/mocha.js"></script>
+
+  <!-- Sinon Link-->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/sinon.js/9.0.3/sinon.min.js"></script>
+  
+  <!-- Setup Mocha Framework -->
+  <script>
+    mocha.setup('bdd');
+    var assert = chai.assert;
+  </script>
+</head>
+
+<body>
+  <div>
+  <h1><a href="./Assignments/w1d4dataTypes.pdf">Assignment 4 W1D4</a>: Data Types<span id="error" style="color:red;">-Error on Page See Console</span></h1><br>
+
+  <h2>Methods of primitives</h2>
+    <ul>
+      <li id="addStringProperty">Can I add a String Property</li>
+    </ul>
+
+  <h2>Section: Numbers</h2>
+  <ul>
+    <li id="addNumbers">Sum Numbers from the Visitor</li>
+    <li id="readNumber">Repeat Until the Input is a Number</li>
+    <li id="infiniteLoop">An Occasional Infinite Loop</li>
+    <li id="random">A Random Number From Min to Max</li>
+    <li id="randomInteger">A Random Integer From Min to Max</li>  
+  </ul>
+
+  <h2>Section: Strings</h2>
+  <ul>
+    <li id="ucFirst">Uppercase the First Character</li>
+    <li id="checkSpam">Check for Spam</li>
+    <li id="truncate">Truncate the Text</li>
+    <li id="extractCurrencyValue">Extract the Money</li>
+ 
+  </ul>
+
+  <h2>Section: Arrays</h2>
+  <ul>
+    <li id="getMaxSubSum">A Maximal Subarray</li>
+  </ul>
+  
+  <h2>Section: Array Methods</h2>
+  <ul>
+    <li id="camelize">Translate border-left-width to borderLeftWidth</li>
+  </ul>
+
+
+<!--
+
+  <h2></h2>
+  <ul>
+    <li id=""></li>
+  </ul>
+-->
+
+</div>
+<br>
+<h2 id="allmochatests" class="func">All Mocha Tests</h2>
+<div id="mocha" style="display:none;"></div>
+<script>
+(function () {
+
+$setup.setup("addNumbers", "./js/W1D4_DataType.js", "SNFV", null);
+
+$setup.setup("readNumber", "./js/W1D4_DataType.js", "//RUIN", null).
+  addTest("./tests/W1D4_DataTypeTest.js", "RUIN");
+
+$setup.setup("infiniteLoop", "./js/W1D4_DataType.js", "OIP", null);
+
+$setup.setup("ucFirst", "./js/W1D4_DataType.js", "UFC", "john").
+  addTest("./tests/W1D4_DataTypeTest.js", "UFC");
+
+$setup.setup("checkSpam", "./js/W1D4_DataType.js", "CFS", "buy ViAgRA now").
+  addTest("./tests/W1D4_DataTypeTest.js", "CFS");
+
+$setup.setup("truncate", "./js/W1D4_DataType.js", "TTT", "What I'd like to tell , 20").
+  addTest("./tests/W1D4_DataTypeTest.js", "TTT").
+  mod("promptReturn", [["string","number"]],)
+  
+$setup.setup("extractCurrencyValue", "./js/W1D4_DataType.js", "ETM", "$120").
+  addTest("./tests/W1D4_DataTypeTest.js", "ETM");
+  
+$setup.setup("getMaxSubSum", "./js/W1D4_DataType.js", "MSA", "-2, -1, 1, 2").
+  addTest("./tests/W1D4_DataTypeTest.js", "MSA").
+  mod("promptReturn", [["number"]],);
+  
+$setup.setup("camelize", "./js/W1D4_DataType.js", "TBW", "list-style-image").
+  addTest("./tests/W1D4_DataTypeTest.js", "TBW");
+///
+$setup.setup("randomInteger", "./js/W1D4_DataType.js", "//RIT", "1, 10").
+  mod("promptReturn", [["number","number"]],).
+  addTest("./tests/W1D4_DataTypeTest.js");
+
+$setup.setup("random", "./js/W1D4_DataType.js", "//RNT", "1, 10").
+  mod("promptReturn", [["number","number"]],).
+  addTest("./tests/W1D4_DataTypeTest.js");
+
+$setup.setup("addStringProperty", "./js/W1D4_DataType.js", "//CIASP", "Hello").
+  mod("promptReturn", "string",)
+
+
+  
+
+
+
+
+
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+    
+
+ 
+
+
+
+
+
+
+
+
+
+
+
+// Update Page
+$setup.requestFiles()
+document.getElementById("error").style.display="none";
+})();
+</script>
+
+</body>
+</html>

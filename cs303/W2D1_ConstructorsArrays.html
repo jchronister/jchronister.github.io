@@ -26,7 +26,7 @@
 
 <body>
   <div>
-  <h1><a href="./assignments/w2d1DataTypes.pdf">W2D1 Assignment</a>: Constructors and Arrays<span id="error" style="color:red;">-Error on Page See Console</span></h1><br>
+  <h1><a href="./Assignments/w2d1DataTypes.pdf">W2D1 Assignment</a>: Constructors and Arrays<span id="error" style="color:red;">-Error on Page See Console</span></h1><br>
   
 
   <h2>Objects: The Basics: Sections: Constructor, operator “new”</h2>
@@ -93,7 +93,7 @@ $setup.setup("Accumulator", "./js/A05_misc.js", "//CNA", "5").
       this.functionRef[0] = accum.read.bind(accum);
       this.functionRef[1] = function() {return accum.value + "\n Object = " + JSON.stringify(accum);}
     }).
-    addTest("./tests/A05_miscTest.js", "CNA");
+    addTest("./tests/W2D1_ConstArrayTest.js", "CNA");
 
 $setup.setup("camelize", "./js/A05_misc.js", "//CTCC", "list-style-image");
 
@@ -118,7 +118,7 @@ $setup.setup("extCalculator", "./js/A05_misc.js", "//ECAL", ["5 + 5"]).
 
       // this.functionRef[2] = function() {return cal.value + "\n Object = " + JSON.stringify(cal);}
     })
-    // addTest("./tests/A05_miscTest.js", "CNA");
+    // addTest("./tests/A05_miscTest.js", "//CNA");
     
 
 
@@ -131,10 +131,11 @@ $setup.setup(["shuffle", "checkProbablity"], "./js/A05_misc.js", "//SAA", "1, 2,
 $setup.setup("getAverageAge", "./js/A05_misc.js", "//GAA", null).
    mod("strFunctionRef", "callgetAverageAge")
 $setup.setup("unique", "./js/A05_misc.js", "//FUAM", "Hare, Krishna, Hare, Krishna, Krishna, Krishna, Hare, Hare, :-O").
-   mod("promptReturn", [["string"]])  
+   mod("promptReturn", [["string"]]).
+   addTest("./tests/W2D1_ConstArrayTest.js");
 $setup.setup("groupById", "./js/A05_misc.js", "//CKOFA", null).
     mod("strFunctionRef", "callgroupById").
-    addTest("./tests/A05_miscTest.js", "//CKOFA");
+    addTest("./tests/W2D1_ConstArrayTest.js", "//CKOFA");
 
 // $setup.setup("getMaxSubSum", "./js/A04_misc.js", "MSA", "-2, -1, 1, 2").
 //   addTest("./tests/A04_miscTest.js", "MSA").
