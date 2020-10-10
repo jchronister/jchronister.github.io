@@ -75,8 +75,8 @@
 
 (function () {
 
-$setup.setup("equalObjects", "./js/A05_misc.js", "//TEO", null)
-$setup.setup("Calculator", "./js/A05_misc.js", "//CNC", "5, 5").
+$setup.setup("equalObjects", "./js/W2D1_ConstArray.js", "//TEO", null)
+$setup.setup("Calculator", "./js/W2D1_ConstArray.js", "//CNC", "5, 5").
     mod("strFunctionRef", ["read","sum","mul"]).
     mod("promptReturn", [["number"], null, null]).
     mod("initialize", function () {
@@ -85,7 +85,7 @@ $setup.setup("Calculator", "./js/A05_misc.js", "//CNC", "5, 5").
       this.functionRef[1] = function() {return calc.sum() + "\n Object = " + JSON.stringify(calc);}
       this.functionRef[2] = function() {return calc.mul() + "\n Object = " + JSON.stringify(calc);}
     });
-$setup.setup("Accumulator", "./js/A05_misc.js", "//CNA", "5").
+$setup.setup("Accumulator", "./js/W2D1_ConstArray.js", "//CNA", "5").
     mod("strFunctionRef", ["Accumulator","property value"]).
     mod("promptReturn", ["number", null]).
     mod("initialize", function () {
@@ -95,20 +95,20 @@ $setup.setup("Accumulator", "./js/A05_misc.js", "//CNA", "5").
     }).
     addTest("./tests/W2D1_ConstArrayTest.js", "CNA");
 
-$setup.setup("camelize", "./js/A05_misc.js", "//CTCC", "list-style-image");
+$setup.setup("camelize", "./js/W2D1_ConstArray.js", "//CTCC", "list-style-image");
 
 
-$setup.setup("filterRange", "./js/A05_misc.js", "//FR", null).
+$setup.setup("filterRange", "./js/W2D1_ConstArray.js", "//FR", null).
   mod("strFunctionRef", "callfilterRange");
-$setup.setup("filterRangeAry", "./js/A05_misc.js", "//FRIP", null).
+$setup.setup("filterRangeAry", "./js/W2D1_ConstArray.js", "//FRIP", null).
   mod("strFunctionRef", "callfilterRangeAry");
-$setup.setup("sortDecreaseOrder", "./js/A05_misc.js", "//SDO", "5, 2, 1, -10, 8").
+$setup.setup("sortDecreaseOrder", "./js/W2D1_ConstArray.js", "//SDO", "5, 2, 1, -10, 8").
     mod("promptReturn", [["number"]]);
-$setup.setup("sortArray", "./js/A05_misc.js", "//SAC", "HTML, JavaScript, CSS").
+$setup.setup("sortArray", "./js/W2D1_ConstArray.js", "//SAC", "HTML, JavaScript, CSS").
     mod("promptReturn", [["string"]]);
 
     
-$setup.setup("extCalculator", "./js/A05_misc.js", "//ECAL", ["5 + 5"]).
+$setup.setup("extCalculator", "./js/W2D1_ConstArray.js", "//ECAL", ["5 + 5"]).
     mod("strFunctionRef", ["extCalculator","addMethod *"]).
     mod("promptReturn", ["string", null]).
     mod("initialize", function () {
@@ -118,22 +118,22 @@ $setup.setup("extCalculator", "./js/A05_misc.js", "//ECAL", ["5 + 5"]).
 
       // this.functionRef[2] = function() {return cal.value + "\n Object = " + JSON.stringify(cal);}
     })
-    // addTest("./tests/A05_miscTest.js", "//CNA");
+    // addTest("./tests/W2D1_ConstArrayTest.js", "//CNA");
     
 
 
-$setup.setup("covertArrayName", "./js/A05_misc.js", "//MTN", null)
-$setup.setup("mapToObject", "./js/A05_misc.js", "//MTO", null)
-$setup.setup("sortByAge", "./js/A05_misc.js", "//SUA", null).
+$setup.setup("covertArrayName", "./js/W2D1_ConstArray.js", "//MTN", null)
+$setup.setup("mapToObject", "./js/W2D1_ConstArray.js", "//MTO", null)
+$setup.setup("sortByAge", "./js/W2D1_ConstArray.js", "//SUA", null).
     mod("strFunctionRef", "callSortByAge")
-$setup.setup(["shuffle", "checkProbablity"], "./js/A05_misc.js", "//SAA", "1, 2, 3").
+$setup.setup(["shuffle", "checkProbablity"], "./js/W2D1_ConstArray.js", "//SAA", "1, 2, 3").
    mod("promptReturn", [["number"], null])     
-$setup.setup("getAverageAge", "./js/A05_misc.js", "//GAA", null).
+$setup.setup("getAverageAge", "./js/W2D1_ConstArray.js", "//GAA", null).
    mod("strFunctionRef", "callgetAverageAge")
-$setup.setup("unique", "./js/A05_misc.js", "//FUAM", "Hare, Krishna, Hare, Krishna, Krishna, Krishna, Hare, Hare, :-O").
+$setup.setup("unique", "./js/W2D1_ConstArray.js", "//FUAM", "Hare, Krishna, Hare, Krishna, Krishna, Krishna, Hare, Hare, :-O").
    mod("promptReturn", [["string"]]).
    addTest("./tests/W2D1_ConstArrayTest.js");
-$setup.setup("groupById", "./js/A05_misc.js", "//CKOFA", null).
+$setup.setup("groupById", "./js/W2D1_ConstArray.js", "//CKOFA", null).
     mod("strFunctionRef", "callgroupById").
     addTest("./tests/W2D1_ConstArrayTest.js", "//CKOFA");
 

@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+
+  <link href="./js/assignment.css" rel="stylesheet" type="text/css"/>
+  <script src="./js/assignments.js"></script>
+
+  <!-- Reference Chai -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/chai/4.2.0/chai.min.js"></script>
+  
+  <!-- Reference Mocha Framework Code -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/mocha/3.2.0/mocha.js"></script>
+
+  <!-- Sinon Link
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/sinon.js/9.0.3/sinon.min.js"></script>-->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/sinon.js/9.2.0/sinon.js" integrity="sha512-9X6wigszgCLFhOENWD3vRQwH/n/djrTRQqA3mS9Uv9Gz6pXeeLANX0KaJFFh3fBcGnXsD3Vst9jgXmTqzE26RQ==" crossorigin="anonymous"></script>
+  <!-- Setup Mocha Framework -->
+  <script>
+    mocha.setup('bdd');
+    var assert = chai.assert;
+  </script>
+</head>
+
+<body>
+  <div>
+  <h1><a href="./Assignments/w3d5inheritanceAssignment.pdf">W3D5 Assignment</a>: Inheritance<span id="error" style="color:red;">-Error on Page See Console</span></h1><br>
+
+
+  <h2>Prototypal Inheritance</h2>
+  <ul>
+    <li id="workingWithPrototype">Working with Prototype</li>
+    <li id="searchingAlgorithm">Searching Algorithm</li>
+    <li id="whereDoesItWrite">Where Does It Write</li>
+    <li id="whyAreBothHamstersFull">Why Are Both Hamsters Full</li>
+    
+  </ul>
+
+  
+  
+  
+  
+<!--
+
+  <h2></h2>
+  <ul>
+    <li id=""></li>
+  </ul>
+-->
+
+</div>
+<br>
+<h2 id="allmochatests" class="func">All Mocha Tests</h2>
+<div id="mocha" style="display:none;"></div>
+<script>
+{
+
+
+$setup.setup("workingWithPrototype", "./js/W3D5_Inheritance.js", "//WWP", null)
+
+
+$setup.setup("searchingAlgorithm", "./js/W3D5_Inheritance.js", "//SA", null)
+$setup.setup("whereDoesItWrite", "./js/W3D5_Inheritance.js", "//WDIW", null)
+$setup.setup("whyAreBothHamstersFull", "./js/W3D5_Inheritance.js", "//WBHF", null)
+
+
+
+
+
+
+
+
+    
+// Update Page
+$setup.requestFiles()
+document.getElementById("error").style.display="none";
+
+}
+</script>
+
+</body>
+</html>
