@@ -154,13 +154,16 @@ function whyAreBothHamstersFull () {
 
   // Fix to Give Each Hamster its Own Stomach when Called
   hamster.eat = function (food) {
-    this.stomach = [];
+    // eslint-disable-next-line no-prototype-builtins
+    if(!this.hasOwnProperty("stomach")) this.stomach = [];
     this.stomach.push(food);
   };
 
-  speedy.eat("grape");
+  speedy.eat("grape");speedy.eat("grape1");speedy.eat("grape2");
   retrn.push( "speedy.stomach = " + speedy.stomach );
   retrn.push( "lazy.stomach = " + lazy.stomach );
+
+
   return retrn;
 
 }

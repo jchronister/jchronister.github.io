@@ -5,7 +5,7 @@ body{
 
 .game td
 {
-  width:100px;
+  width:75px;
   height:100px;
   border: solid 5px black;
   text-align:center;
@@ -26,13 +26,33 @@ body{
   border:solid 10px #333;
 }
 
-.game .game-title
+.game-title 
 {
   background:#222;
   color:#fff;
   padding: 10px;
   text-align:center;
+ 
 }
+
+.gameEnd {
+  text-align:center;
+  color:red;
+  font-size:20pt;
+
+}
+
+/* .game-title {
+  background:#222;
+  color:#fff;
+  padding: 10px;
+  text-align:center;
+   text-align:center; 
+
+} */
+
+
+
 
 .game .player
 {
@@ -76,3 +96,18 @@ body{
 {
   clear:both;
 }
+
+.clickable:hover {
+  color:red;
+  cursor:pointer;
+}
+
+.gameSttings {
+  float:right;
+
+
+}
+.setting {margin:10px}
+
+#timer{color:red;
+        font-size: 30px;}

@@ -7,26 +7,44 @@
   <link rel="stylesheet" href="./ticTacToe.css">
 </head>
 <body>
+  <!-- contenteditable="true"-->  
+  <div class="game"> 
+    <div class="game-title">Tic Tac Toe<span id="gameSettings" class="clickable gameSttings">Game Settings</span></div>
+      <div id="changeSettings" style="display:none">
+        <div class="setting"><label for="p1name">Player 1 Name:</label>
+        <input type="text" id="p1name" placeholder="Player 1"></div>
+        <div class="setting"><label for="p2name">Player 2 Name:</label>
+        <input type="text" id="p2name" placeholder="Player 2"></div>
+        <div class="setting"><label for="gameSize">Game Size:</label>
+        <input type="text" id="gameSize" placeholder="3" title="Game Board Size Width & Height. 3 or 3,4"></div>
+        <div class="setting"><label for="winBy">Win with n in a Row:</label>
+        <input type="text" id="winBy" placeholder="3"></div>
+        <div class="setting"><input type="button" id="updateSettings" value="Update Setting"></div>
+      </div>
+      <div id="currentSettings" class="setting">0</div>
 
-  <div class="game">
-    <div class="game-title" contenteditable="true">Tic Tac Toe</div>
-    <div class="player" contenteditable="true">
+
+
+
+    <div><span id="gameEnd" class="gameEnd clickable">Player X Wins</span></div>
+    <div id="player1name" class="player">
     Player 1
-    <div style="font-size:30pt;" id="player1" class="selected" contenteditable="true">
+    <div style="font-size:30pt;" id="player1" class="selected">
     0
     </div>
     </div>
     
-    <table id="game" class="tictactoe" style="float:left;width:45%;" contenteditable="true">
+    <table id="game" class="tictactoe" style="float:left;width:45%;">
     </table>
     
-    <div class="player" contenteditable="true">
+    <div id="player2name" class="player">
     Player 2
-    <div id="player2" style="font-size:30pt;" contenteditable="true">0</div>
-    </div>
+    <div id="player2" style="font-size:30pt;">0</div>
+  </div>  
     
     <div class="clear" contenteditable="true"></div>
-    </div>
+    <div id="timer" style="display:none">win</div>
+
 
 
 
