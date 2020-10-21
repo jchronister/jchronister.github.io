@@ -5,12 +5,29 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Document</title>
   <link href="../js/style.css" rel="stylesheet" type="text/css"/>
+
+  <style>
+    .ulMenu {
+      color:blue;
+    }
+
+     .ulMenu:hover {
+      color:red;
+      text-decoration: underline;
+      cursor: pointer;
+    }
+
+  </style>
+
+
+
 </head>
 <body>
   <h1>CS303</h1><ul> 
-  <li><a href="./Assignments/w1d1functionsArraysReview.pdf">Assignment 1</a>: Functions and Arrays
+  <li>Assignment 1: Functions and Arrays
 
     <ul>
+      <li><a href="./Assignments/w1d1functionsArraysReview.pdf">Assignment 1: Functions and Arrays</a></li>
       <li><a href="./Assignments/C2.15_Functions.html">Chapter 2 Function Questions</a></li>
       <li><a href="./Assignments/C2.17_ArrowFunctions.html">Chapter 2 Arrow Function Questions</a></li>
       <li><a href="./Assignments/C5.4_DataType_Arrays.html">Chapter 5 Data Type Array Questions</a></li>
@@ -38,8 +55,11 @@
     <li><a href="./W2D5_ReviewAssignment.html">Assignment W2D5 Review</a></li>
     <li><a href="./W2D6_Closure.html">Assignment W2D6 Closure</a></li>
     <li><a href="./W3D1_TimeoutContextBinding.html">Assignment W3D1 Timeout and Context/’this’ Binding</a></li>
+    <li>Assignment W3D5 Inheritance
+    <ul>
     <li><a href="./W3D5_Inheritance.html">Assignment W3D5 Inheritance</a></li>
     <li><a href="./Assignments/TicTacToe/ticTacToe.html">Tic Tac Toe Game</a></li>
+    </ul></li>
     <li><a href="./W3D6_ConstructorsInheritance.html">Assignment W3D6 F.prototype and Object.create</a></li>
     <li><a href="./W4D1Classes.html">Assignment W4D1 Part 1 Classes</a></li>
     <li><a href="./Assignments/W4D1_2_BankingAccountProject/Banking.html">Assignment W4D1 Part 2 Bank Accounts (Classes & Inheritance)</a></li>
@@ -56,5 +76,46 @@
   <br>
   <br>
   <br><a href="../index.html">home</a>
+
+<script> 
+
+document.getElementsByTagName("body")[0].addEventListener("click",function(e) {
+
+  var tgt = e.target;
+
+  if(tgt.nodeName === "UL" || tgt.nodeName === "LI") {
+
+    var ul = tgt.getElementsByTagName("UL");
+
+    for(var i = 0; i < ul.length; i += 1) {
+      var cur = ul[i].style.display
+      ul[i].style.display = cur === "" ? "none" : "";
+    }
+
+
+  }
+
+},false);
+
+
+(function () {
+
+
+// Hide All Child ULs
+let uls = document.getElementsByTagName("ul");
+
+for (var ul of uls) {
+  if(ul.parentElement.nodeName === "LI") {
+    ul.style.display = "none";
+
+    // Modify Parent Like Link
+    ul.parentElement.classList.add("ulMenu")
+  }
+}
+
+}())
+
+</script>
+
 </body>
 </html>
