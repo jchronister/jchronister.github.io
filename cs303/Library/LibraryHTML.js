@@ -3,14 +3,37 @@
 /*global lib*/
 
 
+
+
 //Load Members
 updateListOptions(lib.members, "memberList");
 
 //Load Books
-updateListOptions(lib.books, "bookList", n=>n.status ===0 ? 0 : null);// eslint-disable-line id-length
+updateListOptions(lib.books, "bookList");// eslint-disable-line id-length
 
 
 let currentMember;
+
+/** Get HTML Element Reference
+ * @param  {String} eId - Element Id
+ * @returns  {Object} HTML Element
+ */
+function elmt (eId) {return document.getElementById(eId);}
+
+/** Alert User
+ * @param  {String} msg - Message
+ * @returns  {undefined}
+ */
+function alertUser (msg) {alert(msg);}
+
+
+/** Convert Date to MM-DD-YY Format
+ * @param  {Date} date Date
+ * @returns {String} Formated Date
+ */
+function formatDate(date){
+  return (date.getMonth() + 1) + "-" + date.getDate() + "-" + (date.getFullYear()%100);
+}
 
 
 
@@ -20,7 +43,7 @@ let currentMember;
  * @returns {String} Data Id
  */
 function getDataOption (listName, value) {
-  let options = document.getElementById(listName).options;
+  let options = elmt(listName).options;
   for (var i = 0; i < options.length; i += 1) {
     if (options[i].value === value) {
       return options[i];
@@ -33,60 +56,128 @@ function getDataOption (listName, value) {
  */
 function getMember() {// eslint-disable-line no-unused-vars
 
-  let cmd = document.getElementById("getMember");
-  let txt = document.getElementById("member");
+  let cmd = elmt("getMember");
+  let txt = elmt("member");
 
+  // Logout and Setup Login Mode
   if (cmd.value === "Log Out") {
-    document.getElementById("memberStatus").style.display="none";
+    elmt("memberStatus").style.display="none";
     txt.value = "";
     txt.removeAttribute("disabled");
     cmd.value = "Select";
+    currentMember = null;
     return;
   }
 
-  let opt = getDataOption("memberList", document.getElementById("member").value);
-  
+  // Get Member Account
+  let opt = getDataOption("memberList", elmt("member").value);
   if(!opt) {
-    let member = document.getElementById("member").value;
+    let member = elmt("member").value;
     if (member === "") {
       alert("Please Select Member Account");
     } else {
-      alert("Sorry Cannot Find Member '" + member + "'");
+      alert("Sorry Cannot Find Member '" + member + "' Please See Librarian to Create Account");
     }
     return;
   }
+
+  // Get Current Member and Set Global
   let member = lib.getMember(Number(opt.getAttribute("data-id")));
   currentMember = member;
 
-  // Show User Info
-  document.getElementById("memberInfo").firstChild.nodeValue =
+  // Show Current User Info
+  elmt("memberInfo").firstChild.nodeValue =
   member.name + "; " + member.phone + "; Current Balance: " + member.balance;
   
-  document.getElementById("memberStatus").style.display="";
+  // Setup Logout Mode
+  elmt("memberStatus").style.display="";
   cmd.value = "Log Out";
   txt.setAttribute("disabled", "disabled");
 
-  // Update Checked Out Table
-  updateTable(member.checkedOut, function(n){// eslint-disable-line id-length
-    return [n.title, n.author, n.checkedOut, n.getDueDate()];}, 
-    (a, b)=>b[3] - a[3], "checkedOut", "noCheckedOut");// eslint-disable-line id-length
-
-  // Update Cart Table
-  updateTable(member.cart, function(n){ // eslint-disable-line id-length
-    let status = n.status === 0 ? "Available" : "Unavailable";
-    return [n.title, n.author, status, "Remove"];}, null, "cart", "noCart");
+  updateMemberTables(member);
 
 }
 
-/** Update Checkedout and Cart Tables
+/** Update Checked Out and Cart HTML Tables
+ * @param {Object} member - Member
+ * @param {boolean} checkedOut Update Checked Out Table
+ * @param {boolean} cart - Update Cart Table
+ * @returns {undefined}
+ */
+function updateMemberTables (member, checkedOut = true, cart = true) {
+
+  // Update Checked Out Table
+  if (checkedOut) {
+    var updt = updateTable(member.checkedOut, function(nth){
+      return [nth.book.title, nth.book.author, formatDate(nth.dateDue), nth.computeCharge(), "Return"];}, 
+      (ath, bth)=>bth[3] - ath[3], "checkedOut");
+
+    // Show None Row if Needed
+    elmt("noCheckedOut").style.display = member.checkedOut.length === 0 ? "" : "none";
+  
+     // Add Return Event Listener
+     updt.forEach(function(n){// eslint-disable-line id-length
+
+      if (n.cellIndex === 4) {
+        n.classList.add("select");
+        n.addEventListener("click", function(elmnt) {
+        
+        // Remove Item from Cart
+        let cell = elmnt.target.parentElement.cells;
+
+        let opt = getDataOption("bookList", cell[0].firstChild.nodeValue + " by " + cell[1].firstChild.nodeValue );
+        let book = lib.getBook(Number(opt.getAttribute("data-id")));
+        currentMember.returnItem(book, currentMember);
+
+        updateMemberTables(currentMember, true, false);
+        
+        }, false);
+      }
+    });
+  
+  }
+
+  // Update Cart Table
+  if (cart) {
+    
+    updt = updateTable(member.cart, function(n){// eslint-disable-line id-length
+      return [n.title, n.author, n.bookTextAvailble(), "Remove"];}, null, "cart");
+
+    // Show None Row if Needed
+    elmt("noCart").style.display = member.cart.length === 0 ? "" : "none";
+
+    // Add Remove Event Listener
+    updt.forEach(function(n){// eslint-disable-line id-length
+
+      if (n.cellIndex === 3) {
+        n.classList.add("select");
+        n.addEventListener("click", function(elmnt) {
+        
+        // Remove Item from Cart
+        let cell = elmnt.target.parentElement.cells;
+
+        let opt = getDataOption("bookList", cell[0].firstChild.nodeValue + " by " + cell[1].firstChild.nodeValue );
+        let book = lib.getBook(Number(opt.getAttribute("data-id")));
+        currentMember.deleteFromCart(book);
+
+        updateMemberTables(currentMember, false, true);
+        
+        }, false);
+      }
+    });
+  }
+}
+
+
+/** Update Delete Old Rows and Add New Data to Table Body
  * @param {Object[]} aryMaster - Data Array
  * @param {Function} displayFx - Data to Display Function
  * @param {Function} sortFx - Sort Function
- * @param {String} tableName - Table Name
+ * @param {String} tableBodyName - Table Name
  * @param {String} noneRowName - Table Name for None Row
- * @returns {undefined}
+ * @returns {Object} [Cell Reference of Added Cells]
  */
-function updateTable(aryMaster, displayFx, sortFx, tableName, noneRowName){
+function updateTable(aryMaster, displayFx, sortFx, tableBodyName){
 
   let ary = [], tbl;
 
@@ -97,16 +188,9 @@ function updateTable(aryMaster, displayFx, sortFx, tableName, noneRowName){
   if(sortFx) ary.sort(sortFx);
 
   // Delete Old Records and Put in New
-  tbl = document.getElementById(tableName);
+  tbl = elmt(tableBodyName);
   removeAllChildren(tbl);
-
-  // Show None or Insert Data
-  if (ary.length === 0) {
-    if (noneRowName) document.getElementById(noneRowName).style.display = "";
-  } else {
-    if (noneRowName) document.getElementById(noneRowName).style.display = "none";
-    addTableRows (ary, tbl);
-  }
+  return addTableRows(ary, tbl);
 
 }
 
@@ -116,15 +200,17 @@ function updateTable(aryMaster, displayFx, sortFx, tableName, noneRowName){
  */
 function addToCart () {// eslint-disable-line no-unused-vars
 
+  // Verify Member
   if (!currentMember) {
-    alert("Please Login");
-    return;
+    alertUser("Please Login");return;
   }
 
-  let opt = getDataOption("bookList", document.getElementById("books").value);
+  let bookTxt = elmt("books");
+  let opt = getDataOption("bookList", bookTxt.value);
   
+  // Verify Book Exists
   if(!opt) {
-    let bookTitle = document.getElementById("books").value;
+    let bookTitle = elmt("books").value;
     if (bookTitle === "") {
       alert("Please Select Book");
     } else {
@@ -132,48 +218,21 @@ function addToCart () {// eslint-disable-line no-unused-vars
     }
     return;
   }
+
+  // Get Book
   let book = lib.getBook(Number(opt.getAttribute("data-id")));
 
-  // Check to See if Already Exists Add to Member Cart
+  // Check to See Book Already Exists & Add to Member Cart
   if(currentMember.addToCart(book) === -1) {
     alert("Sorry " + book.key() + " Already Exists in Your Cart");
+    bookTxt.value = "";
     return;
   }
 
-  let add = [[book.title, book.author, book.status === 0 ? "Available" : "Unavailable Expected:?", "Remove"]];
-
-  // Hide None Row and Add to Table
-  document.getElementById("noCart").style.display = "none";
-  addTableRows(add, document.getElementById("cart"));
-
-  document.getElementById("books").value = "";
+  // Update Table & Clear Textbox
+  updateMemberTables(currentMember, false, true);
+  bookTxt.value = "";
 }
-
-/**
- * @param  {Object} e - Clicked Object or Table Row/Cell
- * @returns {undefined}
- */
-function removeTableRow (e) {// eslint-disable-line id-length
-
-  let row = e.target || e;
-
-  // Get Table Row
-  while (row.nodeName !== "TR") {
-    row = row.parentNode;
-  }
-  
-  let fields = [row.cells[0].firstChild.nodeValue, row.cells[1].firstChild.nodeValue];
-
-  // Show None if No Rows will Be Left
-  let rowCnt = row.parentElement.children.length - 1;
-  
-  row.remove();
-
-  return [fields, rowCnt];
-
-}
-
-
 
 
 /** Removed All Children from Parent Object
@@ -191,7 +250,6 @@ function removeAllChildren(element) {
 }
 
 
-
 /** Update HTML Data List Options
  * @param  {Object} ary - Array of Items to Add
  * @param  {string} listId - Data List Id
@@ -200,7 +258,7 @@ function removeAllChildren(element) {
  */
 function updateListOptions(ary, listId, include) {
 
-  let list = document.getElementById(listId);
+  let list = elmt(listId);
   removeAllChildren(list);
 
   // Add New Children
@@ -214,7 +272,6 @@ function updateListOptions(ary, listId, include) {
     // Add Datalist Option
     let option = document.createElement("option");
     option.value = i.key();
-    // option["data-id"] = i.id;
     option.setAttribute("data-id", i.id);
     frag.appendChild(option);
     }
@@ -227,9 +284,11 @@ function updateListOptions(ary, listId, include) {
 /** Creates HTML Table Row Fragment
  * @param {String[]} ary - Array of Elements [[col1, col2, col3, etc...]]
  * @param {Object} tbody - tbody Reference
- * @returns {Object} Table Row Fragment
+ * @returns {Object} [Cell Reference of Added Cells]
  */
 function addTableRows (ary, tbody) {
+
+  let retrn = [];
 
   for(var r of ary) {// eslint-disable-line id-length
   
@@ -237,29 +296,13 @@ function addTableRows (ary, tbody) {
 
     // Add Cells
     r.forEach(function (n,i) {// eslint-disable-line id-length
-      row.insertCell(i);
-      row.cells[i].appendChild(document.createTextNode(n));
-
-      if (n === "Remove") {
-        row.cells[i].classList.add("select");
-        row.cells[i].addEventListener("click", function(elmt) {
-          
-          let rmv = removeTableRow(elmt);
-
-          // Show None for No Items
-          if (rmv[1] === 0) document.getElementById("noCart").style.display = "";
-
-          // Remove Item from Cart
-          let opt = getDataOption("bookList", rmv[0][0] + " by " + rmv[0][1] );
-          let book = lib.getBook(Number(opt.getAttribute("data-id")));
-          currentMember.deleteFromCart(book);
-          
-        }, false);
-      }
+      let cell = row.insertCell(i);
+      retrn.push(cell);
+      cell.appendChild(document.createTextNode(n));
     });
   
   }
-
+  return retrn;
 }
 
 /** Checkout Items in Cart
@@ -267,11 +310,20 @@ function addTableRows (ary, tbody) {
  */
 function checkoutCart () {// eslint-disable-line no-unused-vars
 
+  let cnt = 0;
+
   currentMember.cart.forEach(function (n) {// eslint-disable-line id-length
-    if (n.status === 0) {
+    if (n.bookAvailable()) {
       lib.checkOut(n, currentMember);
       currentMember.deleteFromCart(n);
+      cnt += 1;
     }
   });
 
+  // Update Tables if Books Checked Out
+  if (cnt === 0) {
+    alertUser("No Books in Cart or Available to Checkout");
+  } else {
+    updateMemberTables (currentMember);
+  }
 }

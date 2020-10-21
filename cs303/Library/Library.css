@@ -1,5 +1,5 @@
 body {background-color: rgb(213, 245, 239);
-  font-size: 125%;
+  font-size: 100%;
 }
 
 
@@ -44,6 +44,10 @@ th, td:nth-child(4) {
   text-align:center;
 }
 
+th, td:nth-child(5) {
+  width:150px;
+  text-align:center;
+}
 input {
   padding:5px;
   font-size: 70%;
@@ -64,8 +68,4 @@ label {
   margin-left: 10px;
 
 
-}
-
-#checkOut{
-  /* float:right; */
 }
