@@ -49,7 +49,7 @@ function getMember() {// eslint-disable-line no-unused-vars
   if(!opt) {
     let member = document.getElementById("member").value;
     if (member === "") {
-      alert("Please Select Member");
+      alert("Please Select Member Account");
     } else {
       alert("Sorry Cannot Find Member '" + member + "'");
     }
