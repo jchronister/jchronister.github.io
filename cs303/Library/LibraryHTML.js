@@ -35,7 +35,26 @@ function formatDate(date){
   return (date.getMonth() + 1) + "-" + date.getDate() + "-" + (date.getFullYear()%100);
 }
 
+/** Convert Number to Currency Format $###.##
+ * @param  {Number} num Number
+ * @returns {String} Formated Currency
+ */
+function formatMoney(num){
 
+  let str = ("" + num);
+  let indx = str.indexOf(".");
+
+  if (indx === -1) {
+    return "$" + str;
+  } else {
+
+    if (!str[indx + 1]) str += "0";
+    if (!str[indx + 2]) str += "0";
+
+    return "$" + str;
+  }
+  
+}
 
 /** Returns Option data-id that Matches Value
  * @param  {String} listName - Listbox Name
@@ -84,10 +103,6 @@ function getMember() {// eslint-disable-line no-unused-vars
   // Get Current Member and Set Global
   let member = lib.getMember(Number(opt.getAttribute("data-id")));
   currentMember = member;
-
-  // Show Current User Info
-  elmt("memberInfo").firstChild.nodeValue =
-  member.name + "; " + member.phone + "; Current Balance: " + member.balance;
   
   // Setup Logout Mode
   elmt("memberStatus").style.display="";
@@ -106,10 +121,14 @@ function getMember() {// eslint-disable-line no-unused-vars
  */
 function updateMemberTables (member, checkedOut = true, cart = true) {
 
+  // Show Current User Info
+  elmt("memberInfo").firstChild.nodeValue =
+  member.name + "; " + member.phone + "; Current Balance Due: " + formatMoney(member.balance);
+
   // Update Checked Out Table
   if (checkedOut) {
     var updt = updateTable(member.checkedOut, function(nth){
-      return [nth.book.title, nth.book.author, formatDate(nth.dateDue), nth.computeCharge(), "Return"];}, 
+      return [nth.book.title, nth.book.author, formatDate(nth.dateDue), formatMoney(nth.computeCharge()), "Return"];}, 
       (ath, bth)=>bth[3] - ath[3], "checkedOut");
 
     // Show None Row if Needed
@@ -127,7 +146,7 @@ function updateMemberTables (member, checkedOut = true, cart = true) {
 
         let opt = getDataOption("bookList", cell[0].firstChild.nodeValue + " by " + cell[1].firstChild.nodeValue );
         let book = lib.getBook(Number(opt.getAttribute("data-id")));
-        currentMember.returnItem(book, currentMember);
+        lib.returnItem(book, currentMember);
 
         updateMemberTables(currentMember, true, false);
         

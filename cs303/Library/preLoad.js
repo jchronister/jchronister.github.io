@@ -5,49 +5,97 @@
 /* Export lib:Library*/
 
 
-/* eslint-disable require-jsdoc */
 
 
 
-
-
+/** Library Class */
 class Library {
+
+  /** Library Constructor */
   constructor(){
       this.members = [];
       this.books = [];
   }
 
+  /** Return Book Reference Given Id
+   * @param  {Number} id Id
+   * @returns {Object} Book
+   */
   getBook(id){// eslint-disable-line id-length
     for(var i = this.books.length - 1; i >= 0; i -= 1){
       if(this.books[i].id===id) return this.books[i];
     }
   }
+
+  /** Return Member Reference Given Id
+   * @param  {Number} id Id
+   * @returns {Object} Book
+   */
   getMember(id){// eslint-disable-line id-length
     for(var i = this.members.length - 1; i >= 0; i -= 1){
       if(this.members[i].id===id) return this.members[i];
     }
   }
 
+  /** Add Member
+  * @param {Number} member Member Class
+  * @returns {undefined}
+  */
   addMember(member){
     let id = this.members.push(member);// eslint-disable-line id-length
     this.members[id - 1].id = id;// eslint-disable-line id-length
   }
 
+  /** Add Book
+  * @param {Number} book Book Class
+  * @returns {undefined}
+  */
   addBook(book){
     let id = this.books.push(book);// eslint-disable-line id-length
     this.books[id - 1].id = id;// eslint-disable-line id-length
   }
 
+  /** Checkout Book
+   * @param  {Object} book - Book
+   * @param  {Object} member - Member
+   * @param  {Date} checkOutDate - Date if Not Today
+   * @returns {undefined}
+   */
   checkOut(book, member, checkOutDate = new Date()) {
     let loan = new Loan(book, member, checkOutDate);
     member.checkedOut.push(loan);
     book.status.push(loan);
   }
 
+  /** Return Book
+   * @param  {Object} book - Book
+   * @param  {Object} member - Member
+   * @param  {Date} returnDate - Date if Not Today
+   * @returns {undefined}
+   */  
+  returnItem(book, member, returnDate = new Date()) {
+    
+    for (var item of member.checkedOut) {
+        if (item.book === book) {
+            var loan = item;
+            break;
+        }
+    }
+    member.balance = loan.computeCharge(returnDate) + member.balance;
+    member.checkedOut.splice(member.checkedOut.indexOf(item), 1);
+  }
 }
 
-
+/** Book Class */
 class Book {
+
+  /** Book Constructor 
+   * @param  {String} title - Title
+   * @param  {String} author - Author
+   * @param  {Number} bookCost - Book Cost
+   * @param  {Number} chargePerDay - Charge per Day - Default 0.05
+   * @param  {Number} copies - Copies - Default 1
+   */
   constructor(title, author, bookCost, chargePerDay = 0.05, copies = 1) {
       this.title = title;
       this.author = author;
@@ -57,13 +105,20 @@ class Book {
       this.copies = copies;
   }
 
+  /** Return Primary Key
+  * @returns {String} Key
+  */
   key(){
     return this.title + " by " + this.author;
   }
 
+  /** Check if Book Available
+  * @returns {Boolean} Key
+  */ 
   bookAvailable() {
     return this.status.length < this.copies;
   }
+
   /** Returns 'Available' or 'Unavailable Expected MM-DD-YY'
    * @returns {Sting} Available String
    */
@@ -71,26 +126,31 @@ class Book {
     
     if (this.bookAvailable()) {
       return "Available";
+
     } else {
 
-      let expected = this.status.reduce(function(a, n) {// eslint-disable-line id-length
-        if (n.dateDue < a) {
-          return n;
-        } else {
-          return a;
-        }
-      },this.status[0].dateDue);    
-      
-      return "Unavailable Expected " + formatDate(expected);
+      // Get Due Dates by Order 
+      let expected = this.status.map(n=>n.dateDue).sort((a,b)=>(b-a));// eslint-disable-line id-length
+      if (expected.length > 1) {
+        return "Items Due: " + expected.map(n=>formatDate(n)).join(", "); // eslint-disable-line id-length
+      } else if (new Date() > expected[0]) {
+          return "Unknown Overdue Since " + formatDate(expected[0]);
+      } else {
+        return "Unavailable Expected " + formatDate(expected[0]);
+      }
     }
-
-
-
   }
 }
 
-
+/** Member Class */
 class member {
+
+  
+  /** Member Constructor
+   * @param  {string} name - Name
+   * @param  {string} phone - Phone
+   * @param  {Number} balance - Balance - Default of 0
+   */
   constructor(name, phone, balance = 0){
       this.name = name;
       this.balance = balance;
@@ -98,10 +158,18 @@ class member {
       this.cart = [];
       this.phone = phone;
   }
+
+  /** Return Primary Key
+  * @returns {String} Key
+  */
   key(){
     return this.name + ": " + this.phone;
   }
 
+  /** Add Book to Cart
+  * @param {Object} book - Book
+  * @returns {undefined}
+  */ 
   addToCart(book) {
     if(!this.cart.includes(book)) {
       return this.cart.push(book);
@@ -110,31 +178,49 @@ class member {
     }
   }
 
+  /** Delete Book from Cart
+  * @param {Object} book - Book
+  * @returns {undefined}
+  */ 
   deleteFromCart(book) {
     this.cart.splice(this.cart.indexOf(book),1);
   }
 }
 
+/** Loan Class */
 class Loan {
-
+  
+  /** Loan Constructor
+   * @param  {Object} book - Book
+   * @param  {Object} member  Member
+   * @param  {Date} dateCheckedOut - Date - Default of Today
+   */
   constructor(book, member, dateCheckedOut = new Date()) {
-      this.dateCheckedOut = dateCheckedOut;
+      let date = new Date(dateCheckedOut.getFullYear(), dateCheckedOut.getMonth(), dateCheckedOut.getDate());
+      this.dateCheckedOut = date;
       this.book = book;
       this.member = member;
       this.dateDue = this.getDueDate();
   }
 
+  /** Calculate Due Date
+  * @returns {Date} Due Date
+  */    
   getDueDate() {
-      let msDay = (1000 * 60 * 60 * 24 * 21);
-      let dueDate = new Date(this.dateCheckedOut.getTime() + msDay);
-      return new Date(dueDate.getFullYear(), dueDate.getMonth(), dueDate.getDate());
-  }
+      var dueDate = new Date(this.dateCheckedOut);
+      dueDate.setDate(dueDate.getDate() + 21);
+      return dueDate;
+    }
 
+  /** Calculate Return Dues
+  * @param {Date} date - Return Date - Default of Today
+  * @returns {Date} Due Date
+  */ 
   computeCharge(date = new Date()) {
 
-      let due = this.getDueDate();
-      if (date > due) {
-          let charge = (date - due) / (1000 * 60 * 60 * 24) * this.book.chargePerDay;
+      let retrned  = new Date(date.getFullYear(), date.getMonth(), date.getDate());
+      if (retrned > this.dateDue) {
+          let charge = (retrned - this.dateDue) / (1000 * 60 * 60 * 24) * this.book.chargePerDay;
           if (charge >= this.book.bookCost) {
               return this.book.bookCost;
           }
@@ -220,8 +306,9 @@ uploadMember(lib);
 let mbr = lib.members;
 let bok = lib.books;
 
+bok[0].copies = 2;
 lib.checkOut(bok[0],mbr[0],new Date(2020, 6, 25));
-lib.checkOut(bok[1],mbr[0],new Date(2020, 9, 19));
+lib.checkOut(bok[1],mbr[0],new Date(2020, 9, 20));
 lib.checkOut(bok[2],mbr[0],new Date(2020, 8, 20));
 
 lib.checkOut(bok[3],mbr[1],new Date(2020, 2, 3));
