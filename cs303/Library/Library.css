@@ -69,3 +69,9 @@ label {
 
 
 }
+
+#link{
+  position: absolute;
+  left:700px;
+  text-decoration:none;
+}
