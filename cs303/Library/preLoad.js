@@ -81,8 +81,15 @@ class Library {
             break;
         }
     }
+
+    // Add Fees
     member.balance = loan.computeCharge(returnDate) + member.balance;
-    member.checkedOut.splice(member.checkedOut.indexOf(item), 1);
+
+    // Remove from Member Checkout
+    member.checkedOut.splice(member.checkedOut.indexOf(loan), 1);
+
+    // Remove from Book Status
+    book.status.splice(book.status.indexOf(loan), 1);
   }
 }
 

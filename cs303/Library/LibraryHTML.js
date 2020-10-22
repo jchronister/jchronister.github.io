@@ -160,7 +160,7 @@ function updateMemberTables (member, checkedOut = true, cart = true) {
   if (cart) {
     
     updt = updateTable(member.cart, function(n){// eslint-disable-line id-length
-      return [n.title, n.author, n.bookTextAvailble(), "Remove"];}, null, "cart");
+      return [n.title, n.author, n.bookTextAvailble(), "Remove", n.bookAvailable() ? "Check Out" : ""];}, null, "cart");
 
     // Show None Row if Needed
     elmt("noCart").style.display = member.cart.length === 0 ? "" : "none";
@@ -170,18 +170,31 @@ function updateMemberTables (member, checkedOut = true, cart = true) {
 
       if (n.cellIndex === 3) {
         n.classList.add("select");
+
+        // Remove Item from Cart
         n.addEventListener("click", function(elmnt) {
         
-        // Remove Item from Cart
         let cell = elmnt.target.parentElement.cells;
 
         let opt = getDataOption("bookList", cell[0].firstChild.nodeValue + " by " + cell[1].firstChild.nodeValue );
         let book = lib.getBook(Number(opt.getAttribute("data-id")));
         currentMember.deleteFromCart(book);
-
         updateMemberTables(currentMember, false, true);
         
         }, false);
+      } else if (n.cellIndex === 4 && n.firstChild.nodeValue === "Check Out") {
+        n.classList.add("select");
+
+        // Checkout Book
+        n.addEventListener("click", function(elmnt) {
+
+          let cell = elmnt.target.parentElement.cells;
+          let opt = getDataOption("bookList", cell[0].firstChild.nodeValue + " by " + cell[1].firstChild.nodeValue );
+          let book = lib.getBook(Number(opt.getAttribute("data-id")));
+          lib.checkOut(book, currentMember);
+          currentMember.deleteFromCart(book);
+          updateMemberTables(currentMember);
+        });
       }
     });
   }
@@ -331,7 +344,7 @@ function checkoutCart () {// eslint-disable-line no-unused-vars
 
   let cnt = 0;
 
-  currentMember.cart.forEach(function (n) {// eslint-disable-line id-length
+  currentMember.cart.slice().forEach(function (n) {// eslint-disable-line id-length
     if (n.bookAvailable()) {
       lib.checkOut(n, currentMember);
       currentMember.deleteFromCart(n);
