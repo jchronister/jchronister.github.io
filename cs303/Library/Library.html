@@ -11,8 +11,8 @@
   <h2>The Lost Book Library</h2>
 
 <div>
-  <label for="member">Please Select Account:</label>
-  <input type="text" id="member" list="memberList" style="width:250px;"/>
+  <label for="member">Account:</label>
+  <input type="text" id="member" list="memberList" style="width:250px;" placeholder="Select Account and Click Select Button"/>
   <input id="getMember" type="button" value="Select" onclick="getMember()">
   <datalist id="memberList"></datalist>
 </div>
@@ -32,8 +32,8 @@
 
   <div class="info">Current Cart of Items to be Checked Out</div>
     <div> 
-      <label for="books">Select Item:</label>
-      <input type="text" id="books" list="bookList" style="width:400px;"/>
+      <label for="books">Item:</label>
+      <input type="text" id="books" list="bookList" style="width:400px;" placeholder="Select Item and Click Add to Cart"/>
       <input type="button" value="Add Item to Cart" onclick="addToCart()">
       <datalist id="bookList"></datalist>
 

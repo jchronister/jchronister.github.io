@@ -152,7 +152,7 @@ function updateMemberTables (member, checkedOut = true, cart = true) {
         let book = lib.getBook(Number(opt.getAttribute("data-id")));
         lib.returnItem(book, currentMember);
 
-        updateMemberTables(currentMember, true, false);
+        updateMemberTables(currentMember);
         
         }, false);
       }
@@ -183,7 +183,7 @@ function updateMemberTables (member, checkedOut = true, cart = true) {
         let opt = getDataOption("bookList", cell[0].firstChild.nodeValue + " by " + cell[1].firstChild.nodeValue );
         let book = lib.getBook(Number(opt.getAttribute("data-id")));
         currentMember.deleteFromCart(book);
-        updateMemberTables(currentMember, false, true);
+        updateMemberTables(currentMember);
         
         }, false);
       } else if (n.cellIndex === 4 && n.firstChild.nodeValue === "Check Out") {
@@ -266,7 +266,7 @@ function addToCart () {// eslint-disable-line no-unused-vars
   }
 
   // Update Table & Clear Textbox
-  updateMemberTables(currentMember, false, true);
+  updateMemberTables(currentMember);
   bookTxt.value = "";
 }
 

@@ -5,9 +5,6 @@
 /* Export lib:Library*/
 
 
-
-
-
 /** Library Class */
 class Library {
 
@@ -313,35 +310,18 @@ uploadMember(lib);
 let mbr = lib.members;
 let bok = lib.books;
 
+// Test Cases
 bok[0].copies = 2;
 lib.checkOut(bok[0],mbr[0],new Date(2020, 6, 25));
 lib.checkOut(bok[1],mbr[0],new Date(2020, 9, 20));
 lib.checkOut(bok[2],mbr[0],new Date(2020, 8, 20));
+mbr[0].addToCart(bok[7]);
 
 lib.checkOut(bok[3],mbr[1],new Date(2020, 2, 3));
 lib.checkOut(bok[4],mbr[1],new Date(2020, 9, 20));
 lib.checkOut(bok[5],mbr[1],new Date(2020, 9, 12));
 
 lib.checkOut(bok[6],mbr[2],new Date(2020, 7, 2));
-
-
-
-// books.0("The longer the thread<>Emma Lathen<>0.05<>10");
-// books.1("The sky's the limit<>Wayne W. Dyer<>0.05<>35");
-// books.2("The Prince & the Lily<>James Brough<>0.15<>5");
-// books.3("The sun : the universe<>Ian Ridpath<>0.05<>42");
-// books.4("The tower, the zoo, and the tortoise<>Julia Stuart<>0.25<>15");
-// books.5("The snake, the crocodile, and the dog<>Elizabeth Peters<>0.50<>25");
-// books.6("Go, go America<>Dan Yaccarino<>0.15<>6");
-// let book = 
-
-
-// lib.checkOut(book, member, checkOutDate = new Date()) {
-// members.0("Leslie Patricelli<>301-562-9861");
-// members.1("Kid Rock<>919-657-6598");
-// members.2("Maya Ajmera<>741-654-7524");
-// members.3("Debbie Macomber<>741-675-1254");
-
 
 }
 
