@@ -129,7 +129,11 @@ function updateMemberTables (member, checkedOut = true, cart = true) {
   if (checkedOut) {
     var updt = updateTable(member.checkedOut, function(nth){
       return [nth.book.title, nth.book.author, formatDate(nth.dateDue), formatMoney(nth.computeCharge()), "Return"];}, 
-      (ath, bth)=>bth[3] - ath[3], "checkedOut");
+      function (ath, bth) {
+        let num1 = ath[3].slice(1);
+        let num2 = bth[3].slice(1);
+        return num2 - num1;
+      }, "checkedOut");
 
     // Show None Row if Needed
     elmt("noCheckedOut").style.display = member.checkedOut.length === 0 ? "" : "none";
