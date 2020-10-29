@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <link href="../js/style.css" rel="stylesheet" type="text/css"/>
+
+  <style>
+    .ulMenu {
+      color:blue;
+    }
+
+     .ulMenu:hover {
+      color:red;
+      text-decoration: underline;
+      cursor: pointer;
+    }
+
+  </style>
+
+
+
+</head>
+<body>
+  <h1>CS421</h1><ul> 
+
+      <li><a href="./Assignments/Assignment2_StackList.html">Assignment 2</a></li>
+ 
+  </ul>
+
+  
+
+
+  
+  <br>
+  <br>
+  <br>
+  <br><a href="../index.html">home</a>
+
+<script> 
+
+document.getElementsByTagName("body")[0].addEventListener("click",function(e) {
+
+  var tgt = e.target;
+
+  if(tgt.nodeName === "UL" || tgt.nodeName === "LI") {
+
+    var ul = tgt.getElementsByTagName("UL");
+
+    for(var i = 0; i < ul.length; i += 1) {
+      var cur = ul[i].style.display
+      ul[i].style.display = cur === "" ? "none" : "";
+    }
+
+
+  }
+
+},false);
+
+
+(function () {
+
+
+// Hide All Child ULs
+let uls = document.getElementsByTagName("ul");
+
+for (var ul of uls) {
+  if(ul.parentElement.nodeName === "LI") {
+    ul.style.display = "none";
+
+    // Modify Parent Like Link
+    ul.parentElement.classList.add("ulMenu")
+  }
+}
+
+}())
+
+</script>
+
+</body>
+</html>

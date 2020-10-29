@@ -171,14 +171,20 @@ var $setup = {
     if (that.jsLoaded.complete === false && that.jsLoaded.allFilesLoaded()) {
       that.setupHTMl();
 
-      document.getElementById("allmochatests").innerText = "No Tests Loaded Yet. Click to Check";
+      if (that.runMocha ===false) {
+        document.getElementById("allmochatests").style.display = "none"; 
+      } else {
+
+        document.getElementById("allmochatests").innerText = "No Tests Loaded Yet. Click to Check";
+        
+        document.getElementById("allmochatests").addEventListener("click",function(){
+          var mochaStyle = document.getElementById("mocha").style;
+          mochaStyle.display = mochaStyle.display === "" ? "none" : "";
+        });
       
-      document.getElementById("allmochatests").addEventListener("click",function(){
-        var mochaStyle = document.getElementById("mocha").style;
-        mochaStyle.display = mochaStyle.display === "" ? "none" : "";
-      });
-      
-      that.runMocha();
+        that.runMocha();
+      }
+
       that.jsLoaded.complete = true;
     }
 

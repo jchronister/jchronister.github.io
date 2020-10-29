@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <link href="../../cs303/js/assignment.css" rel="stylesheet" type="text/css"/>
+  <script src = "../../cs303/js/assignments.js"></script>
+  <script src = "./DLinkedList.js"></script>
+  <!-- <script src = "./Assignment2_StackList.js"></script> -->
+
+
+</head>
+<body>
+
+<h2><a href="./AssignmentLesson2.pdf">Assignment 2</a></h2>
+
+<ul>
+  <li id="testFindMiddle">A: Function findMiddle for Linked List
+    <!-- <a href="./AssignmentLesson2.pdf">Test Link</a> -->
+  </li>
+  <li id="testStack">B: Function Push/Pop for Linked List</li>
+  <li id="testQueue">C: Function Enqueue/Dequeue for Linked List</li>
+  <li id="testQueueStack">C-2.2: Function Enqueue/Dequeue for 2 Stacks</li>
+
+  
+</ul>
+  
+<h2 id="allmochatests" class="func">All Mocha Tests</h2>
+<div id="mocha" style="display:none;"></div>
+<script>
+{
+$setup.setup("testFindMiddle", "./Assignment2_StackList.js", "//FME", null)
+$setup.setup("testStack", "./Assignment2_StackList.js", "//LLS", null)
+$setup.setup("testQueue", "./Assignment2_StackList.js", "//LLQ", null)
+$setup.setup("testQueueStack", "./Assignment2_StackList.js", "//LQS", null)
+
+
+  // Update Page
+$setup.runMocha = false;
+$setup.requestFiles()
+// document.getElementById("error").style.display="none";
+
+}
+</script>
+</body>
+</html>
