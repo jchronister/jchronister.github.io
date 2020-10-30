@@ -66,17 +66,29 @@ function testFindMiddle () {// eslint-disable-line no-unused-vars
  *  class. Push & Pop.
 */
 //LLS
-class Stack extends DLinkedList {
+class Stack {
+
+  constructor () {
+    this._list = new DLinkedList();
+  }
 
   push (elmt) {
-    this.insertLast(elmt);
-    return this;
+    this._list.insertLast(elmt);
+    return this._list;
   }
 
   pop () {
-    let elmt = this.last();
-    this.remove(elmt);
+    let elmt = this._list.last();
+    this._list.remove(elmt);
     return elmt.element();
+  }
+
+  print () {
+    this._list.print();
+  }
+
+  isEmpty () {
+    return this._list.isEmpty();
   }
 }
 
@@ -105,17 +117,25 @@ function testStack () {// eslint-disable-line no-unused-vars
 *  DLinkedList class - enqueue() and dequeue() methods
 */
 //LLQ
-class Queue extends DLinkedList { 
+class Queue { 
+
+  constructor () {
+    this._list = new DLinkedList();
+  }
 
   enqueue (elmt) {
-    this.insertLast(elmt);
-    return this;
+    this._list.insertLast(elmt);
+    return this._list;
   }
 
   dequeue () {
-    let elmt = this.first();
-    this.remove(elmt);
+    let elmt = this._list.first();
+    this._list.remove(elmt);
     return elmt.element();
+  }
+
+  print () {
+    this._list.print();
   }
 
 }
@@ -130,9 +150,9 @@ function testQueue () {// eslint-disable-line no-unused-vars
   list.print();
   list.enqueue("7A"); log("Enqueue '7A'");
   list.print();
-  log(list.dequeue());
+  log("dequeue", list.dequeue());
   list.print();
-  log(list.dequeue());
+  log("dequeue", list.dequeue());
   list.print();
 
   return "See Console for Output";
@@ -143,31 +163,39 @@ function testQueue () {// eslint-disable-line no-unused-vars
 /** implement the queue ADT using two stacks.
 */
 //LQS
-class QueueStack extends Stack { 
+class QueueStack { 
+
+  constructor () {
+    this._listI = new Stack();
+    this._listO = new Stack();
+  }
 
   enqueue(elmt) {
 
-    let temp = new Stack();
-
-    // Move All to Temporary Stack
-    while (this.size() > 0) {
-      temp.push(this.pop());
-    }
-
     // Add New Element
-    this.push(elmt);
-
-    // Move All Off Temporary Stack
-    while (temp.size() > 0) {
-      this.push(temp.pop());
-    }
-
-    return this;
+    this._listI.push(elmt);
+    return this._listI;
     
   }
 
   dequeue () {
-    return this.pop();
+
+    // If Empty Fill From Incoming Stack
+    if (this._listO.isEmpty()) {
+    
+      while (!this._listI.isEmpty()) {
+        this._listO.push(this._listI.pop());
+      }
+
+    }
+
+    return this._listO.pop();
+
+  }
+
+  print () {
+    this._listI.print();
+    this._listO.print();
   }
 
 }

@@ -2,6 +2,7 @@
 /* eslint-disable require-jsdoc */
 "use strict";
 
+
 class APos {
     constructor(elem, index) {
         this._elem = elem;
@@ -11,7 +12,8 @@ class APos {
         return this._elem;
     }
 }
-class Sequence {
+
+class Sequence { // eslint-disable-line no-unused-vars
     constructor(size) {
         this._arr = new Array(size);
         this._first = 0;
@@ -19,16 +21,16 @@ class Sequence {
     }
     // Rank Operations
     isEmpty() {
-        return _first == _last;
+        return this._first == this._last;  // bug 5 missing this
     }
     size() {
         return this._index2rank(this._last);
-    } 
+    }
     _index2rank(i) {
         return (this._arr.length - this._first + i) % this._arr.length;
     }
     _rank2index(r) {
-        return (this._first + r) % this._arr.length;
+        return (this._first + r) % this._arr.length;
     }
     _isValidRank(r) {
         return (0 <= r) && (r < this.size());
@@ -48,7 +50,7 @@ class Sequence {
         return this.atRank(r).element();
     }
     replaceAtRank(r, elem) {
-        let p = atRank(r);
+        let p = this.atRank(r);
         let oldElem = p.element();
         p._elem = elem;
         return oldElem;
@@ -93,7 +95,7 @@ class Sequence {
         for (let r=r2; r>r1; r--) {
             var prev = this._rank2index(r - 1);
             this._arr[curr] = this._arr[prev];
-            this._arr[curr].index = curr;
+            this._arr[curr]._index = curr; // Error 10/29/20 this._arr[curr].index = curr;
             curr = prev;
         }
     }
@@ -167,10 +169,10 @@ class Sequence {
         let oldElem = p.element();
         p._elem = elem;
         return oldElem;
-    } 
+    }
     swapElements(p, q) {
-        let temp = replaceElement(p, q.element());
-        q.replaceElement(temp);
+        let temp = this.replaceElement(p, q.element());
+        this.replaceElement(q, temp); // q.replaceElement(temp); // Error q is a position??? 10/29
     }
     insertFirst(elem) {
         let newPos = this._causesOverflow(0, elem);
@@ -196,7 +198,7 @@ class Sequence {
     remove(p) {
         return this.removeAtRank(this.rankOf(p));
     }
-    print() {
+    toString() {
         let res = "[";
         let iter = this.iterator();
         while (iter.hasNext()) {
@@ -205,9 +207,13 @@ class Sequence {
                 res = res + ", ";
             }
         }
-        console.log(res + "]");
+        return res + "]";
+    }
+    print() {
+        console.log(this.toString());///////
         console.log("size =" + this.size() + "  N=" + this._arr.length
                 + " first="+this._first + " last=" + this._last+"\n");
+
     }
     iterator() {
         return new SeqIterator(this);
@@ -234,29 +240,29 @@ class SeqIterator {
         this._nextRank = 0;
     }
 }
-var tst0 = new Sequence();
-tst0.print();
-var tst1 = new Sequence();
-tst1.insertFirst(5);
-tst1.print();
-var tst2 = new Sequence();
-tst2.print();
-tst2.insertFirst(1);
-tst2.print();
-tst2.insertLast(3);
-tst2.print();
-tst2.insertAtRank(1, 2);
-tst2.print();
-tst2.removeAtRank(1);
-tst2.print();
-tst2.insertFirst(0);
-tst2.insertLast(4);
-tst2.insertAtRank(2, 2);
-tst2.insertAtRank(4, 3.5);
-tst2.insertAtRank(2, 1.5);
-tst2.print();
-tst2.insertAtRank(7, 8);
-tst2.print();
-console.log(tst2.elemAtRank(3));
-console.log(tst2.first().element());
-console.log(tst2.last().element());
+// var tst0 = new Sequence();
+// tst0.print();
+// var tst1 = new Sequence();
+// tst1.insertFirst(5);
+// tst1.print();
+// var tst2 = new Sequence();
+// // tst2.print();
+// tst2.insertFirst(1);
+// // tst2.print();
+// tst2.insertLast(3);
+// // tst2.print();
+// tst2.insertAtRank(1, 2);
+// tst2.print();
+// tst2.removeAtRank(1);
+// tst2.print();
+// tst2.insertFirst(0);
+// tst2.insertLast(4);
+// tst2.insertAtRank(2, 2);
+// tst2.insertAtRank(4, 3.5);
+// tst2.insertAtRank(2, 1.5);
+// tst2.print();
+// tst2.insertAtRank(7, 8);
+// tst2.print();
+// console.log(tst2.elemAtRank(3));
+// console.log(tst2.first().element());
+// console.log(tst2.last().element());
