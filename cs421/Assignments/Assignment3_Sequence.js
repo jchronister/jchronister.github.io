@@ -13,7 +13,8 @@ if (typeof alert === "undefined") var alert = console.log;
 // eslint-disable-next-line no-undef, no-redeclare
 if (typeof prompt === "undefined") var prompt = require("prompt-sync")();
 
-
+//RD
+//RD
 function removeDuplicates(list) {
 
   // Return on Empty Array
@@ -38,7 +39,7 @@ function removeDuplicates(list) {
       }
 
       if (list.isLast(compare)) break;
-      compare = list.after(compare);//I dot like this line?
+      compare = list.after(compare);
     }
     
     if (list.isLast(i)) return list;
@@ -47,24 +48,23 @@ function removeDuplicates(list) {
     
 }
  
-
 function testRemoveDuplicates() {// eslint-disable-line no-unused-vars
 
   let list = new Sequence (25);
 
   for(let i = 0; i < 10; ++i){
     list.insertLast(i);
-     list.insertFirst(i);
-
+     list.insertFirst(i); 
   }
-
 
   list.print();
   removeDuplicates(list);
   list.print();
+  return "See Console for Output";
 }
-
-
+//RD
+//IP
+//IP
 function isPermutation(listA, listB) {
 
   // Finds and Removes search Item from list
@@ -76,7 +76,6 @@ function isPermutation(listA, listB) {
 
       // Check for Match and Remove
       if (i.element() === search) {
-        list.last();
         list.swapElements(i, list.last()); // Speedup for Sequence Removal
         list.remove(list.last());
         return true;
@@ -104,8 +103,7 @@ function isPermutation(listA, listB) {
   while (iter.hasNext()) {
 
     // Get and Compare for Match
-    var elA = iter.nextObject();
-    if (!exists(bItems, elA)) return false;
+    if (!exists(bItems, iter.nextObject())) return false;
 
   }
 
@@ -114,12 +112,10 @@ function isPermutation(listA, listB) {
 
 }
 
-
 function testIsPermutation () {
 
-  let listA = new $.Sequence (5);
-  let listB = new $.Sequence (5);
-
+  let listA = new Sequence (7);
+  let listB = new Sequence (7);
 
   listA.insertLast(4);
   listA.insertLast(3);
@@ -127,13 +123,19 @@ function testIsPermutation () {
   listA.insertLast(1);
   listA.insertLast(2);
 
-
   listB.insertLast(2);
   listB.insertLast(3);
   listB.insertLast(1);
   listB.insertLast(1);
   listB.insertLast(4);
-
+  listA.print(),listB.print();
   log(isPermutation (listA,listB));
-}
 
+  listA.insertLast(3);
+  listB.insertLast(4);
+  listA.print(),listB.print();
+  log(isPermutation (listA,listB));
+
+  return "See Console for Output";
+}
+//IP
