@@ -21,8 +21,9 @@
 
 <ul>
   <li id="callSumTree">A: Sum Node Values in Binary Tree</li>
-
-    
+  <li id="callMaxTree">B: Sum Node Values in Binary Tree</li>
+  <li id="callMaxOfTreeEulerTour">C: Max of Tree Euler Tour Template</li>
+  
     <!-- <a href="./AssignmentLesson2.pdf">Test Link</a> -->
   
 
@@ -33,10 +34,15 @@
 <div id="mocha" style="display:none;"></div>
 <script>
 {
-$setup.setup("callSumTree", "./Assignment5_Trees.js", "//ST", null)
+$setup.setup(["callSumTree", "printTree"], "./Assignment5_Trees.js", "//ST", null).
+  mod("promptReturn", [null,null]);
+$setup.setup(["callMaxOfTreeEulerTour", "printTree"], "./Assignment5_Trees.js", "//MET", null).
+  mod("promptReturn", [null,null]);
+$setup.setup(["callMaxTree", "printTree"], "./Assignment5_Trees.js", "//MOT", null).
+  mod("promptReturn", [null,null]);
 
 
-  
+
   // Update Page
 $setup.runMocha = false;
 $setup.requestFiles()

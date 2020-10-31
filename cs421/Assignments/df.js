@@ -1,7 +1,6 @@
 /* eslint-disable id-length */
 /* eslint-disable require-jsdoc */
-"use strict";
-
+/* eslint-disable strict */
 class NPos {
     constructor (elem, prev, next) {
         // inserts this new node between prev and next
@@ -19,8 +18,7 @@ class NPos {
         return this._elem;
     }
 }
-
-class DLinkedList {// eslint-disable-line no-unused-vars
+class List {
     constructor() {
         this._header = new NPos(null, null, null);
         this._trailer = new NPos(null, this._header, null);
@@ -67,7 +65,7 @@ class DLinkedList {// eslint-disable-line no-unused-vars
     }
     replaceElement(p, elem) {
         let oldElem = p._elem;
-        p._elem = elem; //Error Removed 
+        p._elem = _elem;
         return oldElem;
     }
     swapElements(p, q) {
@@ -101,6 +99,56 @@ class DLinkedList {// eslint-disable-line no-unused-vars
         p._prev = null;  // should no longer reference a Position in the List
         p._next = null;
         this._size--;
+    }
+    // Rank/Random Access Operations
+    _isValidRank(r) {
+        return (r < this._size);
+    }
+    atRank(r) {
+        if (!this._isValidRank(r)) {
+            throw new Error("Invalid rank " + r)
+        }
+        let i = 0;
+        let p = this.first();
+        while (i<r) {
+            p = this.after(p);
+            i++;
+        }
+        return p;
+    }
+    rankOf(p) {
+        let r = 0;
+        let q = this.first();
+        while (q != p) {
+            q = this.after(q);
+            r++;
+        }
+        return r;
+    }
+    elemAtRank(r) {
+        let p = this.atRank(r);
+        return p._elem;
+    }
+    replaceAtRank(r, e) {
+        let p = this.atRank(r);
+        let oldElem = p.element();
+        p._elem = e;
+        return oldElem;
+    }
+    insertAtRank(r, e) {
+        let p = null;
+        if (r == this._size) { // bug 1
+            p = this.insertLast(e);
+        } else {
+            p = this.atRank(r);
+            p = this.insertBefore(p, e); // generally not good
+        }
+        return p;
+    }
+    removeAtRank(r) {
+        let p = this.atRank(r);
+        this.remove(p);  // generally not good to call public methods with side-effects
+        return p.element();
     }
     print() {
         let res = "[";
@@ -145,25 +193,25 @@ class ListIterator {
         }
     }
 }
-// var tst0 = new DLinkedList();
-// tst0.print();
-// var tst1 = new DLinkedList();
-// tst1.insertFirst(5);
-// tst1.print();
-// var tst2 = new DLinkedList();
-// tst2.print();
-// tst2.insertFirst(1);
-// tst2.print();
-// tst2.insertLast(3);
-// tst2.print();
-// tst2.insertAfter(tst2.before(tst2.after(tst2.first())), 2);
-// tst2.print();
-// tst2.remove(tst2.after(tst2.first()));
-// tst2.print();
-// tst2.insertFirst(0);
-// tst2.insertLast(4);
-// tst2.insertAfter(tst2.after(tst2.first()), 2);
-// tst2.print();
-// console.log(tst2.after(tst2.after(tst2.after(tst2.first()))).element());
-// console.log("first = " + tst2.first().element());
-// console.log("last  = " + tst2.last().element());
+var tst0 = new List();
+tst0.print();
+var tst1 = new List();
+tst1.insertFirst(5);
+tst1.print();
+var tst2 = new List();
+tst2.print();
+tst2.insertFirst(1);
+tst2.print();
+tst2.insertLast(3);
+tst2.print();
+tst2.insertAtRank(1, 2);
+tst2.print();
+tst2.removeAtRank(1);
+tst2.print();
+tst2.insertFirst(0);
+tst2.insertLast(4);
+tst2.insertAtRank(2, 2);
+tst2.print();
+console.log(tst2.elemAtRank(3));
+console.log("first = " + tst2.first().element());
+console.log("last  = " + tst2.last().element());

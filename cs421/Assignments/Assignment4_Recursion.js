@@ -32,53 +32,55 @@ function getRandomNumberList() {
 //SS
 /*  Recursive algorithm, setOfSubsets(n), that enumerates all
 *   of the subsets of the set of numbers {1,2,…,n}.
+*   Runtime O(n^2)
 */
 //SS
-
 function setOfSubsets(set) {
 
-  // Add New Subsets Helper Function
+  // Add New Subsets to Return List
   let updateSubset = function (num, subset, i) {
 
-    // Update - Skip First () Empty
-    if(!subset.isFirst(i)) subset.insertLast("" + i.element() + num);
-
-    // Insert New Number and Exit
+    // End of Subset - Insert New Number and Exit
     if(subset.isFirst(i)) {
       subset.insertLast(num);
       return;
     }
 
+    // Insert New Subset
+    subset.insertLast("" + i.element() + num);
+
     updateSubset(num, subset, subset.before(i));
   };
 
-  // Initilize or Get Position
-  if (arguments[1] === undefined) {
-    var subset = new List();
-    subset.insertFirst("()");
-    if(set.isEmpty()) return subset;
-    var p = set.first();
-  } else {
-    p = arguments[1];
-    subset = arguments[2];
-  }
+  // Iterate Sets List
+  let iterateSet = function (set, p, subset) {
+ 
+    updateSubset (p.element(), subset, subset.last());
 
-  // Update Subset with New Item
-  updateSubset (p.element(), subset, subset.last());
+    if(!set.isLast(p)) iterateSet(set, set.after(p), subset);
 
-  if(set.isLast(p)) return subset;
+  };
 
-  // Update Next set Item
-  return setOfSubsets(set, set.after(p), subset);
+  // Initilize Return List
+  let subset = new List();
+  subset.insertFirst("()");
+  if(set.isEmpty()) return subset;
+  let p = set.first();
+
+  // Iterate and Update Subsets
+  iterateSet(set, p, subset);
+  
+  return subset;
 
 }
 
-function callSetOfSubsets(input) {
+function callSetOfSubsets(input) {// eslint-disable-line no-unused-vars
 
   let set = new List();
   input.forEach(n=>set.insertLast(n));
 
-  return setOfSubsets(set).print("return");
+  let sets = setOfSubsets(set);
+  return sets.print("return") + "\n2^" + set.size() + " -> " + Math.pow(2,set.size()) + " = " + sets.size();
 
 }
 //SS
@@ -145,15 +147,10 @@ function findMax(list) {
 
   // Get Position
   let p = arguments[1] || list.first();
-  let max = arguments[2] || -Infinity;
 
-  // Get Element and Compare
-  let el = p.element();
-  if(el > max) max = el;
-
-  if (list.isLast(p)) return max;
+  if (list.isLast(p)) return p.element();
   
-  return findMax(list, list.after(p), max);
+  return Math.max(p.element(), findMax(list, list.after(p)));
 
 }
 
@@ -163,5 +160,4 @@ function callfindMax() {// eslint-disable-line no-unused-vars
   return "Input: [" + lists[1].join(", ") + "]\n" + lists[1].reduce((a,n)=>n>a?n:a,0) + " Hopefully Equal to " + findMax(lists[0]);
 
 }
-
 //FM

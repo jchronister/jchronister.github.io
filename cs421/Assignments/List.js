@@ -67,7 +67,7 @@ class List {// eslint-disable-line no-unused-vars
   }
   replaceElement(p, elem) {
       let oldElem = p._elem;
-      p._elem = elem;
+      p._elem = elem;  //Error Changed p._elem = _elem;
       return oldElem;
   }
   swapElements(p, q) {
@@ -101,6 +101,7 @@ class List {// eslint-disable-line no-unused-vars
       p._prev = null;  // should no longer reference a Position in the List
       p._next = null;
       this._size--;
+      return p; // Error Should Return Element Removed
   }
   // Rank/Random Access Operations
   _isValidRank(r) {

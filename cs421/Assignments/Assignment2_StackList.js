@@ -90,6 +90,10 @@ class Stack {
   isEmpty () {
     return this._list.isEmpty();
   }
+
+  size () {
+    return this._list.size();
+  }
 }
 
 function testStack () {// eslint-disable-line no-unused-vars
@@ -182,6 +186,8 @@ class QueueStack {
 
     // If Empty Fill From Incoming Stack
     if (this._listO.isEmpty()) {
+
+      if (this._listI.size() === 0) throw "No Items in Queue";
     
       while (!this._listI.isEmpty()) {
         this._listO.push(this._listI.pop());
@@ -198,14 +204,23 @@ class QueueStack {
     this._listO.print();
   }
 
+  size () {
+    return this._listI.size() + this._listO.size();
+  }
+
+  isEmpty () {
+    return this.size() === 0;
+  }
+
 }
 
 function testQueueStack() {// eslint-disable-line no-unused-vars
 
   let list = new QueueStack();
 
-  for (let i = 0; i <= 5; i++) {list.enqueue(i);}
-  
+  log("Empty", list.isEmpty());
+  for (let i = 0; i <= 0; i++) {list.enqueue(i);}
+ 
   list.print();
   list.enqueue("7A"); log("Enqueue '7A'");
   list.print();

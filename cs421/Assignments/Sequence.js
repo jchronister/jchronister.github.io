@@ -95,7 +95,7 @@ class Sequence { // eslint-disable-line no-unused-vars
         for (let r=r2; r>r1; r--) {
             var prev = this._rank2index(r - 1);
             this._arr[curr] = this._arr[prev];
-            this._arr[curr]._index = curr; // Error 10/29/20 this._arr[curr].index = curr;
+            this._arr[curr]._index = curr; // Error changed from this._arr[curr].index = curr;
             curr = prev;
         }
     }

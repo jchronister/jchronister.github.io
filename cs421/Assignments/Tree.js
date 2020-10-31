@@ -123,6 +123,7 @@ class BinaryTree {
 
 class EulerTour {
     
+    // 4 Visits Parameters Missing T visitExternal(p, result) { }
     visitExternal(p, result) { } // eslint-disable-line no-unused-vars
     visitPreOrder(p, result) { } // eslint-disable-line no-unused-vars
     visitInOrder(p, result) { } // eslint-disable-line no-unused-vars
@@ -148,7 +149,15 @@ class Print extends EulerTour {// eslint-disable-line no-unused-vars
     visitPostOrder(T, v, result) {
         result[1] = "(" + result[0] + v.element() + result[2] +")";
     }
-    print(T) {
+    print(T, retrn) {
+
+        if (retrn) {
+          let size = T.size() > 0 ? "Root="+T.root().element() : "";
+          let res = this.eulerTour(T, T.root());
+          size += "\n[" + res + "]";
+          return size;
+        }
+
         if (T.size() > 0) {
             console.log("Root="+T.root().element());
         }
