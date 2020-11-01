@@ -13,6 +13,21 @@ if (typeof alert === "undefined") var alert = console.log;
 // eslint-disable-next-line no-undef, no-redeclare
 if (typeof prompt === "undefined") var prompt = require("prompt-sync")();
 
+function generateRandomList(n, ary) {
+
+  let random = function randomInteger(min,max) {// eslint-disable-line no-unused-vars
+    return Math.ceil(Math.random() * (max - (min - 1)) + (min - 1));
+  };
+
+  let list = new Sequence (n);
+  let max = ary.length - 1;
+  
+  for (var i = 0; i < n; ++i) {
+    list.insertLast(ary[random(0, max)]);
+  }
+  return list;
+}
+
 //RD
 //RD
 function removeDuplicates(list) {
@@ -48,7 +63,7 @@ function removeDuplicates(list) {
     
 }
  
-function testRemoveDuplicates() {// eslint-disable-line no-unused-vars
+function callRemoveDuplicates() {// eslint-disable-line no-unused-vars
 
   let list = new Sequence (25);
 
@@ -112,7 +127,7 @@ function isPermutation(listA, listB) {
 
 }
 
-function testIsPermutation () {
+function callIsPermutation () {// eslint-disable-line no-unused-vars
 
   let listA = new Sequence (7);
   let listB = new Sequence (7);
@@ -139,3 +154,84 @@ function testIsPermutation () {
   return "See Console for Output";
 }
 //IP
+//S2C
+/*  An in-place algorithm sortRB(L) that places all red objects in 
+*   list L before the blue colored objects.
+*/
+//S2C
+function swap2Colors (list) {
+
+  // Return on Empty or 1 Element
+  if (list.size() < 2) return;
+
+  let s = list.first();
+  let e = list.last();
+
+  do {
+
+    if (s.element() === "R") {
+      s = list.after(s);
+    } else {
+      list.swapElements(s,e);
+      e = list.before(e);
+    }
+  } while (s !== e);
+
+  return list;
+}
+
+function callSwap2Colors(){// eslint-disable-line no-unused-vars
+
+  let list = generateRandomList(10, ["R","B"]);
+
+  let input = list.print("return");
+  return "\nInput: " + input + "\n" + "Output: " + swap2Colors(list).print("return");
+} 
+//S2C
+//S3C
+//S3C
+function swap3Colors (list) { 
+
+  // Return on Empty or 1 Element
+  if (list.size() < 2) return;
+
+  let i = list.first();
+  let r = list.first();
+  let g = list.last();
+  let notAtMiddle = true;
+
+  do {
+
+    if (i.element() === "G") {
+
+      list.swapElements(i, g);
+      g = list.before(g);
+ 
+    } else {
+
+      if (i.element() === "R") {
+        list.swapElements(i, r);
+        r = list.after(r);
+      }
+
+      if (i === g) {
+        notAtMiddle = false;
+      } else {
+        i = list.after(i);
+      }
+    }
+        
+        
+  } while (notAtMiddle);
+
+  return list;
+}
+
+function callSwap3Colors(){// eslint-disable-line no-unused-vars
+
+  let list = generateRandomList(15, ["R","B","G"]);
+
+  let input = list.print("return");
+  return "\nInput: " + input + "\n" + "Output: " + swap3Colors(list).print("return");
+}
+//S3C

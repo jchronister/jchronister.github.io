@@ -209,7 +209,10 @@ class Sequence { // eslint-disable-line no-unused-vars
         }
         return res + "]";
     }
-    print() {
+    print(output) {
+
+        if (output === "return") return this.toString();
+          
         console.log(this.toString());///////
         console.log("size =" + this.size() + "  N=" + this._arr.length
                 + " first="+this._first + " last=" + this._last+"\n");
