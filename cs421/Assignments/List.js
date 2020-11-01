@@ -101,7 +101,7 @@ class List {// eslint-disable-line no-unused-vars
       p._prev = null;  // should no longer reference a Position in the List
       p._next = null;
       this._size--;
-      return p; // Error Should Return Element Removed
+      return p.element(); // Error Should Return Element Removed
   }
   // Rank/Random Access Operations
   _isValidRank(r) {

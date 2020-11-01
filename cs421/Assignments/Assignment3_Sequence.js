@@ -32,6 +32,15 @@ function generateRandomList(n, ary) {
 //RD
 function removeDuplicates(list) {
 
+  // Remove Duplicate p in list where element = match
+  let rmvDuplicates = function (list, p, match) {
+
+    if (!list.isLast(p)) var next = list.after(p);
+    if (p.element() === match) list.remove(p);
+    if (next) rmvDuplicates(list, next, match);
+
+  };
+
   // Return on Empty Array
   if (list.isEmpty()) return;
 
@@ -43,20 +52,8 @@ function removeDuplicates(list) {
     var compare = list.after(i);
     var elmtI = i.element();
 
-    // Check Rest of Array
-    while (true) {// eslint-disable-line no-constant-condition
+    rmvDuplicates(list, compare, elmtI);
 
-      // Remove Matches
-      if (compare.element() == elmtI) {  
-        var rmv = compare;
-        compare = list.before(compare);
-        list.remove(rmv);
-      }
-
-      if (list.isLast(compare)) break;
-      compare = list.after(compare);
-    }
-    
     if (list.isLast(i)) return list;
     i = list.after(i);
   }
@@ -69,7 +66,7 @@ function callRemoveDuplicates() {// eslint-disable-line no-unused-vars
 
   for(let i = 0; i < 10; ++i){
     list.insertLast(i);
-     list.insertFirst(i); 
+    list.insertFirst(i); 
   }
 
   list.print();
