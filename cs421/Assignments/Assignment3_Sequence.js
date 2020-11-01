@@ -232,6 +232,8 @@ function callSwap3Colors(){// eslint-disable-line no-unused-vars
   let list = generateRandomList(15, ["R","B","G"]);
 
   let input = list.print("return");
-  return "\nInput: " + input + "\n" + "Output: " + swap3Colors(list).print("return");
+  return "\nInput: " + input + "\n" + "Output I Have issue on exit: " + swap3Colors(list).print("return");
 }
+
+// I Still Have and Issue when Exiting when Green Moves Up
 //S3C
