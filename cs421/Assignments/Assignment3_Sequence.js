@@ -183,7 +183,8 @@ function callSwap2Colors(){// eslint-disable-line no-unused-vars
 
   let input = list.print("return");
   return "\nInput: " + input + "\n" + "Output: " + swap2Colors(list).print("return");
-} 
+  // return "\nInput: " + input + "\n" + "Output: " + swap2ColorsRecursive(list).print("return");
+}   
 //S2C
 //S3C
 //S3C
@@ -229,5 +230,58 @@ function callSwap3Colors(){// eslint-disable-line no-unused-vars
 
   let input = list.print("return");
   return "\nInput: " + input + "\n" + "Output: " + swap3Colors(list).print("return");
+  // return "\nInput: " + input + "\n" + "Output: " + swap3ColorsRecursive(list).print("return");
 }
 //S3C
+
+function swap2ColorsRecursive (list) {
+
+  // Return on Empty or 1 Element
+  if (list.isEmpty()) return list;
+
+  // Get Positions
+  let s = arguments[1] || list.first();
+  let e = arguments[2] || list.last();
+
+  if (s === e) return list;
+
+  if (s.element() === "G") {
+    s = list.after(s);
+  } else {
+    list.swapElements(s,e);
+    e = list.before(e);
+  }
+
+  return swap2ColorsRecursive(list, s, e);
+
+}
+
+function swap3ColorsRecursive (list) {
+// debugger  
+  // Return on Empty or 1 Element
+  if (list.isEmpty()) return list;
+
+  // Get Positions
+  let s = arguments[1] || list.first();
+  let e = arguments[2] || list.last();
+  let i = arguments[3] || s;
+
+  let last = i === e;
+  let el = i.element();
+
+  if (el === "G") {
+    list.swapElements(i,e);
+    if (!last) e = list.before(e);
+  } else {
+    if (el === "R") {
+      list.swapElements(i,s);
+      if (!last) s = list.after(s);
+    }
+    if (!last) i = list.after(i);
+  }
+
+  if (last) return list;
+
+  return swap3ColorsRecursive(list, s, e, i);
+
+}

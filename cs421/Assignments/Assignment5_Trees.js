@@ -21,7 +21,7 @@ function printTree() {// eslint-disable-line no-unused-vars
 /**  Function Sums the values in the internal nodes of a binary tree
  */
 //ST
-function sumTree(tree, p) {
+function sumTree(tree) {
 
   // Get Position in Tree
   if (arguments[1] === undefined) {
@@ -100,7 +100,7 @@ function maxTree(tree) {
 
 }
 
-function callMaxTree() {
+function callMaxTree() {// eslint-disable-line no-unused-vars
 
   let tree = getTree();
   return maxTree(tree);
