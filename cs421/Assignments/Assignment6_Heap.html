@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <link href="../../cs303/js/assignment.css" rel="stylesheet" type="text/css"/>
+  <script src = "../../cs303/js/assignments.js"></script>
+
+
+</head>
+<body>
+
+
+  <script src = "./Tree.js"></script>
+  
+
+
+
+<h2><a href="./AssignmentLesson6.pdf">Assignment 6</a></h2>
+
+<ul>
+  <li id="callFindTreeHeight">A-1: Recursive Find Binary Tree Height</li>
+  <li id="eulerTourTreeHeight">A-2: Euler Tour Find Binary Tree Height</li>
+  <li id="callGetHeapKeysLessEqualtoKey">C-2.32: Get Heap Keys</li>
+
+  
+</ul>
+  
+<h2 id="allmochatests" class="func">All Mocha Tests</h2>
+<div id="mocha" style="display:none;"></div>
+<script>
+{
+$setup.setup(["callFindTreeHeight", "printTree"], "./Assignment6_Heap.js", "//FTH", null).
+  mod("promptReturn", [null,null]);
+
+$setup.setup(["eulerTourTreeHeight", "printTree"], "./Assignment6_Heap.js", "//FTHET", null).
+  mod("promptReturn", [null,null]);
+
+$setup.setup(["callGetHeapKeysLessEqualtoKey"], "./Assignment6_Heap.js", "//GHK", "7").
+  mod("promptReturn", ["number"]);
+
+
+  // Update Page
+$setup.runMocha = false;
+$setup.requestFiles()
+// document.getElementById("error").style.display="none";
+
+
+}
+</script>
+</body>
+</html>

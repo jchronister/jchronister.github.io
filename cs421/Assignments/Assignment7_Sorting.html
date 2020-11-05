@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <link href="../../cs303/js/assignment.css" rel="stylesheet" type="text/css"/>
+  <script src = "../../cs303/js/assignments.js"></script>
+
+
+</head>
+<body>
+
+
+  <script src = "./Tree.js"></script>
+  <!-- <script src = "C:\Users\jerem\Documents\MIU\Github_Webpage\cs421\Assignments\Assignment7_Sorting.js"></script> -->
+
+
+
+<h2><a href="./AssignmentLesson7.pdf">Assignment 7</a></h2>
+
+<ul>
+  <li id="compareSorts">Compare Sorting Methods</li>
+  <li id="callSelectionSort">Selection Sort</li>
+  <li id="callInsertionSort">Insertion Sort</li>
+  <li id="callShellSort">Shell Sort</li>
+  <li id="callHeapSort">Heap Sort</li>
+  
+  
+</ul>
+  
+<h2 id="allmochatests" class="func">All Mocha Tests</h2>
+<div id="mocha" style="display:none;"></div>
+<script>
+{
+$setup.setup(["compareSorts"], "./Assignment7_Sorting.js", "//CS", "10000").
+   mod("promptReturn", ["number"]);
+$setup.setup(["callSelectionSort"], "./Assignment7_Sorting.js", "//SS", "10000").
+   mod("promptReturn", ["number"]);
+$setup.setup(["callInsertionSort"], "./Assignment7_Sorting.js", "//IS", "10000").
+   mod("promptReturn", ["number"]);  
+$setup.setup(["callHeapSort"], "./Assignment7_Sorting.js", "//HS", "10000").
+   mod("promptReturn", ["number"]);
+$setup.setup(["callShellSort"], "./Assignment7_Sorting.js", "//SIS", "10000").
+   mod("promptReturn", ["number"]);
+
+   
+   
+  // Update Page
+$setup.runMocha = false;
+$setup.requestFiles()
+// document.getElementById("error").style.display="none";
+
+}
+</script>
+</body>
+</html>

@@ -107,3 +107,47 @@ function callMaxTree() {// eslint-disable-line no-unused-vars
 
 }
 //MOT
+
+function functionIterateTree(tree) {// eslint-disable-line no-unused-vars
+
+  if (tree.isEmpty()) return;
+
+  let ary = [tree.root()];
+
+  while (ary.length > 0) {
+
+    var p = ary.shift();
+
+    var c = tree.leftChild(p);
+    if (tree.isInternal(c)) ary.push(c);
+
+    c = tree.rightChild(p);
+    if (tree.isInternal(c)) ary.push(c);
+
+
+
+    console.log(p.element());
+
+  }
+
+
+
+
+}
+
+function recurseTree(tree) {
+
+  if (tree.isEmpty()) return;
+
+  var p = arguments[1] === undefined ? tree.root() : arguments[1];
+
+  if(tree.isExternal(p)) return;
+ 
+  recurseTree(tree, tree.rightChild(p));
+  recurseTree(tree, tree.leftChild(p));// eslint-disable-line no-unused-vars
+  
+  console.log(p.element());
+
+}
+
+// functionIterateTree(getTree());

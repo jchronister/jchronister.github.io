@@ -23,7 +23,8 @@ function generateRandomList(n, ary) {
   let max = ary.length - 1;
   
   for (var i = 0; i < n; ++i) {
-    list.insertLast(ary[random(0, max)]);
+    var num = random(0, max);
+    list.insertLast(ary[num] || num);
   }
   return list;
 }
@@ -252,7 +253,7 @@ function swap2ColorsRecursive (list) {
     e = list.before(e);
   }
 
-  return swap2ColorsRecursive(list, s, e);
+  return swap2ColorsRecursive(list, s, e); // eslint-disable-line no-unused-vars
 
 }
 
@@ -282,6 +283,8 @@ function swap3ColorsRecursive (list) {
 
   if (last) return list;
 
-  return swap3ColorsRecursive(list, s, e, i);
+  return swap3ColorsRecursive(list, s, e, i); // eslint-disable-line no-unused-vars
 
 }
+
+

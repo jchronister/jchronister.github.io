@@ -119,6 +119,11 @@ class BinaryTree {
         this._size--;
         return child;
     }
+    returnTreePrint () {
+      let printer = new Print();
+      return printer.print(this);
+    }
+
 }
 
 class EulerTour {

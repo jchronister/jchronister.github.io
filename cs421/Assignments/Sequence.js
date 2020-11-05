@@ -243,29 +243,35 @@ class SeqIterator {
         this._nextRank = 0;
     }
 }
+
+function getTestTree2() {// eslint-disable-line no-unused-vars
 // var tst0 = new Sequence();
 // tst0.print();
 // var tst1 = new Sequence();
 // tst1.insertFirst(5);
 // tst1.print();
-// var tst2 = new Sequence();
+var tst2 = new Sequence();
 // // tst2.print();
-// tst2.insertFirst(1);
+tst2.insertFirst(1);
 // // tst2.print();
-// tst2.insertLast(3);
+tst2.insertLast(3);
 // // tst2.print();
-// tst2.insertAtRank(1, 2);
+tst2.insertAtRank(1, 2);
 // tst2.print();
-// tst2.removeAtRank(1);
+tst2.removeAtRank(1);
 // tst2.print();
-// tst2.insertFirst(0);
-// tst2.insertLast(4);
-// tst2.insertAtRank(2, 2);
-// tst2.insertAtRank(4, 3.5);
-// tst2.insertAtRank(2, 1.5);
+tst2.insertFirst(0);
+tst2.insertLast(4);
+tst2.insertAtRank(2, 2);
+tst2.insertAtRank(4, 3.5);
+tst2.insertAtRank(2, 1.5);
 // tst2.print();
-// tst2.insertAtRank(7, 8);
+tst2.insertAtRank(7, 8);
 // tst2.print();
 // console.log(tst2.elemAtRank(3));
 // console.log(tst2.first().element());
 // console.log(tst2.last().element());
+
+return tst2;
+
+}
