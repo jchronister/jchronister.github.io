@@ -8,7 +8,9 @@
 function generateRandomArray(n, min, max) {
 
   let random = function randomInteger(min,max) {// eslint-disable-line no-unused-vars
-    return Math.ceil(Math.random() * (max - (min - 1)) + (min - 1));
+    var num = Math.ceil(Math.random() * (max - (min - 1)) + (min - 1));
+    if(num == 0) num = 0; //Remove -0
+    return num;
   };
 
   let list = [];
@@ -120,21 +122,24 @@ function shellSort(ary){
   var timeStart = Date.now();
 
   // Insertion Sort Function
-  var sort = function(ary, gap = 1) {  for (var i = 1; i < end; i += 1) {
+  var sort = function(ary, gap = 1) {  
+    
+    for (var i = 1; i < end; i += 1) {
 
-    var temp = ary[i];
-    var j = i;
-    var comp = j - gap;
-    while (comp >= 0 && ary[comp] > temp) {
+      var temp = ary[i];
+      var j = i;
+      var comp = j - gap;
       compare++;
-      insert++;
-      ary[j] = ary[comp];
-      j -= gap;
-      comp = j - gap;
-    }
+      while (comp >= 0 && ary[comp] > temp) {
+        compare++;
+        insert++;
+        ary[j] = ary[comp];
+        j -= gap;
+        comp = j - gap;
+      }
 
-    insert++;
-    ary[j] = temp;
+      insert++;
+      ary[j] = temp;
 
     }
   };
@@ -290,18 +295,25 @@ function compareSorts(n = 10) {// eslint-disable-line no-unused-vars
   let ary2 = ary.slice();
   let ary3 = ary.slice();
   let ary4 = ary.slice();
+  let ary5 = ary.slice();
+  let ary6 = ary.slice();
 
   console.log(ary.slice());
   console.log(selectionSort(ary));
   console.log(insertionSort(ary2));
   console.log(shellSort(ary4));
   console.log(new heapSort(ary3).sortTime());
+  console.log(timeQuickSort(ary5));
+  console.log(timeArraySort(ary6));
+  
   console.log(ary);
 
   // Verify Sorts All the Same
   var match = "";
   for (var i = 0; i < ary.length; ++i) {
-    if (ary[i] !== ary2[i] || ary[i] !== ary3[i] || ary[i] !== ary4[i]){
+    if (ary[i] !== ary2[i] || ary[i] !== ary3[i] ||
+        ary[i] !== ary4[i] || ary[i] !== ary5[i] ||
+        ary[i] !== ary6[i]){
       match = "Error Arrays do Not Match";
       break;
     }
@@ -313,3 +325,85 @@ function compareSorts(n = 10) {// eslint-disable-line no-unused-vars
 
 }
 //CS
+
+
+
+//*Quick Sort
+
+function quickSort(ary) {
+
+  let start = arguments[1] === undefined ? 0 : arguments[1];
+  let end = arguments[2] === undefined ? ary.length - 1 : arguments[2];
+
+  if (start >= end) return; 
+
+  let mid = randomInteger(start, end);
+
+  let se = flipElements(ary, mid, start, end);
+
+  quickSort(ary, start, se[0]);
+  quickSort(ary, se[1], end);
+
+  return ary;
+}
+
+function randomInteger(min,max) {
+  return Math.ceil(Math.random() * (max - (min - 1)) + (min - 1));
+}
+
+function flipElements(ary, mid, start, end) {
+
+  var i = start;
+  var midValue = ary[mid];
+
+  while (i <= end) {
+    quickSort.compare++;
+    if (ary[i] > midValue) {
+      // Move to End
+      swapElements(ary, i, end);
+      end -= 1;
+    } else {
+      quickSort.compare++;
+      if (ary[i] < midValue) {
+        // Move to Front
+        swapElements(ary, i, start);
+        start += 1;
+      }
+      i += 1;
+    }
+  }
+  
+  return [start === 0 ? start : start - 1, end === ary.length - 1 ? end : end + 1];
+}
+
+function swapElements(ary, indexA, indexB) {
+  var temp = ary[indexA];
+  ary[indexA] = ary[indexB];
+  ary[indexB] = temp;
+  quickSort.swap++;
+}
+
+
+function timeQuickSort (ary) {
+
+  quickSort.swap = 0;
+  quickSort.compare = 0;
+
+  var timeStart = Date.now();
+  quickSort(ary);
+
+  var timeEnd = Date.now();
+  return "Quick Sort " + quickSort.compare + " compares and " + quickSort.swap + " swaps in " + (timeEnd - timeStart) + " ms";
+
+
+}
+
+function timeArraySort (ary) {
+
+  var timeStart = Date.now();
+  ary.sort((a,b)=>a-b);
+
+  var timeEnd = Date.now();
+  return "Built in Array Sort in " + (timeEnd - timeStart) + " ms";
+
+}

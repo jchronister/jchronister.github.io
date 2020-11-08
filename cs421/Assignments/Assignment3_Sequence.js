@@ -197,30 +197,30 @@ function swap3Colors (list) {
   let i = list.first();
   let r = list.first();
   let g = list.last();
-  let notAtMiddle = true;
+  let notAtEnd = true;
 
   do {
 
-    if (i === g) notAtMiddle = false;
+    if (i === g) notAtEnd = false;
 
     if (i.element() === "G") {
 
       list.swapElements(i, g);
-      if (notAtMiddle) g = list.before(g);
+      if (notAtEnd) g = list.before(g);
  
     } else {
 
       if (i.element() === "R") {
         list.swapElements(i, r);
-        r = list.after(r);
+        if (notAtEnd) r = list.after(r);
       }
 
-      if (notAtMiddle) i = list.after(i);
+      if (notAtEnd) i = list.after(i);
   
     }
         
         
-  } while (notAtMiddle);
+  } while (notAtEnd);
 
   return list;
 }

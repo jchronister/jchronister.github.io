@@ -14,17 +14,20 @@
 
   <script src = "./MinHeap.js"></script>
   <script src = "./Sequence.js"></script>
+  <script src = "./List.js"></script>
   
   <!-- <script src = "C:\Users\jerem\Documents\MIU\Github_Webpage\cs421\Assignments\Assignment7_Sorting.js"></script> -->
 
 
 
-<h2><a href="./AssignmentLesson8.pdf">Assignment 8</a></h2>
+<h2><a href="./AssignmentLesson9-10.pdf">Assignment 9 - 10</a></h2>
 
 <ul>
-  <li id="priorityqueue">Priority Queue Implementation & Testing</li>
-  <li id="priorityQueueSort">Priority Queue Sort</li>
-  <li id="callCompareSequences">Compare Sequences</li>
+  <li id="callMergeSortList">R-4.2: Merge Sort</li>
+  <li id="callUniqueSequence">R-4.5: Combine to Unique Sequence</li>
+  <li id="callQuickSort">Quick Sort</li>
+  <li id="callCountVotes">C-4.10: Count Votes and Determine Winner from Sequence</li>
+  <li id="callSwap3Colors">Sort Three Color Sequence</li>
   
 </ul>
   
@@ -32,13 +35,13 @@
 <div id="mocha" style="display:none;"></div>
 <script>
 {
-$setup.setup(["priorityqueue"], "./Assignment8_PriorityQueue.js", "//PQ", "10").
-   mod("promptReturn", ["number"]);
-$setup.setup(["priorityQueueSort"], "./Assignment8_PriorityQueue.js", "//PQS", "10").
-   mod("promptReturn", ["number"]);
-$setup.setup(["callCompareSequences"], "./Assignment8_PriorityQueue.js", "//CS", null)
-   
-   
+$setup.setup(["callUniqueSequence"], "./Assignment9-10_Sorting.js", "//US", null)
+$setup.setup(["callCountVotes"], "./Assignment9-10_Sorting.js", "//CV", null)
+$setup.setup("callSwap3Colors", "./Assignment3_Sequence.js", "//S3C", null)
+$setup.setup("callMergeSortList", "./Assignment9-10_Sorting.js", "//MS", null)  
+$setup.setup("callQuickSort", "./Assignment9-10_Sorting.js", "//QS", null)
+
+
   // Update Page
 $setup.runMocha = false;
 $setup.requestFiles()

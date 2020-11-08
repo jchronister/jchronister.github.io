@@ -130,9 +130,6 @@ function functionIterateTree(tree) {// eslint-disable-line no-unused-vars
 
   }
 
-
-
-
 }
 
 function recurseTree(tree) {
@@ -146,8 +143,35 @@ function recurseTree(tree) {
   recurseTree(tree, tree.rightChild(p));
   recurseTree(tree, tree.leftChild(p));// eslint-disable-line no-unused-vars
   
-  console.log(p.element());
+  // console.log(p.element());
 
 }
 
 // functionIterateTree(getTree());
+
+function findTreeNode(tree, element) {
+
+  if (tree.isEmpty()) return;
+
+  var p = arguments[2] === undefined ? tree.root() : arguments[2];
+
+  if(tree.isExternal(p)) return 0;
+
+  if(p.element() === element) return p;
+ 
+  let el = findTreeNode(tree, element, tree.rightChild(p));
+
+  if (el === 0) {
+    el = findTreeNode(tree, element, tree.leftChild(p));// eslint-disable-line no-unused-vars
+  }
+  
+  return el;
+
+} 
+
+function findNode(){// eslint-disable-line no-unused-vars
+
+  let tree = getTree();
+  console.log(findTreeNode(tree, 550));
+
+}
