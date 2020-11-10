@@ -4,7 +4,7 @@
 
 /* global Sequence List*/
 
-function generateRandomList(n, ary) {
+function generateRandomList9_10(n, ary) {
 
   let random = function randomInteger(min,max) {// eslint-disable-line no-unused-vars
     return Math.ceil(Math.random() * (max - (min - 1)) + (min - 1));
@@ -120,7 +120,7 @@ function countVotes(seq) {
 }
 
 function callCountVotes() {// eslint-disable-line no-unused-vars
-  return countVotes(generateRandomList(10000, [15,65,78,23,54,89,8]));
+  return countVotes(generateRandomList9_10(10000, [15,65,78,23,54,89,8]));
 }
 //CV
 //MS
@@ -183,7 +183,7 @@ function combineLists (list, list1, list2) {
 
 function callMergeSortList(){// eslint-disable-line no-unused-vars
 
-  let list = generateRandomList(20, 100);
+  let list = generateRandomList9_10(20, 100);
   let orgList = list.print("return");
   return orgList + "\nSorted to\n" + mergeSortList(list).print("return");
 
