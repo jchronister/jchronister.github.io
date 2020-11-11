@@ -4,7 +4,7 @@
 
 /* global Sequence List*/
 
-function generateRandomList9_10(n, ary) {
+function generateRandomList9_10(n, ary) {// eslint-disable-line camelcase
 
   let random = function randomInteger(min,max) {// eslint-disable-line no-unused-vars
     return Math.ceil(Math.random() * (max - (min - 1)) + (min - 1));
