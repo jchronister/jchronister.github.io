@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <link href="../../cs303/js/assignment.css" rel="stylesheet" type="text/css"/>
+  <script src = "../../cs303/js/assignments.js"></script>
+
+
+</head>
+<body>
+
+
+  <script src = "./MinHeap.js"></script>
+  <script src = "./Sequence.js"></script>
+  <script src = "./List.js"></script>
+  <script src = "./HT_Dictionary.js"></script>
+  
+  <!-- <script src = "C:\Users\jerem\Documents\MIU\Github_Webpage\cs421\Assignments\Assignment7_Sorting.js"></script> -->
+
+
+
+<h2><a href="./AssignmentLesson12.pdf">Assignment 12 - Dictionary</a></h2>
+
+<ul>
+  <li id="callFindWinner">Q1: Count Votes via Dictionary O(n)</li>
+
+</ul>
+  
+<h2 id="allmochatests" class="func">All Mocha Tests</h2>
+<div id="mocha" style="display:none;"></div>
+<script>
+{
+$setup.setup(["callFindWinner"], "./Assignment12-Dictionary.js", "//DVC", "1000, 15").
+  mod("promptReturn", [["number", "number"]]);
+
+
+  // Update Page
+$setup.runMocha = false;
+$setup.requestFiles()
+// document.getElementById("error").style.display="none";
+
+}
+</script>
+</body>
+</html>

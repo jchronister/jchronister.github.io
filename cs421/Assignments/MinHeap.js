@@ -128,11 +128,10 @@ class PriorityQueue {// eslint-disable-line no-unused-vars
       this._heap = new MinHeap(compare);
   }
   insertItem(key, elem) { // returns the Position containing new Item
-    let item = new Item(key, elem);
-    this._heap.insertElem(item);
+    this._heap.insertElem(new Item(key, elem));
   }
   removeMin() {
-    return this._heap.removeMin();
+    return this._heap.removeMin().element();
   }
   minKey() {
     return this._heap.minElem().key();
