@@ -11,7 +11,7 @@
 </head>
 <body>
 
-
+  <script src = "./Tree.js"></script>
   <script src = "./MinHeap.js"></script>
   <script src = "./Sequence.js"></script>
   <script src = "./List.js"></script>
@@ -25,7 +25,14 @@
 
 <ul>
   <li id="callRemoveDuplicates">Remove Duplicates from List or Sequence</li>
-
+  <li id="callFindMax1Pass">Return Top Two Max Values Recurse 1 Pass</li>
+  <li id="callIsSubset">Is Subset</li>
+  <li id="findMinElement">Find Min Tree Element</li>
+  <li id="findTreeElement">Find Tree Element</li>
+  <li id="callisValidAVLTree">Is Valid AVL Tree</li>
+  <li id="callIsPermutation">Is Permutation</li>
+  
+  
 </ul>
   
 <h2 id="allmochatests" class="func">All Mocha Tests</h2>
@@ -33,6 +40,15 @@
 <script>
 {
 $setup.setup(["callRemoveDuplicates"], "./AssignmentPractice.js", "//RDLS", null)
+$setup.setup(["callFindMax1Pass"], "./AssignmentPractice.js", "//FM1P", null) 
+$setup.setup(["callIsSubset"], "./AssignmentPractice.js", "//ISS", "1, 2, 3, 4, 5").
+  mod("promptReturn", [["number"]]);
+$setup.setup(["findMinElement"], "./AssignmentPractice.js", "//FME", null)
+$setup.setup(["printTree", "findTreeElement"], "./AssignmentPractice.js", "//FTE", [null, "800"]).
+  mod("promptReturn", [null,"number"]);
+$setup.setup(["callisValidAVLTree"], "./AssignmentPractice.js", "//VAVL", "Root, RLC, RRC, RLLC, RLRC").
+  mod("promptReturn", [["string"]]);
+$setup.setup(["callIsPermutation"], "./AssignmentPractice.js", "//IPD", null)
   
   // Update Page
 $setup.runMocha = false;

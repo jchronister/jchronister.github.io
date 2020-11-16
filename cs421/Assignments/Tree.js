@@ -129,10 +129,10 @@ class BinaryTree {
 class EulerTour {
     
     // 4 Visits Parameters Missing T visitExternal(p, result) { }
-    visitExternal(p, result) { } // eslint-disable-line no-unused-vars
-    visitPreOrder(p, result) { } // eslint-disable-line no-unused-vars
-    visitInOrder(p, result) { } // eslint-disable-line no-unused-vars
-    visitPostOrder(p, result) { } // eslint-disable-line no-unused-vars
+    visitExternal(T, p, result) { } // eslint-disable-line no-unused-vars
+    visitPreOrder(T, p, result) { } // eslint-disable-line no-unused-vars
+    visitInOrder(T, p, result) { } // eslint-disable-line no-unused-vars
+    visitPostOrder(T, p, result) { } // eslint-disable-line no-unused-vars
     eulerTour(T, p) {
         let result = new Array(3);
         if (T.isExternal(p)) {
