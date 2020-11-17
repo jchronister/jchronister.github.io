@@ -146,3 +146,15 @@ class PriorityQueue {// eslint-disable-line no-unused-vars
       return this._heap.isEmpty();
   }
 }
+
+class maxPriorityQueue extends PriorityQueue{// eslint-disable-line no-unused-vars
+
+  constructor() {
+    super(maxPriorityQueue.prototype.maxCompare);
+  }
+
+  maxCompare(item1, item2) {
+    return item2.key() - item1.key();
+  }
+
+}

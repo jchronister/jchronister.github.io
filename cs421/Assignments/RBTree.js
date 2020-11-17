@@ -630,3 +630,12 @@ class PrintPlainTree extends EulerTour {// eslint-disable-line no-unused-vars
       console.log("[" + res + "]\n");
   }
 }
+
+if (typeof Window === "undefined") {
+  module.exports =  { BinaryTree:BinaryTree,
+                    BinarySearchTree:BinarySearchTree,
+                    RedBlackTree:RedBlackTree,
+                    Print:Print,
+                    EulerTour:EulerTour,
+                  };
+}

@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <link href="../../../cs303/js/assignment.css" rel="stylesheet" type="text/css"/>
+  <script src = "../../../cs303/js/assignments.js"></script>
+
+
+</head>
+<body>
+
+  <script src="./DLinkedList.js"></script>
+  <script src="./HT_Dictionary.js"></script>
+  <script src="./BST_Dictionary.js"></script>
+  
+  <script src="./LinearHashTable.js"></script>
+  <script src="./BinaryTree.js"></script>
+  <script src="./BinarySearchTree.js"></script>
+  <script src="./RBTree.js"></script>
+  <!-- <script src="./RBTree-HW.js"></script> -->
+
+
+
+<h2><a href="../AssignmentLesson12Update.pdf">Assignment 12 Update - Binary & Red/Black Tree Height & Counting Votes</a></h2>
+
+<ul>
+  
+  <li id="testTreeHeight">Test Tree Height Functions: Recursive and Euler Tour</li>
+  <li id="callFindWinnerHT">Find Winner Using List or Sequence and Hash Dictionary</li>
+  <li id="callFindWinnerHT2">Find Winner Using Array and Hash Dictionary</li>
+  <li id="callFindWinnerListBST">Find Winner Using List or Sequence and BST Dictionary</li>
+  <li id="callfindWinnerBST2">Find Winner Using Array and BST Dictionary</li>
+  <li id="testAllWinnerDictionaries">Test Winner Using all 4 Dictionaries Above</li>
+  
+</ul>
+  
+<h2 id="allmochatests" class="func">All Mocha Tests</h2>
+<div id="mocha" style="display:none;"></div>
+<script>
+{
+
+
+$setup.setup(["testTreeHeight"], "./Assignment12_RBTree.js", "//TH", null)
+
+$setup.setup(["callFindWinnerHT"], "./Assignment12_HT_Dictionary.js", "//FWD", null)
+$setup.setup(["callFindWinnerHT2"], "./Assignment12_HT_Dictionary.js", "//FWD2", null)
+$setup.setup(["callFindWinnerListBST"], "./Assignment12_BST_Dictionary.js", "//WBD", null)
+$setup.setup(["callfindWinnerBST2"], "./Assignment12_BST_Dictionary.js", "//WLD", null)
+
+var z = $setup.setup(["testAllWinnerDictionaries"], null, null, null)
+z.files=[[]];
+
+
+function testAllWinnerDictionaries () {
+
+  // Random Generator
+  let genData = function (n, k) {
+    let dat = new List.DLinkedList();
+    let chk = [];
+    for (let i=0; i<n; i++) {
+        let rand = Math.floor(Math.random()*100)%k + 1;
+        chk.push(rand);
+        dat.insertLast(rand);
+    }
+    return [dat, chk];
+  }
+
+  var data = genData(1000, 10);
+  retrn = "\n" +  JSON.stringify(findWinnerHT(data[0])) + " HT Dictionary List Parameter";
+  retrn += "\n" + JSON.stringify(findWinnerHT2(data[1])) + " HT Dictionary Array Parameter";
+  retrn += "\n" + JSON.stringify(findWinnerListBST(data[0])) + " BST Dictionary List Parameter";
+  retrn += "\n" + JSON.stringify(findWinnerBST2(data[1])) + " BST Dictionary Array Parameter";
+
+  // Log Array Data 
+  let chk = data[1].reduce(function(a,n){
+    if (a[n]) {
+      a[n] += 1;
+    } else {
+      a[n] = 1;
+    }
+    return a;
+  },[]);
+
+  chk = chk.map((n,i)=>{return {id:i,count:n};});
+  console.log(chk.sort((a,b)=>b.count-a.count));
+
+  return retrn;
+}
+
+
+  // Update Page
+$setup.runMocha = false;
+$setup.requestFiles()
+// document.getElementById("error").style.display="none";
+
+}
+</script>
+</body>
+</html>

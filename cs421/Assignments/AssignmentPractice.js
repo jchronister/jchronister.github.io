@@ -2,7 +2,7 @@
 /* eslint-disable id-length */
 "use strict";
 
-/* global List Sequence PriorityQueue Item EulerTour getTree Print BinaryTree HT_Dictionary*/
+/* global List maxPriorityQueue Sequence PriorityQueue Item EulerTour getTree Print BinaryTree HT_Dictionary*/
 
 //RDLS//RDLS
 function removeDuplicates (listorSequence) {
@@ -58,6 +58,7 @@ function findMax1Pass(list) {
 
   let calVal = function (val, array) {
     if (val >= array[0]) {
+      // Check is 2nd Largest Value is in Array
       if (val !== array[0]) if (array[0] > array[1]) array[1] = array[0];
       array[0] = val;
     } else if (val >= array[1]) {
@@ -102,7 +103,6 @@ function callFindMax1Pass() {// eslint-disable-line no-unused-vars
     list.insertLast(rand);list.insertLast(rand);
     rnd.push(rand);
   }
-console.log(list.print())
 
   rnd.sort((a,b)=>b-a);
   
@@ -118,7 +118,7 @@ console.log(list.print())
 
 }//FM1P
 
-function findMax2Pass(list) {
+function findMax2Pass(list) {// eslint-disable-line no-unused-vars
 
   let getVal = function (val, lessThan) {
     if (val < lessThan) {
@@ -413,5 +413,72 @@ function callIsPermutation () {// eslint-disable-line no-unused-vars
   return "See Console for Output";
   
 }
-
 //IPD
+
+//FXL//FXL  
+function findXLargest(seqOrList, xLargest) {
+
+  if (seqOrList.isEmpty()) return null;
+  let p = seqOrList.first();
+
+  let pq = new maxPriorityQueue();
+
+  // Fill Priority Queue from Sequence or List
+  pq.insertItem(p.element(),p.element());
+  while (!seqOrList.isLast(p)) {
+    p = seqOrList.after(p);
+    var el = p.element();
+    pq.insertItem(el, el);
+  }
+
+  // Find X Largest
+  var cnt = 0;
+  while (!pq.isEmpty()) {
+    var num = pq.removeMin(); // Really Max
+    if (num !== last) {
+      cnt += 1;
+      if (cnt === xLargest) return num;
+    }
+    var last = num;
+  }
+
+  return null; // No X Largest
+
+}
+
+function callFindXLargest(xLargest) {
+
+  let seq = new Sequence();
+
+  seq.insertLast(50);
+  seq.insertLast(40);
+  seq.insertLast(30);
+  seq.insertLast(20);
+  seq.insertLast(70);
+  seq.insertLast(90);
+
+  return findXLargest(seq, xLargest);
+
+}
+//FXL
+//O3C//O3C
+function moveToFront(seqOrList, start, element){
+
+  if (seqOrList.isEmpty()) return;
+
+  let s = seqOrList.first();
+  let e = seqOrList.Last();
+
+  while (){
+
+
+  }
+
+
+
+}
+
+
+
+
+//O3C

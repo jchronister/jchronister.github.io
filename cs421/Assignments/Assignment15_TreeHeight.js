@@ -2,7 +2,11 @@
 /* eslint-disable id-length */
 "use strict";
 
-/* global EulerTour BinaryTree PrintPlainTree RedBlackTree Print*/
+
+/* global EulerTour PrintPlainTree BinaryTree RedBlackTree Print*/
+
+
+
 
 //BTH//BTH//RTHD  
 class TreeHeight extends EulerTour {
@@ -13,10 +17,12 @@ class TreeHeight extends EulerTour {
 
   visitPostOrder(tree, p, result) {
 
+    // Red/Black Tree if Has isRed Method
     if(tree.isRed) {
+      // Red Height = 0, Black Height = 1
       var h = tree.isRed(p) ? 0 : 1;
     } else {
-      // Not Red Black Tree
+      // Regular Tree
       h = 1;
     }
 
@@ -71,3 +77,5 @@ function getRedBlackTreeHeight(max) {// eslint-disable-line no-unused-vars
     return printer.print(tree, "return") + "\n Height is: " + (new TreeHeight).height(tree);
 
 }//RTHF
+
+
