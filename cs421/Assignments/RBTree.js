@@ -2,7 +2,7 @@
 /* eslint-disable require-jsdoc */
 "use strict";
 
-class TPos {
+class RBTPos {
   constructor(left, elem, right, parent) {
       this._parent = parent;
       this._left = left;
@@ -70,7 +70,7 @@ class BinaryTree {
       if (this._size > 0) {
           throw new Error("Invalid insertRoot(e) to non-empty tree");
       }
-      this._root = new TPos(null, e, null, null);
+      this._root = new RBTPos(null, e, null, null);
       this._size++;
       return this._root;
   }
@@ -78,7 +78,7 @@ class BinaryTree {
       if (this.isExternal(p) || this.isInternal(p._left)) {
           throw new Error("Invalid insertLeft(p,e) operation");
       }
-      let newLeft = new TPos(null, e, null, p);
+      let newLeft = new RBTPos(null, e, null, p);
       p._left = newLeft;
       this._size++;
       return newLeft;
@@ -87,7 +87,7 @@ class BinaryTree {
       if (this.isExternal(p) || this.isInternal(p._right)) {
           throw new Error("Invalid insertRight(p,e) operation");
       }
-      let newRight = new TPos(null, e, null, p);
+      let newRight = new RBTPos(null, e, null, p);
       p._right = newRight;
       this._size++;
       return newRight;

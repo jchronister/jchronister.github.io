@@ -462,23 +462,167 @@ function callFindXLargest(xLargest) {
 }
 //FXL
 //O3C//O3C
-function moveToFront(seqOrList, start, element){
+function moveToFront(seqOrList, startP, element, cnt){
 
-  if (seqOrList.isEmpty()) return;
+  let e = seqOrList.last();
+  let y = 0;
+  cnt = cnt || Infinity;
 
-  let s = seqOrList.first();
-  let e = seqOrList.Last();
+  while (startP != e ){
 
-  while (){
+    while(startP != e && startP.element() === element) {
+      
+      startP = seqOrList.after(startP);
+      y+=1
+      if (y >= cnt) return [startP, 1]
+    }
 
+    while(startP != e && e.element() !== element) {
+      e = seqOrList.before(e);
+    }
 
+ 
+    if (startP != e) {
+      seqOrList.swapElements(startP, e);
+      // y += 1;
+      // if (y >= cnt) return seqOrList.after(startP)
+    }
   }
 
+  return [startP, null];
 
+}
+
+
+function sortColors(){
+
+  let seq = new Sequence();
+
+  seq.insertLast("Y");
+  seq.insertLast("P");
+  seq.insertLast("E");
+  seq.insertLast("B");
+  seq.insertLast("M");
+  seq.insertLast("J");
+  seq.insertLast("J");
+  seq.insertLast("R");
+  seq.insertLast("E");
+
+  let p = seq.first();
+
+  p = moveToFront(seq, p, "J", 1);
+  p = moveToFront(seq, p[0], "E", 1);
+  p = moveToFront(seq, p[0], "R", 1);
+  p = moveToFront(seq, p[0], "E", 1);
+  p = moveToFront(seq, p[0], "M", 1);
+  p = moveToFront(seq, p[0], "Y", 1);
+
+  p = moveToFront(seq, p[0], "?", 1);
+if(p[1] === null) {
+p = p[0];
+  while (!seq.isLast(p)){
+    let o = seq.after(p);
+    seq.remove(p);
+    p = o;
+  }
+  seq.remove(p);
+
+}
+  return seq.print("return");
 
 }
 
 
 
-
 //O3C
+
+//FFS//FFS
+function find1stSmallest (n) {
+
+let tree = new RedBlackTree();
+
+
+for (var i = 0; i <= 50 ; i+=5){
+tree.insertItem(i, i);
+}
+
+let node = (findN(tree, tree.root(), n));
+
+  debugger
+
+
+// Nothing Less
+if (tree.leftChild(node) === null) {
+  
+  n = node;
+  do {
+    var v = n;
+    n = tree.parent(v);
+  } while (tree.leftChild(n) === v);
+  
+  // node = n;
+}
+  
+if (node === tree.rightChild(n)) return n.element();
+
+
+while (tree.rightChild(node) !== null) {
+  node = tree.rightChild(node);
+}
+
+  return node.element();
+
+
+}
+
+function findN (tree, p, n) {
+
+  if (tree.isExternal(p)){
+    return null;
+  }
+
+  if (p.element().element() === n) return p;
+
+  let l = findN(tree, tree.leftChild(p), n);
+
+  if (l !== null) return l;
+
+  return findN(tree, tree.rightChild(p), n);
+
+
+}//FFS
+//FERB//FERB
+var cnt = 0
+function findElinRBTree(tree, p, val) {
+  cnt+=1
+  if (tree.isExternal(p)) return null;
+
+  var cur = p.element().key();
+
+  if (cur === val) {
+    return p;
+  } else if (val < cur) {
+    var r = findElinRBTree(tree, tree.leftChild(p), val);
+    // if(r !== null) return r;
+  } else {
+    r = findElinRBTree(tree, tree.rightChild(p), val);
+  }
+
+  return r;
+
+}
+
+function callfindElinRBTree() {
+
+  let tree = new RedBlackTree();
+
+
+  for (var i = 0; i <= 50 ; i+=5){
+    tree.insertItem(i, i);
+  }
+  var r = findElinRBTree(tree, tree.root(), 0)
+  // if (r !== null)  r = r.element()
+  return r === null ? r :  JSON.stringify(r.element()) + " Calls: " + cnt;
+
+}
+//FERB

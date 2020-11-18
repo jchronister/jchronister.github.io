@@ -126,10 +126,12 @@ class BlackHeight extends EulerTour {
     visitExternal(T, p, result) {result[1] = 0;}
 
     visitPostOrder(T, v, result) {
+      console.log(v.element())
       result[1] = Math.max(result[0], result[2]) + (T.isRed(v) ? 0 : 1);
     }
 
     height(T) {
+      
         return this.eulerTour(T, T.root());
     }
 }

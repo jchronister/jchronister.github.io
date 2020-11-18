@@ -11,11 +11,12 @@
 </head>
 <body>
 
-  <script src = "./Tree.js"></script>
-  <script src = "./MinHeap.js"></script>
+  <!-- <script src = "./Tree.js"></script> -->
+  <!-- <script src = "./MinHeap.js"></script> -->
   <script src = "./Sequence.js"></script>
   <script src = "./List.js"></script>
   <script src = "./HT_Dictionary.js"></script>
+  <script src = "./RBTree.js"></script>
   
   <!-- <script src = "C:\Users\jerem\Documents\MIU\Github_Webpage\cs421\Assignments\Assignment7_Sorting.js"></script> -->
 
@@ -32,6 +33,10 @@
   <li id="callisValidAVLTree">Is Valid AVL Tree</li>
   <li id="callIsPermutation">Is Permutation</li>
   <li id="callFindXLargest">Find X Largest</li>
+  <li id="sortColors">Sort Colors</li>
+  <li id="find1stSmallest">Find 1st Smallest</li>
+  <li id="callfindElinRBTree">Find Element in Red/Black Tree</li>
+  
   
 </ul>
   
@@ -52,9 +57,12 @@ $setup.setup(["callIsPermutation"], "./AssignmentPractice.js", "//IPD", null)
   
 $setup.setup(["callFindXLargest"], "./AssignmentPractice.js", "//FXL", "3").
   mod("promptReturn", ["number"]);
+$setup.setup(["sortColors"], "./AssignmentPractice.js", "//O3C", null)
+$setup.setup(["find1stSmallest"], "./AssignmentPractice.js", "//FFS", "3").
+mod("promptReturn", ["number"]);
+$setup.setup(["callfindElinRBTree"], "./AssignmentPractice.js", "//FERB", null)
 
-
- 
+  
   // Update Page
 $setup.runMocha = false;
 $setup.requestFiles()

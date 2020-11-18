@@ -54,17 +54,21 @@ function testDictionaryIterator (lowKey, highKey) {// eslint-disable-line no-unu
 
   // Create and Fill Tree
   var tree = new RedBlackTree();
-  for (var i = 0; i <= 300; i+=5) {
+  for (var i = 0; i <= 600; i+=5) {
     tree.insertItem(i,i + " El");
   }
 
   // Create Iterator and Log to Console
+  var cnter = 0;
   var iter = new RB_IteratKeyRange(tree, lowKey, highKey);
   while (iter.hasNext()) {
+    cnter += 1;
     console.log(iter.nextObject());
   }
 
   console.log("In " + iter.calls + " Node Checks");
+
+  console.log("log(n) + s = " + (Math.ceil(Math.log2(tree.size())) + cnter));
 
   return "See Console for Output";
 }
