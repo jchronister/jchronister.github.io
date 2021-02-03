@@ -2,7 +2,7 @@
 /* eslint-disable id-length */
 "use strict";
 
-/* global List maxPriorityQueue Sequence PriorityQueue Item EulerTour getTree Print BinaryTree HT_Dictionary*/
+/* global List RedBlackTree maxPriorityQueue Sequence PriorityQueue Item EulerTour getTree Print BinaryTree HT_Dictionary*/
 
 //RDLS//RDLS
 function removeDuplicates (listorSequence) {
@@ -273,7 +273,36 @@ function printTree() {// eslint-disable-line no-unused-vars
 //VAVL//VAVL
 function isValidAVLTree(tree) {
 
-  if (tree.isEmpty()) return true;
+  // if (tree.isEmpty()) return true;
+
+  // var validTree = function (t, p) {
+
+  //   // 0 Height for External Node
+  //   if (t.isExternal(p)) return 0;
+
+  //   var hL = validTree(t, t.leftChild(p));
+  //   var hR = validTree(t, t.rightChild(p));
+
+  //   // Skip Check if Children Failed Height Check
+  //   if(hL === false || hR === false) return false;
+
+  //   // Check if AVL Tree: Height +/- 1 for Each Child
+  //   if ((hL >= (hR - 1)) && (hL <= (hR + 1))){
+  //     if (t.isRoot(p)) {
+  //       // Whole Tree Checked
+  //       return true;
+  //     } else {
+  //       // Subtree Children Valid AVL - Return Current Node Height
+  //       return Math.max(hL, hR) + 1;
+  //     }
+  //   } else {
+  //     return false;
+  //   }
+  // };
+
+  // return validTree(tree, tree.root());
+
+   if (tree.isEmpty()) return true;
 
   var validTree = function (t, p) {
 
@@ -283,25 +312,20 @@ function isValidAVLTree(tree) {
     var hL = validTree(t, t.leftChild(p));
     var hR = validTree(t, t.rightChild(p));
 
-    // Skip Check if Children Failed Height Check
-    if(hL === false || hR === false) return false;
-
     // Check if AVL Tree: Height +/- 1 for Each Child
-    if ((hL >= (hR - 1)) && (hL <= (hR + 1))){
-      if (t.isRoot(p)) {
-        // Whole Tree Checked
-        return true;
-      } else {
-        // Subtree Children Valid AVL - Return Current Node Height
+    if (Math.abs(hL - hR) <= 1){
         return Math.max(hL, hR) + 1;
-      }
     } else {
-      return false;
+      return -1;
     }
   };
 
-  return validTree(tree, tree.root());
-
+  var r = validTree(tree, tree.root());
+  if (r < 0) {
+    return false;
+  } else {
+    return true;
+  }
 }
 
 function callisValidAVLTree(ary) {// eslint-disable-line no-unused-vars
@@ -310,7 +334,7 @@ function callisValidAVLTree(ary) {// eslint-disable-line no-unused-vars
   if (ary.length < 2) return "Bad Tree: " + JSON.stringify(ary);
 
   var tree = new BinaryTree();
-  var printer = new Print();
+  // var printer = new Print();
   var pos = [null];
   ary.unshift(null);
 
@@ -331,10 +355,10 @@ function callisValidAVLTree(ary) {// eslint-disable-line no-unused-vars
 
   // Create Tree Input Values
   // root, r LeftChild, r RightChild, r LC LC, r LC RC, r RC LC r RC RC
-  // null to Skip
+  // null to Skip 
 
-  return printer.print(tree, "return") + "\n" + isValidAVLTree(tree);
-
+  // return printer.print(tree, "return") + "\n" + isValidAVLTree(tree);
+  return  isValidAVLTree(tree);
 }//VAVL
 
 //IPD//IPD
@@ -446,7 +470,7 @@ function findXLargest(seqOrList, xLargest) {
 
 }
 
-function callFindXLargest(xLargest) {
+function callFindXLargest(xLargest) {// eslint-disable-line no-unused-vars
 
   let seq = new Sequence();
 
@@ -473,8 +497,8 @@ function moveToFront(seqOrList, startP, element, cnt){
     while(startP != e && startP.element() === element) {
       
       startP = seqOrList.after(startP);
-      y+=1
-      if (y >= cnt) return [startP, 1]
+      y+=1;
+      if (y >= cnt) return [startP, 1];
     }
 
     while(startP != e && e.element() !== element) {
@@ -494,7 +518,7 @@ function moveToFront(seqOrList, startP, element, cnt){
 }
 
 
-function sortColors(){
+function sortColors(){// eslint-disable-line no-unused-vars
 
   let seq = new Sequence();
 
@@ -537,7 +561,7 @@ p = p[0];
 //O3C
 
 //FFS//FFS
-function find1stSmallest (n) {
+function find1stSmallest (n) {// eslint-disable-line no-unused-vars
 
 let tree = new RedBlackTree();
 
@@ -548,7 +572,7 @@ tree.insertItem(i, i);
 
 let node = (findN(tree, tree.root(), n));
 
-  debugger
+
 
 
 // Nothing Less
@@ -592,9 +616,9 @@ function findN (tree, p, n) {
 
 }//FFS
 //FERB//FERB
-var cnt = 0
+var cnt = 0;
 function findElinRBTree(tree, p, val) {
-  cnt+=1
+  cnt+=1;
   if (tree.isExternal(p)) return null;
 
   var cur = p.element().key();
@@ -603,7 +627,6 @@ function findElinRBTree(tree, p, val) {
     return p;
   } else if (val < cur) {
     var r = findElinRBTree(tree, tree.leftChild(p), val);
-    // if(r !== null) return r;
   } else {
     r = findElinRBTree(tree, tree.rightChild(p), val);
   }
@@ -612,7 +635,7 @@ function findElinRBTree(tree, p, val) {
 
 }
 
-function callfindElinRBTree() {
+function callfindElinRBTree() {// eslint-disable-line no-unused-vars
 
   let tree = new RedBlackTree();
 
@@ -620,9 +643,82 @@ function callfindElinRBTree() {
   for (var i = 0; i <= 50 ; i+=5){
     tree.insertItem(i, i);
   }
-  var r = findElinRBTree(tree, tree.root(), 0)
+  var r = findElinRBTree(tree, tree.root(), 0);
   // if (r !== null)  r = r.element()
   return r === null ? r :  JSON.stringify(r.element()) + " Calls: " + cnt;
 
 }
 //FERB
+
+//IVRB//IVRB.
+var yhu =0
+function isValidRBT(tree, p) {
+  yhu+=1
+  if (tree.isExternal(p)) return 0;
+ 
+
+  if (p !== tree.root()) {
+
+    if (tree.isRed(p)) {
+      var h = 0;
+      if (tree.isRed(tree.parent(p))) return -1;
+    } else {
+      h = 1;
+    }
+  }
+
+  var lH = isValidRBT(tree, tree.leftChild(p));
+// if (lH < 0) return lH
+  var lR = isValidRBT(tree, tree.rightChild(p));
+
+  if (lH === lR) {
+    return lH + h;
+  } else {
+    return -1;
+  }
+
+
+}
+
+
+function callisValidRBT() {// eslint-disable-line no-unused-vars
+
+  var rb = new RedBlackTree();
+
+  for(var i = 0; i <= 50; i+=5) {
+    rb.insertItem(i,i);
+  }
+// debugger
+
+var p = findElinRBTree(rb, rb.root(),50);
+
+p._color = 1;
+
+  var r = isValidRBT(rb, rb.root());
+  console.log(yhu)
+  if (r < 0) {
+    return false;
+  } else {
+    return true;
+  }
+
+
+}//IVRB
+function reverseOrder(){
+
+  let list = new List();
+
+  for(var i = 0; i <= 15; i++) {
+    list.insertLast(i);
+  }
+
+  let reverse = function (list,p) {
+
+    if (!list.isLast(p)) reverse(list,list.after(p));
+
+    console.log(p.element());
+  };
+
+  reverse(list, list.first());
+
+}

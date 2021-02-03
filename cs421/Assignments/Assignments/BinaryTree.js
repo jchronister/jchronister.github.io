@@ -37,7 +37,7 @@ class BinaryTree {
     }
     leftChild(p) {
         return p._left;
-    }
+    } 
     rightChild(p) {
         return p._right;
     }

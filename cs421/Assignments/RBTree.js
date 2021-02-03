@@ -510,7 +510,8 @@ class Print extends EulerTour {// eslint-disable-line no-unused-vars
       let ret = "";
       if (T.size() > 0) {
         if (retrn) {
-          ret = "Root="+T.root().element().key() +"\n";
+          ret = "Root="+T.root().element() +"\n";
+          // ret = "Root="+T.root().element().key() +"\n";
         } else {
           console.log("Root="+T.root().element().key());
         }

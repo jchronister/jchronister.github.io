@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Books</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
+  <link rel="stylesheet" href="./css/cityLibrary.css">
+</head>
+<body>
+  
+  <div id="body" class="container-fluid px-4">
+
+    <ul class="nav nav-tabs pt-2">
+      <li class="nav-item">
+        <a class="nav-link" aria-current="page" href="index.html">City Library Home</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="about.html">About Us</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="virtualtour.html">Virtual Tour</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="books.html">Books</a>
+      </li>
+  
+      <!-- <li class="nav-item">
+        <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
+      </li> -->
+    </ul>
+
+    <div class="row">
+      <div class="col">Edit Book Form</div>
+    </div>
+    <div class="row">
+      <div class="col"><strong>Note:</strong> Form fields marked with asterisk (*) are required</div>
+    </div>
+
+    <div class="row">
+
+      <form method="post" id="bookedit">
+
+        <div class="form-group">
+          <label for="title">*Book Title:</label>
+          <input type="text" class="form-control" id="title" required>
+        </div>
+
+        <div class="form-group">
+          <label for="isbn">*ISBN:</label>
+          <input type="text" class="form-control" id="isbn" required>
+        </div>
+
+        <div class="form-group">
+          <label for="overdueFee">*Overdue Fee per Day:</label>
+          <input type="number" step="any" class="form-control" id="overdueFee" placeholder="1.00" required>
+        </div>
+
+        <div class="form-group">
+          <label for="publisher">*Publisher:</label>
+          <input type="text" class="form-control" id="publisher" required>
+        </div>
+
+        <div class="form-group">
+          <label for="datePublished">*Date Published:</label>
+          <input type="date" class="form-control" id="datePublished" required>
+        </div>
+
+        <div class="form-group">
+          <label for="bookId">ID:</label>
+          <input type="text" class="form-control" id="bookId" required disabled>
+        </div>
+
+        <button id="delete" type="button" class="btn btn-secondary">Delete</button>
+        <button id="reset" type="button" class="btn btn-secondary">Reset</button>
+        <button id="submit" type="submit" class="btn btn-primary">Add</button>
+
+      </form>
+
+
+      <div class="col"></div>
+    </div>  
+
+
+
+
+  </div>
+
+
+  <script src ="./js/cityLibrary.js"></script>
+  <script>
+    (function() {
+
+      let el = cLib.el("bookedit")
+      let currentBookId = null;
+
+      // Retrieve Book Info If Needed
+      let search = window.location.search.split("=");
+
+      if (search[0] === "?bookid") {
+        currentBookId = Number(search[1]);
+        cLib.fetchData(cLib.setup.getBookInfoURL, null, cLib.fillBookInfo, [Number(currentBookId)]);
+        cLib.el("submit").innerText = "Edit";
+      }
+
+      el.onsubmit = function (e) {
+
+        e.preventDefault();
+
+        // Request Object
+        let req = {
+            method: "POST",
+            headers: {"Content-Type": "application/json"},
+            body: JSON.stringify(cLib.getFormInfo("bookedit"))
+          }
+
+        // Add or Edit
+        if (currentBookId === null) {
+          cLib.fetchData(cLib.setup.addBookInfoURL, req, ()=>{});
+        } else {
+          req.method = "PUT";
+          cLib.fetchData(cLib.setup.updateBookInfoURL + currentBookId, req, ()=>{});
+        }
+
+      }
+
+      // Reset Button
+      cLib.el("reset").onclick = function (e) {
+
+        if (currentBookId !== null) {
+          // Get Book Info
+          cLib.fetchData(cLib.setup.getBookInfoURL, null, cLib.fillBookInfo, [currentBookId]);
+        } else {
+          // No Current Book... Clear Selection
+          document.querySelectorAll("input").forEach(n=>n.value="")
+        }
+      
+      }
+
+      // Delete Button
+      cLib.el("delete").onclick = function (e) {
+      
+        if (currentBookId !== null) {
+          cLib.fetchData(cLib.setup.deleteBookURL + currentBookId, {method: "DELETE"}, function(e){alert(JSON.stringify(e))})
+        }
+      }
+
+    }())
+
+
+  </script>
+
+</body>
+</html>

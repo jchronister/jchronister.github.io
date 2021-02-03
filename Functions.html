@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+
+  <input id="IbackSlash" type="text" style="width:500px;"/>
+  <button id="BbackSlash">Remove Switch Backlash's</button>
+  <div id="ObackSlash"></div>
+  
+</body>
+<script>
+
+(function(){
+
+  window.fx = {};
+
+  var btn = document.querySelectorAll("button");
+
+  btn.forEach(el => {
+    el.onclick = function() {
+      var id = el.id.slice(1);
+      fx[id](id, fx.getInput(id));
+    }
+  })
+
+
+  // document.getElementById("B" + name)
+
+
+
+
+
+
+
+
+
+
+}())
+
+
+fx.backSlash = function(id, input) {
+  var output = input.replaceAll("\\","/");
+  fx.outputResult(id, output);
+}
+
+fx.getInput = function(name) {
+  return document.getElementById("I" + name).value;
+}
+
+fx.outputResult = function (name, output) {
+  document.getElementById("O" + name).innerText = output;
+}
+
+
+
+
+
+
+</script>
+</html>
