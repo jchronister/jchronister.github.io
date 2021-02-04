@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Books</title>
+  <title>City Library Edit Book</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
   <link rel="stylesheet" href="./css/cityLibrary.css">
 </head>
@@ -24,16 +24,21 @@
       <li class="nav-item">
         <a class="nav-link" href="books.html">Books</a>
       </li>
+      <li class="nav-item">
+        <a class="nav-link" href="CityLibraryWebsiteHelpandDocumentation.pdf">Help / Documentation</a>
+      </li>
   
       <!-- <li class="nav-item">
         <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
       </li> -->
     </ul>
 
+    <div class="container">
+
     <div class="row">
-      <div class="col">Edit Book Form</div>
+      <div class="col"><h2 id="page_title" class="page_title my-4">Add Book Form</h2></div>
     </div>
-    <div class="row">
+    <div class="row my-1">
       <div class="col"><strong>Note:</strong> Form fields marked with asterisk (*) are required</div>
     </div>
 
@@ -41,40 +46,56 @@
 
       <form method="post" id="bookedit">
 
-        <div class="form-group">
-          <label for="title">*Book Title:</label>
-          <input type="text" class="form-control" id="title" required>
+        <div class="row my-2">
+            <div class="form-group">
+                <label for="title">*Book Title:</label>
+                <input type="text" class="form-control" id="title" required>
+            </div>
         </div>
 
-        <div class="form-group">
-          <label for="isbn">*ISBN:</label>
-          <input type="text" class="form-control" id="isbn" required>
+        <div class="row my-2">
+          <div class="col">
+            <div class="form-group">
+              <label for="isbn">*ISBN:</label>
+              <input type="text" class="form-control" id="isbn" required>
+            </div>
+          </div>
+
+          <div class="col">
+            <div class="form-group">
+              <label for="overdueFee">*Overdue Fee per Day:</label>
+              <input type="number" step="any" class="form-control" id="overdueFee" placeholder="1.00" required>
+            </div>
+          </div>
         </div>
 
-        <div class="form-group">
-          <label for="overdueFee">*Overdue Fee per Day:</label>
-          <input type="number" step="any" class="form-control" id="overdueFee" placeholder="1.00" required>
+        <div class="row my-2">
+          <div class="col">
+            <div class="form-group">
+              <label for="publisher">*Publisher:</label>
+              <input type="text" class="form-control" id="publisher" required>
+            </div>
+          </div>  
+          <div class="col">
+            <div class="form-group">
+              <label for="datePublished">*Date Published:</label>
+              <input type="date" class="form-control" id="datePublished" required>
+            </div>
+          </div>  
         </div>
 
-        <div class="form-group">
-          <label for="publisher">*Publisher:</label>
-          <input type="text" class="form-control" id="publisher" required>
-        </div>
 
-        <div class="form-group">
-          <label for="datePublished">*Date Published:</label>
-          <input type="date" class="form-control" id="datePublished" required>
-        </div>
+      <div class="row my-2 hideMe">
+          <div class="form-group">
+            <label for="bookId">ID:</label>
+            <input type="text" class="form-control" id="bookId" required disabled>
+          </div>
+      </div>
 
-        <div class="form-group">
-          <label for="bookId">ID:</label>
-          <input type="text" class="form-control" id="bookId" required disabled>
-        </div>
-
-        <button id="delete" type="button" class="btn btn-secondary">Delete</button>
-        <button id="reset" type="button" class="btn btn-secondary">Reset</button>
-        <button id="submit" type="submit" class="btn btn-primary">Add</button>
-
+        <button id="switchAdd" type="button" class="btn btn-secondary m-2 hideMe">Switch to Add Mode</button>
+        <button id="reset" type="button" class="btn btn-secondary m-2">Reset</button>
+        <button id="submit" type="submit" class="btn btn-primary float-end m-2">Add</button>
+        <button id="delete" type="button" class="btn btn-secondary float-end m-2">Delete</button>
       </form>
 
 
@@ -82,8 +103,42 @@
     </div>  
 
 
+  </div>  
+
+  </div>  
 
 
+  <div id="confirm_msg" class="container msg hideMe" style="max-width: 600px;">
+    <div class="row m-1">
+      <h4>Are You Sure You Want to Delete the Following Book?</h4>
+    <!-- </div> -->
+
+    <!-- <div class="row"> -->
+      <p id="confirm_info" class="my-2"></p>
+    <!-- </div> -->
+
+      <div class="col">
+        <button id="confirm_yes" class="float-end btn btn-primary py-2 mx-1">Yes</button>
+        <button id="confirm_no" class="float-end btn btn-secondary py-2 mx-1">No</button>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Info Message -->
+  <div id="info_msg" class="container msg hideMe" style="max-width: 500px;">
+    <div class="row m-1">
+      <h4 id="info_title"></h4>
+    <!-- </div> -->
+
+    <!-- <div class="row"> -->
+      <p id="info_body"></p>
+    <!-- </div> -->
+
+      <div class="col">
+        <button id="info_ok" class="float-end btn btn-primary py-2 mx-1">Ok</button>
+      </div>
+    </div>
   </div>
 
 
@@ -91,8 +146,31 @@
   <script>
     (function() {
 
-      let el = cLib.el("bookedit")
       let currentBookId = null;
+
+      // Switch to Add Mode
+      let addMode = function (deleteData) {
+        currentBookId = null
+        cLib.el("submit").innerText = "Add"
+        if (deleteData) document.querySelectorAll("input").forEach(n=>n.value="")
+        cLib.el("delete").classList.add("hideMe");
+        cLib.el("switchAdd").classList.add("hideMe")  
+        cLib.el("page_title").innerText = "Add Book Form"
+        // history.pushState(window.location.href.split("?")[0],"asdf");
+      };
+
+      // Switch to Edit Mode
+      let editMode = function (bookId) {
+        
+        if(bookId) {
+          currentBookId = bookId;
+          cLib.el("bookId").value = bookId;
+        }
+        cLib.el("switchAdd").classList.remove("hideMe");
+        cLib.el("submit").innerText = "Edit";
+        cLib.el("delete").classList.remove("hideMe");
+        cLib.el("page_title").innerText = "Edit Book Form"
+      }
 
       // Retrieve Book Info If Needed
       let search = window.location.search.split("=");
@@ -100,26 +178,47 @@
       if (search[0] === "?bookid") {
         currentBookId = Number(search[1]);
         cLib.fetchData(cLib.setup.getBookInfoURL, null, cLib.fillBookInfo, [Number(currentBookId)]);
-        cLib.el("submit").innerText = "Edit";
+        editMode();
+      } else {
+        // Add Mode - Remainder is Default
+        cLib.el("delete").classList.add("hideMe");
       }
 
-      el.onsubmit = function (e) {
 
+      // Submit Form -> Only Allow 1 Add. Add then Switch to Edit
+      cLib.el("bookedit").onsubmit = function (e) {
+
+        // Stop Default Form Submittion
         e.preventDefault();
 
-        // Request Object
+        // Fetch Request Object
         let req = {
             method: "POST",
             headers: {"Content-Type": "application/json"},
-            body: JSON.stringify(cLib.getFormInfo("bookedit"))
+            // body: JSON.stringify(cLib.getFormInfo("bookedit"))
           }
 
-        // Add or Edit
+        // Add or Edit  
         if (currentBookId === null) {
-          cLib.fetchData(cLib.setup.addBookInfoURL, req, ()=>{});
+          // Add Mode. After Add Switch to Edit Mode
+
+          // Delete Id (Updates if Id Present)
+          let data = cLib.getFormInfo("bookedit");
+          delete data.bookId;
+
+          req.body = JSON.stringify(data);
+          cLib.fetchData(cLib.setup.addBookInfoURL, req, (data)=>{
+            cLib.alert("Book Successfully Added");
+            // editMode(data.bookId); // Continue in Edit Mode
+            addMode(true)
+          }, undefined, cLib.alert);
         } else {
+          // Edit Mode
           req.method = "PUT";
-          cLib.fetchData(cLib.setup.updateBookInfoURL + currentBookId, req, ()=>{});
+          req.body = JSON.stringify(cLib.getFormInfo("bookedit"));
+          cLib.fetchData(cLib.setup.updateBookInfoURL + currentBookId, req, ()=>{
+            cLib.alert("Book Updated")
+          }, undefined, cLib.alert);
         }
 
       }
@@ -129,20 +228,72 @@
 
         if (currentBookId !== null) {
           // Get Book Info
-          cLib.fetchData(cLib.setup.getBookInfoURL, null, cLib.fillBookInfo, [currentBookId]);
+          cLib.fetchData(cLib.setup.getBookInfoURL, null, cLib.fillBookInfo, [currentBookId, function() {
+            cLib.alert("Cannot Reset, Data Deleted from Database by Another User. Continue in Add Mode.");
+            addMode(false);
+          }], cLib.alert);
         } else {
           // No Current Book... Clear Selection
-          document.querySelectorAll("input").forEach(n=>n.value="")
+          addMode(true);
         }
       
       }
 
       // Delete Button
       cLib.el("delete").onclick = function (e) {
-      
-        if (currentBookId !== null) {
-          cLib.fetchData(cLib.setup.deleteBookURL + currentBookId, {method: "DELETE"}, function(e){alert(JSON.stringify(e))})
+
+        if (currentBookId === null) {
+          cLib.alert("Deletion Error", "No Book to Delete Yet", "No Book to Delete Yet, Maybe Slow Network Error. Try Again Once When Data Retrieved.");
+          return;
         }
+
+        let showConfirmation = function (show) {
+          if (show) {
+            cLib.el("confirm_msg").classList.remove("hideMe");
+          } else {
+            cLib.el("confirm_msg").classList.add("hideMe");
+          }
+        }
+      
+        // Show Confirmation Form with Data
+        showConfirmation(true);
+
+        let {bookId, isbn, title, overdueFee, publisher, datePublished} = cLib.getFormInfo("bookedit");
+
+        cLib.el("confirm_info").innerText = `Book Title: ${title}
+                                              ISBN: ${isbn}
+                                              Publisher: ${publisher}
+                                              Date Published: ${datePublished}`
+
+        // No Button
+        cLib.el("confirm_no").onclick = function (e) {
+          showConfirmation(false);
+        };
+
+        // Yes Button
+        cLib.el("confirm_yes").onclick = function (e) {
+          let rst = true;
+          cLib.fetchData(cLib.setup.deleteBookURL + currentBookId, {method: "DELETE"}, function(msg){
+            // Message and Clear Form
+            cLib.alert("Book Deleted");
+            addMode(true);
+          },undefined, function(msg, err) {
+            // Already Deleted
+            if (err.status === 500) {
+              msg = "Deletion Error. Item May Have Already Been Deleted by Another User. Continue in Add Mode.";
+              rst = false;
+              addMode(false);
+            }
+            cLib.alert(msg);
+          });
+          if (rst) showConfirmation(false);
+        };         
+      
+      }
+
+      // Switch to Add Mode Button
+      cLib.el("switchAdd").onclick = function () {
+        addMode(false);
       }
 
     }())
